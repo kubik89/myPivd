@@ -29,14 +29,16 @@ public class People {
     private String fname;
     @NotBlank(message = "Пусте значення lName")
     private String lname;
-//    private String nadija_na;
+    private String nadija_na;
 
 //    @Min(message = "Group number must be min 1", value = 1)
-//    private int group_numb;
-//    private String address;
-//    private int home_phone;
-//    private int mobile_phone;
-//    private String sex;
+    private int group_numb;
+    private String streetName;
+    private String street_building_number;
+    private int flat_number;
+    private int home_phone;
+    private int mob_phone;
+    private int sex;
 
 
 }
