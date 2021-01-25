@@ -1,30 +1,51 @@
 package com.example.demo.service;
 
+import com.example.demo.dao.GroupRepository;
 import com.example.demo.dao.PeopleRepository;
+import com.example.demo.dto.PeopleCreateDto;
+import com.example.demo.dto.PeopleDto;
+import com.example.demo.entity.Group;
 import com.example.demo.entity.People;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class PeopleService implements IPeopleService {
 
     PeopleRepository peopleRepository;
+    GroupRepository groupRepository;
 
     @Autowired
-    public PeopleService(PeopleRepository peopleRepository) {
+    public PeopleService(PeopleRepository peopleRepository, GroupRepository groupRepository) {
         this.peopleRepository = peopleRepository;
+        this.groupRepository = groupRepository;
     }
 
     @Override
-    public People savePerson(People people) {
+    public PeopleDto savePerson(PeopleCreateDto peopleCreateDto) {
+        People people = new People();
+
+        people.setFname(peopleCreateDto.getFName());
+        people.setLname(peopleCreateDto.getLName());
+        people.setSex(peopleCreateDto.getSex());
+
+//        Optional<Group> groupId = groupRepository.findById(peopleCreateDto.getGroupNumb());
+//        Group group = groupId.orElseThrow(() ->
+//                new NullPointerException("I did not find group for new user"));
+//        people.setGroup(group);
+
         return peopleRepository.saveAndFlush(people);
     }
 
     @Override
-    public List<People> getAllPersons() {
-        return peopleRepository.findAll();
+    public List<PeopleDto> getAllPersons() {
+        return peopleRepository.findAll().stream().map(people ->
+                new PeopleDto(people.getLname(), people.getFname(), people.getGroup().getResponsible().getLname(),
+                        people.getGroup().getNumber())).collect(Collectors.toList());
     }
 
     @Override

@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.PeopleCreateDto;
+import com.example.demo.dto.PeopleDto;
 import com.example.demo.entity.People;
 import com.example.demo.service.IPeopleService;
 import com.example.demo.validator.PeopleValidator;
@@ -19,7 +21,7 @@ public class PeopleController {
     private IPeopleService iPeopleService;
 
     @GetMapping
-    public List<People> getAllPersons() {
+    public List<PeopleDto> getAllPersons() {
         return iPeopleService.getAllPersons();
     }
 
@@ -29,7 +31,7 @@ public class PeopleController {
     }
 
     @PostMapping
-    public People createPerson(@RequestBody @Valid People people) {
+    public People createPerson(@RequestBody PeopleCreateDto people) {
         return iPeopleService.savePerson(people);
     }
 

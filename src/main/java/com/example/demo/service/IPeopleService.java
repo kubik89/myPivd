@@ -1,14 +1,14 @@
 package com.example.demo.service;
-
+import com.example.demo.dto.PeopleCreateDto;
+import com.example.demo.dto.PeopleDto;
 import com.example.demo.entity.People;
-
 import java.util.List;
 
 public interface IPeopleService {
 
-People savePerson(People people);
+PeopleDto savePerson(PeopleCreateDto people);
 
-List<People> getAllPersons();
+List<PeopleDto> getAllPersons();
 
 People getPersonById(int id);
 
