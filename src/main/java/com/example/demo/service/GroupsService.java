@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.dao.BadRequestException;
 import com.example.demo.dao.GroupRepository;
 import com.example.demo.dao.PeopleRepository;
 import com.example.demo.dto.GroupCreateDto;
@@ -28,11 +29,12 @@ public class GroupsService implements IGroupService {
     @Override
     public Group saveGroup(GroupCreateDto group) {
         Group myGroups = new Group();
+
         myGroups.setNumber(group.getNumber());
 
         Optional<People> responsibleID = peopleRepository.findById(group.getRespId());
         People people = responsibleID.orElseThrow(() ->
-                new NullPointerException("I did not find any responsible in DB"));
+                new BadRequestException("I did not find any responsible in DB"));
         myGroups.setResponsible(people);
         return groupRepository.saveAndFlush(myGroups);
     }

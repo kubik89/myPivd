@@ -5,6 +5,8 @@ import com.example.demo.dto.PeopleDto;
 import com.example.demo.entity.People;
 import com.example.demo.service.IPeopleService;
 import com.example.demo.validator.PeopleValidator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +22,8 @@ public class PeopleController {
     @Autowired
     private IPeopleService iPeopleService;
 
+    private static Logger logger = LoggerFactory.getLogger(GroupsController.class);
+
     @GetMapping
     public List<PeopleDto> getAllPersons() {
         return iPeopleService.getAllPersons();
@@ -31,12 +35,13 @@ public class PeopleController {
     }
 
     @PostMapping
-    public People createPerson(@RequestBody PeopleCreateDto people) {
+    public People createPerson(@RequestBody @Valid PeopleCreateDto people) {
+        logger.info("New person created: {}", people.getLname());
         return iPeopleService.savePerson(people);
     }
 
     @PutMapping("/{id}")
-    public People updatePerson(@PathVariable int id, @RequestBody @Valid People people) {
+    public People updatePerson(@PathVariable int id, @RequestBody People people) {
         return iPeopleService.updatePerson(id, people);
     }
 

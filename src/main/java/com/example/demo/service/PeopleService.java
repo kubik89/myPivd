@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.dao.BadRequestException;
 import com.example.demo.dao.GroupRepository;
 import com.example.demo.dao.PeopleRepository;
 import com.example.demo.dto.PeopleCreateDto;
@@ -26,17 +27,16 @@ public class PeopleService implements IPeopleService {
     }
 
     @Override
-    public PeopleDto savePerson(PeopleCreateDto peopleCreateDto) {
+    public People savePerson(PeopleCreateDto peopleCreateDto) {
         People people = new People();
 
-        people.setFname(peopleCreateDto.getFName());
-        people.setLname(peopleCreateDto.getLName());
+        people.setFname(peopleCreateDto.getFname());
+        people.setLname(peopleCreateDto.getLname());
         people.setSex(peopleCreateDto.getSex());
 
-//        Optional<Group> groupId = groupRepository.findById(peopleCreateDto.getGroupNumb());
-//        Group group = groupId.orElseThrow(() ->
-//                new NullPointerException("I did not find group for new user"));
-//        people.setGroup(group);
+        Optional<Group> groupIp = groupRepository.findById(peopleCreateDto.getGroupNumb());
+        Group group = groupIp.orElseThrow(() -> new BadRequestException("I did not find any Group for new User"));
+        people.setGroup(group);
 
         return peopleRepository.saveAndFlush(people);
     }
@@ -44,8 +44,8 @@ public class PeopleService implements IPeopleService {
     @Override
     public List<PeopleDto> getAllPersons() {
         return peopleRepository.findAll().stream().map(people ->
-                new PeopleDto(people.getLname(), people.getFname(), people.getGroup().getResponsible().getLname(),
-                        people.getGroup().getNumber())).collect(Collectors.toList());
+                new PeopleDto(people.getLname(), people.getFname(), people.getGroup().getNumber(), people.getSex()))
+                .collect(Collectors.toList());
     }
 
     @Override

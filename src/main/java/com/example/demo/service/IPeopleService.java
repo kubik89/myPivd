@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface IPeopleService {
 
-PeopleDto savePerson(PeopleCreateDto people);
+People savePerson(PeopleCreateDto people);
 
 List<PeopleDto> getAllPersons();
 
