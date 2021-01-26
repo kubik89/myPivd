@@ -11,7 +11,7 @@ public interface IGroupService {
     Group saveGroup (GroupCreateDto groupDto);
     List<GroupDto> getAllGroups();
     Group getSomeGroupById(int id);
-    void deleteGroup();
-    Group updateGroup(Group group);
+    void deleteGroup(int id);
+    Group updateGroup(int id, Group group);
 
 }

@@ -19,8 +19,6 @@ public class GroupsController {
     @Autowired
     private IGroupService igroupService;
 
-    private static Logger logger = LoggerFactory.getLogger(GroupsController.class);
-
     @GetMapping
     public List<GroupDto> getAllGroups() {
         return igroupService.getAllGroups();
@@ -28,7 +26,21 @@ public class GroupsController {
 
     @PostMapping
     public Group saveGroup(@RequestBody GroupCreateDto group) {
-        logger.info("New group created: {}", group.getNumber());
         return igroupService.saveGroup(group);
+    }
+
+    @GetMapping(value = "/{id}")
+    public Group getGroupById(@PathVariable int id) {
+        return igroupService.getSomeGroupById(id);
+    }
+
+    @PutMapping(value = "/{id}")
+    public Group updateGroup(@PathVariable int id, @RequestBody Group group) {
+        return igroupService.updateGroup(id, group);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public void deleteGroup(@PathVariable int id) {
+        igroupService.deleteGroup(id);
     }
 }
