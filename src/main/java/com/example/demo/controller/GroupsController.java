@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.GroupCreateDto;
 import com.example.demo.dto.GroupDto;
+import com.example.demo.dto.PeopleInGroups;
 import com.example.demo.entity.Group;
 import com.example.demo.service.IGroupService;
 import org.slf4j.Logger;
@@ -24,14 +25,19 @@ public class GroupsController {
         return igroupService.getAllGroups();
     }
 
+    @GetMapping("/{id}")
+    public GroupDto getGroupById(@PathVariable int id) {
+        return igroupService.getSomeGroupById(id);
+    }
+
+    @GetMapping("/members/{groupId}")
+    public List<PeopleInGroups> peopleInGroup(@PathVariable int groupId) {
+        return igroupService.peopleInGroup(groupId);
+    }
+
     @PostMapping
     public Group saveGroup(@RequestBody GroupCreateDto group) {
         return igroupService.saveGroup(group);
-    }
-
-    @GetMapping(value = "/{id}")
-    public Group getGroupById(@PathVariable int id) {
-        return igroupService.getSomeGroupById(id);
     }
 
     @PutMapping(value = "/{id}")

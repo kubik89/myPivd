@@ -26,4 +26,13 @@ public class Group {
     @ManyToOne
     @JsonIgnore
     private People responsible_name;
+
+    @Override
+    public String toString() {
+        return "Group{" +
+                "id=" + id +
+                ", group_number=" + group_number +
+                ", responsible_name=" + responsible_name +
+                '}';
+    }
 }

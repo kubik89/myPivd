@@ -34,7 +34,7 @@ public class PeopleController {
 //        return iPeopleService.getPersonById(id);
 //    }
 
-        @GetMapping("/{id}")
+    @GetMapping("/{id}")
     public PeopleViewCurrentUserDto getPersonById(@PathVariable int id) {
         return iPeopleService.getPersonById(id);
     }

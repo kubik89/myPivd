@@ -10,5 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Getter
 public class GroupDto {
     private int number;
-    private String respName;
+    private String respfname;
+    private String resplname;
 }

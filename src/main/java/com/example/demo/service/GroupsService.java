@@ -6,6 +6,7 @@ import com.example.demo.dao.GroupRepository;
 import com.example.demo.dao.PeopleRepository;
 import com.example.demo.dto.GroupCreateDto;
 import com.example.demo.dto.GroupDto;
+import com.example.demo.dto.PeopleInGroups;
 import com.example.demo.entity.Group;
 import com.example.demo.entity.People;
 import org.slf4j.Logger;
@@ -13,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -49,15 +51,18 @@ public class GroupsService implements IGroupService {
     @Override
     public List<GroupDto> getAllGroups() {
         return groupRepository.findAll().stream().map(groups ->
-                new GroupDto(groups.getGroup_number(), groups.getResponsible_name().getLname())).collect(Collectors.toList());
+                new GroupDto(groups.getGroup_number(), groups.getResponsible_name().getFname(),
+                        groups.getResponsible_name().getLname()))
+                .collect(Collectors.toList());
     }
 
     @Override
-    public Group getSomeGroupById(int id) {
-        Optional<Group> groupId = groupRepository.findById(id);
-        Group group = groupId.orElseThrow(() -> new BadRequestException(messageNoGroup));
-        return group;
+    public GroupDto getSomeGroupById(int id) {
+        Optional<Group> group = groupRepository.findById(id);
+        return new GroupDto(group.get().getGroup_number(), group.get().getResponsible_name().getFname(),
+                group.get().getResponsible_name().getLname());
     }
+
 
     @Override
     public void deleteGroup(int id) {
@@ -78,5 +83,17 @@ public class GroupsService implements IGroupService {
         } else {
             throw new BadRequestException(messageNoGroup);
         }
+    }
+
+    @Override
+    public List<PeopleInGroups> peopleInGroup(int groupId) {
+        List<People> peopleList = peopleRepository.findAll();
+        List<PeopleInGroups> list = new ArrayList<>();
+        peopleList.forEach(people -> {
+           if (people.getGroup_numb().getGroup_number()==groupId) {
+                list.add(new PeopleInGroups(people.getFname(), people.getLname()));
+            }
+        });
+        return list;
     }
 }
