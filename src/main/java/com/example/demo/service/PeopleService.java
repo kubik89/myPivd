@@ -1,11 +1,12 @@
 package com.example.demo.service;
 
-import com.example.demo.controller.PeopleGetViewDto;
+import com.example.demo.dto.PeopleGetViewDto;
 import com.example.demo.dao.BadRequestException;
 import com.example.demo.dao.GroupRepository;
 import com.example.demo.dao.PeopleRepository;
 import com.example.demo.dto.PeopleCreateDto;
 import com.example.demo.dto.PeopleDto;
+import com.example.demo.dto.PeopleViewCurrentUserDto;
 import com.example.demo.entity.Group;
 import com.example.demo.entity.People;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 public class PeopleService implements IPeopleService {
@@ -56,9 +56,24 @@ public class PeopleService implements IPeopleService {
 //                .collect(Collectors.toList());
     }
 
+//    @Override
+//    public People getPersonById(int id) {
+//        return peopleRepository.getOne(id);
+//    }
+
     @Override
-    public People getPersonById(int id) {
-        return peopleRepository.getOne(id);
+    public PeopleViewCurrentUserDto getPersonById(int id) {
+        String fname = peopleRepository.getOne(id).getFname();
+        String lname = peopleRepository.getOne(id).getLname();
+        int group_number = peopleRepository.getOne(id).getGroup_numb().getGroup_number();
+        int sex = peopleRepository.getOne(id).getSex();
+        String street_name = peopleRepository.getOne(id).getStreet_name();
+        String street_building_number = peopleRepository.getOne(id).getStreet_building_number();
+        int flat_number = peopleRepository.getOne(id).getFlat_number();
+        int home_phone = peopleRepository.getOne(id).getHome_phone();
+        int mob_phone = peopleRepository.getOne(id).getMob_phone();
+        return new PeopleViewCurrentUserDto(fname, lname, group_number, street_name, street_building_number, flat_number,
+                home_phone, mob_phone, sex);
     }
 
     @Override

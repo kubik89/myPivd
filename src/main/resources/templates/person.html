@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Current User</title>
+</head>
+<body>
+
+<table>
+    <thead>
+    <tr>
+        <th>Прізвище</th>
+        <th>Ім'я</th>
+        <th>Група</th>
+        <th>Стать</th>
+        <th>Вулиця</th>
+        <th>Будинок</th>
+        <th>Квартира</th>
+        <th>Дом.телефон</th>
+        <th>Мобільний</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr align="center" th:each="person : ${some_people}">
+        <td><span th:text="${person.lname}"></span></td>
+        <td><span th:text="${person.fname}"></span></td>
+        <td><span th:text="${person.group}"></span></td>
+        <td><span th:text="${person.sex}"></span></td>
+        <td><span th:text="${person.street_name}"></span></td>
+        <td><span th:text="${person.street_building_number}"></span></td>
+        <td><span th:text="${person.flat_number}"></span></td>
+        <td><span th:text="${person.home_phone}"></span></td>
+        <td><span th:text="${person.mob_phone}"></span></td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

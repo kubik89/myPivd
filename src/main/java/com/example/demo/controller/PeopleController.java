@@ -1,7 +1,8 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.PeopleCreateDto;
-import com.example.demo.dto.PeopleDto;
+import com.example.demo.dto.PeopleGetViewDto;
+import com.example.demo.dto.PeopleViewCurrentUserDto;
 import com.example.demo.entity.People;
 import com.example.demo.service.IPeopleService;
 import com.example.demo.validator.PeopleValidator;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @RequestMapping(value = "/people")
 @RestController
@@ -29,8 +29,13 @@ public class PeopleController {
         return iPeopleService.getAllPersons();
     }
 
-    @GetMapping("/{id}")
-    public People getPersonById(@PathVariable int id) {
+//    @GetMapping("/{id}")
+//    public People getPersonById(@PathVariable int id) {
+//        return iPeopleService.getPersonById(id);
+//    }
+
+        @GetMapping("/{id}")
+    public PeopleViewCurrentUserDto getPersonById(@PathVariable int id) {
         return iPeopleService.getPersonById(id);
     }
 
