@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>People</title>
+</head>
+<body>
+
+<h3>Список людей</h3>
+
+<table>
+    <thead>
+
+    <tr>
+        <th>Прізвище</th>
+        <th>Ім'я</th>
+        <th>Група №</th>
+        <th>Стать</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr align="center" th:each="person : ${people}">
+        <td><span th:text="${person.lname}"></span></td>
+        <td><span th:text="${person.fname}"></span></td>
+        <td><span th:text="${person.groupNumb}"></span></td>
+        <td><span th:text="${person.sex}"></span></td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

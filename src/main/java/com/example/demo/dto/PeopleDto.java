@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class PeopleDto {
-    private String lName;
-    private String fName;
+    private String lname;
+    private String fname;
 //    private String respInGroup;
     private int groupNumb;
     private int sex;

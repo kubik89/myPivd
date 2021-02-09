@@ -2,11 +2,10 @@ package com.example.demo.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
@@ -26,15 +25,16 @@ public class People {
     private int id;
 
     @ManyToOne
+    @JsonProperty(value = "group_numb_id")
 //    @Min(message = "Group number must be min 1", value = 1)
-    private Group group;
+    private Group group_numb;
 
     private String fname;
 
     @NotBlank(message = "Пусте значення lName")
     private String lname;
-    private String nadija_na;
-    private String streetName;
+    private int nadija_na;
+    private String street_name;
     private String street_building_number;
     private int flat_number;
     private int home_phone;

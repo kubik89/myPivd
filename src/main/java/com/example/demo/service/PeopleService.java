@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.controller.PeopleGetViewDto;
 import com.example.demo.dao.BadRequestException;
 import com.example.demo.dao.GroupRepository;
 import com.example.demo.dao.PeopleRepository;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class PeopleService implements IPeopleService {
@@ -36,16 +38,22 @@ public class PeopleService implements IPeopleService {
 
         Optional<Group> groupIp = groupRepository.findById(peopleCreateDto.getGroupNumb());
         Group group = groupIp.orElseThrow(() -> new BadRequestException("I did not find any Group for new User"));
-        people.setGroup(group);
+        people.setGroup_numb(group);
 
         return peopleRepository.saveAndFlush(people);
     }
 
     @Override
-    public List<PeopleDto> getAllPersons() {
-        return peopleRepository.findAll().stream().map(people ->
-                new PeopleDto(people.getLname(), people.getFname(), people.getGroup().getNumber(), people.getSex()))
-                .collect(Collectors.toList());
+    public PeopleGetViewDto getAllPersons() {
+
+        List<People> peopleList = peopleRepository.findAll();
+        List<PeopleDto> peopleDtoList = peopleList.stream().map(people ->
+                new PeopleDto(people.getLname(), people.getFname(), people.getGroup_numb().getGroup_number(), people.getSex())).collect(Collectors.toList());
+        return new PeopleGetViewDto(peopleDtoList);
+
+//        return peopleRepository.findAll().stream().map(people ->
+//                new PeopleDto(people.getLname(), people.getFname(), people.getGroup_numb().getId(), people.getSex()))
+//                .collect(Collectors.toList());
     }
 
     @Override

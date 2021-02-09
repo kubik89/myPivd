@@ -1,4 +1,5 @@
 package com.example.demo.service;
+import com.example.demo.controller.PeopleGetViewDto;
 import com.example.demo.dto.PeopleCreateDto;
 import com.example.demo.dto.PeopleDto;
 import com.example.demo.entity.People;
@@ -8,7 +9,8 @@ public interface IPeopleService {
 
 People savePerson(PeopleCreateDto people);
 
-List<PeopleDto> getAllPersons();
+//List<PeopleDto> getAllPersons();
+PeopleGetViewDto getAllPersons();
 
 People getPersonById(int id);
 

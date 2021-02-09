@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,7 +13,7 @@ import javax.validation.constraints.Min;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "Groupss")
+@Table(name = "groupss")
 public class Group {
 
     @Id
@@ -20,9 +21,9 @@ public class Group {
     private int id;
 
     @Min(value = 1)
-    private int number;
+    private int group_number;
 
     @ManyToOne
     @JsonIgnore
-    private People responsible;
+    private People responsible_name;
 }

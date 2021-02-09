@@ -25,7 +25,7 @@ public class PeopleController {
     private static Logger logger = LoggerFactory.getLogger(GroupsController.class);
 
     @GetMapping
-    public List<PeopleDto> getAllPersons() {
+    public PeopleGetViewDto getAllPersons() {
         return iPeopleService.getAllPersons();
     }
 

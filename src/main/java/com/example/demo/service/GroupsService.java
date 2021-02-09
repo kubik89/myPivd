@@ -36,12 +36,12 @@ public class GroupsService implements IGroupService {
     public Group saveGroup(GroupCreateDto group) {
         Group myGroups = new Group();
 
-        myGroups.setNumber(group.getNumber());
+        myGroups.setGroup_number(group.getNumber());
 
         Optional<People> responsibleID = peopleRepository.findById(group.getRespId());
         People people = responsibleID.orElseThrow(() ->
                 new BadRequestException("I did not find any responsible in DB"));
-        myGroups.setResponsible(people);
+        myGroups.setResponsible_name(people);
         logger.info("New group {} created ", group.getNumber());
         return groupRepository.saveAndFlush(myGroups);
     }
@@ -49,7 +49,7 @@ public class GroupsService implements IGroupService {
     @Override
     public List<GroupDto> getAllGroups() {
         return groupRepository.findAll().stream().map(groups ->
-                new GroupDto(groups.getNumber(), groups.getResponsible().getLname())).collect(Collectors.toList());
+                new GroupDto(groups.getGroup_number(), groups.getResponsible_name().getLname())).collect(Collectors.toList());
     }
 
     @Override
