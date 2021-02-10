@@ -17,4 +17,5 @@ PeopleViewCurrentUserDto getPersonById(int id);
 void deletePerson(int id);
 
 People updatePerson(int id, People people);
+
 }

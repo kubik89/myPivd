@@ -6,12 +6,19 @@
 </head>
 <body>
 
-<h4>Список в групі</h4>
+<span style="font-size: medium">Список в групі #</span>
+<span th:text="${groupNumb}"></span>
+<br>
+<span>Кількість: </span>
+<span th:text="${count.count}"></span>
+<p></p>
 
-
+<span>Відповідальний за групу: </span>
+<span style="color: blue" th:text="${responsible.lname}"></span>
+<span style="color: blue" th:text="${responsible.fname}"></span>
+<p></p>
 
 <div th:each="person : ${list}">
-
     <span th:text="${person.lname}"></span>
     <span th:text="${person.fname}"></span>
 

@@ -1,9 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.GroupCreateDto;
-import com.example.demo.dto.GroupDto;
-import com.example.demo.dto.GroupMembersDto;
-import com.example.demo.dto.PeopleInGroups;
+import com.example.demo.dto.*;
 import com.example.demo.entity.Group;
 import com.example.demo.service.IGroupService;
 import org.slf4j.Logger;
@@ -49,5 +46,20 @@ public class GroupsController {
     @DeleteMapping(value = "/{id}")
     public void deleteGroup(@PathVariable int id) {
         igroupService.deleteGroup(id);
+    }
+
+    @GetMapping("/byid/{id}")
+    public Group findGroupById(@PathVariable int id) {
+       return igroupService.findGroupById(id);
+    }
+
+    @GetMapping("/resp/{id}")
+    public PeopleJustNameDto getResponsibleIdInGroup(@PathVariable int id) {
+        return igroupService.getResonsibleIdInGroup(id);
+    }
+
+    @GetMapping("/count/{id}")
+    public int getCountGroupMembers(@PathVariable int id) {
+        return igroupService.getCountGroupMembers(id);
     }
 }

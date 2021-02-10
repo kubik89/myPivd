@@ -1,9 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.dto.GroupCreateDto;
-import com.example.demo.dto.GroupDto;
-import com.example.demo.dto.GroupMembersDto;
-import com.example.demo.dto.PeopleInGroups;
+import com.example.demo.dto.*;
 import com.example.demo.entity.Group;
 
 import java.util.List;
@@ -17,4 +14,9 @@ public interface IGroupService {
     Group updateGroup(int id, Group group);
     GroupMembersDto peopleInGroup(int groupId);
 
+    Group findGroupById(int groupId);
+
+    PeopleJustNameDto getResonsibleIdInGroup(int groupId);
+
+    int getCountGroupMembers(int groupId);
 }

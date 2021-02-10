@@ -4,10 +4,7 @@ import com.example.demo.controller.GroupsController;
 import com.example.demo.dao.BadRequestException;
 import com.example.demo.dao.GroupRepository;
 import com.example.demo.dao.PeopleRepository;
-import com.example.demo.dto.GroupCreateDto;
-import com.example.demo.dto.GroupDto;
-import com.example.demo.dto.GroupMembersDto;
-import com.example.demo.dto.PeopleInGroups;
+import com.example.demo.dto.*;
 import com.example.demo.entity.Group;
 import com.example.demo.entity.People;
 import org.slf4j.Logger;
@@ -59,11 +56,11 @@ public class GroupsService implements IGroupService {
 
     @Override
     public GroupDto getSomeGroupById(int id) {
-        Optional<Group> group = groupRepository.findById(id);
-        return new GroupDto(group.get().getGroup_number(), group.get().getResponsible_name().getFname(),
-                group.get().getResponsible_name().getLname());
-    }
 
+        Group group = groupRepository.findGroupById(id);
+        return new GroupDto(group.getGroup_number(), group.getResponsible_name().getFname(),
+                group.getResponsible_name().getLname());
+    }
 
     @Override
     public void deleteGroup(int id) {
@@ -87,16 +84,27 @@ public class GroupsService implements IGroupService {
     }
 
     @Override
+    public Group findGroupById(int groupId) {
+        return groupRepository.findGroupById(groupId);
+    }
+
     public GroupMembersDto peopleInGroup(int groupId) {
-        List<People> peopleList = peopleRepository.findAll();
-
-
+        List<People> allByGroup_number = peopleRepository.findAllByGroup_number(groupId);
         List<PeopleInGroups> list = new ArrayList<>();
-        peopleList.forEach(people -> {
-           if (people.getGroup_numb().getGroup_number()==groupId) {
-                list.add(new PeopleInGroups(people.getFname(), people.getLname()));
-            }
-        });
+        allByGroup_number.forEach(people ->
+                list.add(new PeopleInGroups(people.getLname(), people.getFname())));
         return new GroupMembersDto(list);
     }
+
+    public PeopleJustNameDto getResonsibleIdInGroup(int groupId) {
+        int responsibleInGroup = groupRepository.findResponsibleInGroup(groupId);
+        String lname = peopleRepository.findById(responsibleInGroup).get().getLname();
+        String fname = peopleRepository.findById(responsibleInGroup).get().getFname();
+        return new PeopleJustNameDto(lname, fname);
+    }
+
+    public int getCountGroupMembers(int groupId) {
+        return groupRepository.getCountOfGroupMembers(groupId);
+    }
+
 }
