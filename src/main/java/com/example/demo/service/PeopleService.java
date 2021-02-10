@@ -48,18 +48,10 @@ public class PeopleService implements IPeopleService {
 
         List<People> peopleList = peopleRepository.findAll();
         List<PeopleDto> peopleDtoList = peopleList.stream().map(people ->
-                new PeopleDto(people.getLname(), people.getFname(), people.getGroup_numb().getGroup_number(), people.getSex())).collect(Collectors.toList());
+                new PeopleDto(people.getLname(), people.getFname(), people.getGroup_numb().getGroup_number(),
+                        people.getSex())).collect(Collectors.toList());
         return new PeopleGetViewDto(peopleDtoList);
-
-//        return peopleRepository.findAll().stream().map(people ->
-//                new PeopleDto(people.getLname(), people.getFname(), people.getGroup_numb().getId(), people.getSex()))
-//                .collect(Collectors.toList());
     }
-
-//    @Override
-//    public People getPersonById(int id) {
-//        return peopleRepository.getOne(id);
-//    }
 
     @Override
     public PeopleViewCurrentUserDto getPersonById(int id) {

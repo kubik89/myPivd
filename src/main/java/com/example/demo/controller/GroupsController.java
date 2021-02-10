@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.GroupCreateDto;
 import com.example.demo.dto.GroupDto;
+import com.example.demo.dto.GroupMembersDto;
 import com.example.demo.dto.PeopleInGroups;
 import com.example.demo.entity.Group;
 import com.example.demo.service.IGroupService;
@@ -31,7 +32,7 @@ public class GroupsController {
     }
 
     @GetMapping("/members/{groupId}")
-    public List<PeopleInGroups> peopleInGroup(@PathVariable int groupId) {
+    public GroupMembersDto peopleInGroup(@PathVariable int groupId) {
         return igroupService.peopleInGroup(groupId);
     }
 

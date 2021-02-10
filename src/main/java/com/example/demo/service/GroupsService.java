@@ -6,6 +6,7 @@ import com.example.demo.dao.GroupRepository;
 import com.example.demo.dao.PeopleRepository;
 import com.example.demo.dto.GroupCreateDto;
 import com.example.demo.dto.GroupDto;
+import com.example.demo.dto.GroupMembersDto;
 import com.example.demo.dto.PeopleInGroups;
 import com.example.demo.entity.Group;
 import com.example.demo.entity.People;
@@ -86,14 +87,16 @@ public class GroupsService implements IGroupService {
     }
 
     @Override
-    public List<PeopleInGroups> peopleInGroup(int groupId) {
+    public GroupMembersDto peopleInGroup(int groupId) {
         List<People> peopleList = peopleRepository.findAll();
+
+
         List<PeopleInGroups> list = new ArrayList<>();
         peopleList.forEach(people -> {
            if (people.getGroup_numb().getGroup_number()==groupId) {
                 list.add(new PeopleInGroups(people.getFname(), people.getLname()));
             }
         });
-        return list;
+        return new GroupMembersDto(list);
     }
 }

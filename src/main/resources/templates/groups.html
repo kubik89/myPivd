@@ -8,12 +8,14 @@
 
 <h4>Список в групі</h4>
 
-<p th:each="person : ${people}">
+
+
+<div th:each="person : ${list}">
 
     <span th:text="${person.lname}"></span>
     <span th:text="${person.fname}"></span>
 
-</p>
+</div>
 
 </body>
 </html>
