@@ -1,19 +1,15 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.PeopleDto;
-import com.example.demo.dto.PeopleGetViewDto;
-import com.example.demo.dto.PeopleViewCurrentUserDto;
+import com.example.demo.dto.*;
 import com.example.demo.entity.People;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
 
@@ -49,6 +45,24 @@ public class PeopleMvcController {
         }
         model.addAttribute("title1", "My tytle1");
         return "index";
+    }
+
+    @GetMapping("/create_person")
+    public String create(Model model) {
+
+        model.addAttribute("person", new PeopleCreateDto());
+
+        return "formCreatePerson";
+    }
+
+    @PostMapping("/create_person")
+    public String createPersonForm(PeopleCreateDto person) {
+
+        HttpEntity<PeopleCreateDto> httpEntity = new HttpEntity<>(person, HttpHeaders.EMPTY);
+
+        restTemplate.exchange("http://localhost:8081/people", HttpMethod.POST, httpEntity, PeopleCreateDto.class);
+
+        return "redirect:/view/";
     }
 
 }
