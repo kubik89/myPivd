@@ -1,5 +1,6 @@
 package com.example.demo.dao;
 
+import com.example.demo.dto.GroupCountResp;
 import com.example.demo.entity.Group;
 import com.example.demo.entity.People;
 import org.springframework.data.jpa.repository.JpaRepository;

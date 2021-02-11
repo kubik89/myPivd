@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>All Groups</title>
+</head>
+<body>
+
+<span>Всі групи:</span>
+
+<div th:each="group : ${list}">
+    <span th:text="${group.number}"></span>
+    <span th:text="${group.respfname}"></span>
+    <span th:text="${group.resplname}"></span>
+</div>
+
+<span>Створення нової групи: </span>
+
+<!--<form method="post" th:object="${newGroup}" th:action="@{/group}">-->
+
+<!--    <input type="text" th:field="*{number}"/>-->
+<!--    <input type="text" th:field="*{respId}"/>-->
+
+<!--    <input type="submit" value="Create group">-->
+
+<!--</form>-->
+
+
+</body>
+</html>

@@ -46,8 +46,10 @@ public class PeopleService implements IPeopleService {
     @Override
     public PeopleGetViewDto getAllPersons() {
 
-        List<People> peopleList = peopleRepository.findAll();
-        List<PeopleDto> peopleDtoList = peopleList.stream().map(people ->
+        List<People> allPersons = peopleRepository.findAllPersons();
+
+//        List<People> peopleList = peopleRepository.findAll();
+        List<PeopleDto> peopleDtoList = allPersons.stream().map(people ->
                 new PeopleDto(people.getLname(), people.getFname(), people.getGroup_numb().getGroup_number(),
                         people.getSex())).collect(Collectors.toList());
         return new PeopleGetViewDto(peopleDtoList);

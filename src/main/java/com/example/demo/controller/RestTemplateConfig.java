@@ -17,5 +17,10 @@ public class RestTemplateConfig {
     public RestTemplate groupRestTemplate() {
         return new RestTemplate();
     }
+
+    @Bean
+    public RestTemplate groupCreateRestTemplate() {
+        return new RestTemplate();
+    }
 }
 

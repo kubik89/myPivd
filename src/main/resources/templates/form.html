@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Form</title>
+</head>
+<body>
+<span>Створення нової групи: </span>
+<span th:text="${form}"></span>
+<span th:text="${hello}"></span>
+
+<!--@{/form/post} - це урла яка описана в Mvc контроллері для запуску Post методу
+    group - це обєкт який приходить із Post через Get в model.addAttribute("group", new GroupCreateDto());-->
+<form method="post" th:object="${group}" th:action="@{/form/post}">
+
+    <input type="text" th:field="*{number}"/>
+    <input type="text" th:field="*{respId}"/>
+
+    <input type="submit" value="Create group">
+
+</form>
+
+
+</body>
+</html>

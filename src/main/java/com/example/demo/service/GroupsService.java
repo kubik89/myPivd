@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class GroupsService implements IGroupService {
@@ -47,11 +48,12 @@ public class GroupsService implements IGroupService {
     }
 
     @Override
-    public List<GroupDto> getAllGroups() {
-        return groupRepository.findAll().stream().map(groups ->
+    public GroupGetViewDto getAllGroups() {
+        List<GroupDto> list = groupRepository.findAll().stream().map(groups ->
                 new GroupDto(groups.getGroup_number(), groups.getResponsible_name().getFname(),
                         groups.getResponsible_name().getLname()))
                 .collect(Collectors.toList());
+        return new GroupGetViewDto(list);
     }
 
     @Override

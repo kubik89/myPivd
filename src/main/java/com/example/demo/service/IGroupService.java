@@ -8,7 +8,7 @@ import java.util.List;
 public interface IGroupService {
 
     Group saveGroup (GroupCreateDto groupDto);
-    List<GroupDto> getAllGroups();
+    GroupGetViewDto getAllGroups();
     GroupDto getSomeGroupById(int id);
     void deleteGroup(int id);
     Group updateGroup(int id, Group group);

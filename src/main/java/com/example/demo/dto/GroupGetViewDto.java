@@ -2,13 +2,13 @@ package com.example.demo.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
+import java.util.List;
+
 @AllArgsConstructor
+@NoArgsConstructor
 @Data
-public class GroupCreateDto {
-    private int number;
-    private int respId;
+public class GroupGetViewDto {
+    private List<GroupDto> list;
 }

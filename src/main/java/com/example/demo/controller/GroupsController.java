@@ -19,7 +19,7 @@ public class GroupsController {
     private IGroupService igroupService;
 
     @GetMapping
-    public List<GroupDto> getAllGroups() {
+    public GroupGetViewDto getAllGroups() {
         return igroupService.getAllGroups();
     }
 
@@ -62,4 +62,5 @@ public class GroupsController {
     public int getCountGroupMembers(@PathVariable int id) {
         return igroupService.getCountGroupMembers(id);
     }
+
 }
