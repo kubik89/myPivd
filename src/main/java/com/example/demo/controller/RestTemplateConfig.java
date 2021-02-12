@@ -22,5 +22,10 @@ public class RestTemplateConfig {
     public RestTemplate groupCreateRestTemplate() {
         return new RestTemplate();
     }
+
+    @Bean
+    public RestTemplate mainRestTemplate() {
+        return new RestTemplate();
+    }
 }
 
