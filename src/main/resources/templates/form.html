@@ -17,9 +17,22 @@
     <input type="text" th:field="*{respId}"/>
 
     <input type="submit" value="Create group">
+<!--    <input type="submit" value="Delete group" th:action="@{/form/delete}">-->
 
 </form>
 
+
+<form method="post" th:object="${group}" th:action="@{/form/update}">
+    <input type="text" th:field="*{number}"/>
+    <input type="text" th:field="*{respId}"/>
+
+    <input type="submit" value="Update group">
+</form>
+
+<form method="post" th:object="${groupID}" th:action="@{/form/delete}">
+    <input type="text" th:field="*{number}"/>
+    <input type="submit" value="Delete group">
+</form>
 
 </body>
 </html>

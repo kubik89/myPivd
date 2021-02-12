@@ -11,7 +11,7 @@ public interface IGroupService {
     GroupGetViewDto getAllGroups();
     GroupDto getSomeGroupById(int id);
     void deleteGroup(int id);
-    Group updateGroup(int id, Group group);
+    Group updateGroup(int id, GroupCreateDto group);
     GroupMembersDto peopleInGroup(int groupId);
 
     Group findGroupById(int groupId);

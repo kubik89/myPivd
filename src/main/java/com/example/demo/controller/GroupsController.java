@@ -39,7 +39,7 @@ public class GroupsController {
     }
 
     @PutMapping(value = "/{id}")
-    public Group updateGroup(@PathVariable int id, @RequestBody Group group) {
+    public Group updateGroup(@PathVariable int id, @RequestBody GroupCreateDto group) {
         return igroupService.updateGroup(id, group);
     }
 

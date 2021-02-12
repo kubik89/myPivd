@@ -66,20 +66,21 @@ public class GroupsService implements IGroupService {
 
     @Override
     public void deleteGroup(int id) {
-        if (groupRepository.existsById(id)) {
-            groupRepository.deleteById(id);
-            logger.info("Group with id {} deleted", id);
-        } else {
-            throw new BadRequestException(messageNoGroup);
-        }
+        Group groupById = groupRepository.findGroupById(id);
+        groupRepository.delete(groupById);
     }
 
     @Override
-    public Group updateGroup(int id, Group group) {
+    public Group updateGroup(int id, GroupCreateDto group) {
         if (groupRepository.existsById(id)) {
-            group.setId(id);
-            logger.info("Group id {} updated", group.getId());
-            return groupRepository.saveAndFlush(group);
+            People respId = peopleRepository.getOne(group.getRespId());
+            Group group2 = groupRepository.getOne(id);
+
+//            group2.setGroup_number(group.getNumber());
+            group2.setResponsible_name(respId);
+
+            logger.info("Group id {} updated", group2.getId());
+            return groupRepository.saveAndFlush(group2);
         } else {
             throw new BadRequestException(messageNoGroup);
         }

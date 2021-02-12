@@ -14,17 +14,12 @@
     <span th:text="${group.resplname}"></span>
 </div>
 
-<span>Створення нової групи: </span>
-
-<!--<form method="post" th:object="${newGroup}" th:action="@{/group}">-->
-
-<!--    <input type="text" th:field="*{number}"/>-->
-<!--    <input type="text" th:field="*{respId}"/>-->
-
-<!--    <input type="submit" value="Create group">-->
-
-<!--</form>-->
-
+<form method="post" th:action="@{/form/delete1}">
+    <select>
+        <option th:each="group : ${list}" th:value="${group.number}" th:text="${group.number}"></option>
+        <input type="submit" value="Delete group">
+    </select>
+</form>
 
 </body>
 </html>
