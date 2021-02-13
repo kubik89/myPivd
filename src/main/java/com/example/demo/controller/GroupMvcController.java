@@ -34,6 +34,7 @@ public class GroupMvcController {
         model.addAttribute("list", responseEntity.getBody().getList());
 
         model.addAttribute("newGroup", GroupCreateDto.class);
+        model.addAttribute("groupID", Integer.class);
 
         return "allGroups";
     }
@@ -68,6 +69,21 @@ public class GroupMvcController {
         model.addAttribute("groupNumb", id);
 
         return "groups";
+    }
+
+    @PostMapping("/delete1")
+    public String delForm1(Integer groupID) {
+
+//        HttpEntity<GroupCreateDto> httpEntity = new HttpEntity<>(groupID, HttpHeaders.EMPTY);
+        String fullLinkToGroup = "http://localhost:8081/groups/" + groupID;
+
+        System.out.println(fullLinkToGroup);
+        System.out.println(groupID);
+
+//        restTemplate.exchange(fullLinkToGroup, HttpMethod.DELETE, HttpEntity.EMPTY, GroupCreateDto.class);
+
+        System.out.println(fullLinkToGroup);
+        return "redirect:/group/";
     }
 
 

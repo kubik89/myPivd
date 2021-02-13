@@ -1,7 +1,9 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.GroupCountResp;
 import com.example.demo.dto.GroupCreateDto;
 import com.example.demo.dto.GroupGetViewDto;
+import com.example.demo.dto.GroupSomeInt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpEntity;
@@ -29,6 +31,7 @@ public class GroupsMvcFormController {
 // із Post. Такий принцип прокидання лише через Get
         model.addAttribute("group", new GroupCreateDto());
         model.addAttribute("groupID", new GroupCreateDto());
+        model.addAttribute("groupID1", "16");
         return "form";
     }
 
@@ -57,7 +60,6 @@ public class GroupsMvcFormController {
     @PostMapping("/delete")
     public String delForm(GroupCreateDto groupID) {
 
-//        HttpEntity<GroupCreateDto> httpEntity = new HttpEntity<>(groupID, HttpHeaders.EMPTY);
         String fullLinkToGroup = "http://localhost:8081/groups/" + groupID.getNumber();
 
         System.out.println(fullLinkToGroup);
@@ -69,18 +71,18 @@ public class GroupsMvcFormController {
         return "redirect:/form/";
     }
 
-    @PostMapping("/delete1")
-    public String delForm1(int number) {
+//    @PostMapping("/delete1")
+//    public String delForm1(Integer groupID1) {
+//
+//        String fullLinkToGroup = "http://localhost:8081/groups/" + groupID1;
+//
+//        System.out.println(fullLinkToGroup);
+//        System.out.println(groupID1);
+//
+//        restTemplate.exchange(fullLinkToGroup, HttpMethod.DELETE, HttpEntity.EMPTY, GroupCreateDto.class);
+//
+//        System.out.println(fullLinkToGroup);
+//        return "redirect:/form/";
+//    }
 
-//        HttpEntity<GroupCreateDto> httpEntity = new HttpEntity<>(groupID, HttpHeaders.EMPTY);
-        String fullLinkToGroup = "http://localhost:8081/groups/" + number;
-
-        System.out.println(fullLinkToGroup);
-        System.out.println(number);
-
-        restTemplate.exchange(fullLinkToGroup, HttpMethod.DELETE, HttpEntity.EMPTY, Integer.class);
-
-        System.out.println(fullLinkToGroup);
-        return "redirect:/group/";
-    }
 }

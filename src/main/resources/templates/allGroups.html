@@ -8,18 +8,34 @@
 
 <span>Всі групи:</span>
 
-<div th:each="group : ${list}">
-    <span th:text="${group.number}"></span>
-    <span th:text="${group.respfname}"></span>
-    <span th:text="${group.resplname}"></span>
+
+<table>
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>ім'я</th>
+        <th>прізвище</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="group : ${list}">
+        <td th:text="${group.number}"></td>
+        <td th:text="${group.respfname}"></td>
+        <td th:text="${group.resplname}"></td>
+    </tr>
+    </tbody>
+</table>
 </div>
 
-<form method="post" th:action="@{/form/delete1}">
-    <select>
-        <option th:each="group : ${list}" th:value="${group.number}" th:text="${group.number}"></option>
-        <input type="submit" value="Delete group">
-    </select>
-</form>
+
+<!--<form method="post" action="/group/delete1">-->
+<!--    <select>-->
+<!--        <option th:each="group : ${list}" th:value="${group.number}" th:text="${group.number}"></option>-->
+<!--    </select>-->
+<!--    <input type="submit" value="Delete group">-->
+
+<!--</form>-->
+
 
 </body>
 </html>
