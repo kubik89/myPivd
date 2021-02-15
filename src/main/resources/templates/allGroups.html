@@ -8,34 +8,16 @@
 
 <span>Всі групи:</span>
 
-
-<table>
-    <thead>
-    <tr>
-        <th>#</th>
-        <th>ім'я</th>
-        <th>прізвище</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="group : ${list}">
+    <form th:each="group : ${list}">
+        <input type="submit" th:formaction="'/group/members/'+${group.number}" value="Учасники">
+        <input formmethod="post" type="submit" th:formaction="'/group/delete1/'+${group.number}" value="Видалити">
         <td th:text="${group.number}"></td>
         <td th:text="${group.respfname}"></td>
         <td th:text="${group.resplname}"></td>
-    </tr>
-    </tbody>
-</table>
-</div>
 
-
-<!--<form method="post" action="/group/delete1">-->
-<!--    <select>-->
-<!--        <option th:each="group : ${list}" th:value="${group.number}" th:text="${group.number}"></option>-->
-<!--    </select>-->
-<!--    <input type="submit" value="Delete group">-->
-
-<!--</form>-->
-
+        <!--        дві кнопки виконують ту ж функцію, тільки перша вказуючи чітко поле-->
+        <!--        <input class="publish" type="submit" value="Publish Article">-->
+    </form>
 
 </body>
 </html>

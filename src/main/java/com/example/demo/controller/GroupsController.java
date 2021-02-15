@@ -28,8 +28,13 @@ public class GroupsController {
         return igroupService.getSomeGroupById(id);
     }
 
-    @GetMapping("/members/{groupId}")
-    public GroupMembersDto peopleInGroup(@PathVariable int groupId) {
+//    @GetMapping("/members/{groupId}")
+//    public GroupMembersDto peopleInGroup(@PathVariable int groupId) {
+//        return igroupService.peopleInGroup(groupId);
+//    }
+
+    @GetMapping("/members/")
+    public GroupMembersDto peopleInGroup(@RequestParam int groupId) {
         return igroupService.peopleInGroup(groupId);
     }
 
