@@ -13,7 +13,7 @@ public interface PeopleRepository extends JpaRepository<People, Integer> {
             "where person.group_numb.group_number = :groupNumber order by person.lname")
     List<People> findAllByGroup_number(int groupNumber);
 
-    @Query("select person from People person order by person.group_numb.group_number")
+    @Query("select person from People person order by person.group_numb.group_number, person.lname")
     List<People> findAllPersons();
 
 //    @Query("select person.lname, person.fname, person.group_numb.group_number, person.sex " +

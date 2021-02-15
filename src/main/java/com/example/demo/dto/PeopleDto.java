@@ -13,5 +13,6 @@ public class PeopleDto {
     private String fname;
 //    private String respInGroup;
     private int groupNumb;
-    private int sex;
+    private String sex;
+    private String service_priv;
 }

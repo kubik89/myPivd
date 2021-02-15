@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.dao.SexRepository;
 import com.example.demo.dto.PeopleGetViewDto;
 import com.example.demo.dao.BadRequestException;
 import com.example.demo.dao.GroupRepository;
@@ -9,6 +10,7 @@ import com.example.demo.dto.PeopleDto;
 import com.example.demo.dto.PeopleViewCurrentUserDto;
 import com.example.demo.entity.Group;
 import com.example.demo.entity.People;
+import com.example.demo.entity.Sex;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,11 +23,13 @@ public class PeopleService implements IPeopleService {
 
     PeopleRepository peopleRepository;
     GroupRepository groupRepository;
+    SexRepository sexRepository;
 
     @Autowired
-    public PeopleService(PeopleRepository peopleRepository, GroupRepository groupRepository) {
+    public PeopleService(PeopleRepository peopleRepository, GroupRepository groupRepository, SexRepository sexRepository) {
         this.peopleRepository = peopleRepository;
         this.groupRepository = groupRepository;
+        this.sexRepository = sexRepository;
     }
 
     @Override
@@ -34,11 +38,14 @@ public class PeopleService implements IPeopleService {
 
         people.setFname(peopleCreateDto.getFname());
         people.setLname(peopleCreateDto.getLname());
-        people.setSex(peopleCreateDto.getSex());
 
         Optional<Group> groupIp = groupRepository.findById(peopleCreateDto.getGroupNumb());
         Group group = groupIp.orElseThrow(() -> new BadRequestException("I did not find any Group for new User"));
         people.setGroup_numb(group);
+
+        Optional<Sex> sexById = sexRepository.findById(peopleCreateDto.getSex());
+        Sex sex = sexById.orElseThrow(() -> new BadRequestException("Current sex type did not find"));
+        people.setSex(sex);
 
         return peopleRepository.saveAndFlush(people);
     }
@@ -51,7 +58,7 @@ public class PeopleService implements IPeopleService {
 //        List<People> peopleList = peopleRepository.findAll();
         List<PeopleDto> peopleDtoList = allPersons.stream().map(people ->
                 new PeopleDto(people.getLname(), people.getFname(), people.getGroup_numb().getGroup_number(),
-                        people.getSex())).collect(Collectors.toList());
+                        people.getSex().getSexType(), people.getPriv_service().getType())).collect(Collectors.toList());
         return new PeopleGetViewDto(peopleDtoList);
     }
 
@@ -60,7 +67,7 @@ public class PeopleService implements IPeopleService {
         String fname = peopleRepository.getOne(id).getFname();
         String lname = peopleRepository.getOne(id).getLname();
         int group_number = peopleRepository.getOne(id).getGroup_numb().getGroup_number();
-        int sex = peopleRepository.getOne(id).getSex();
+        String sex = peopleRepository.getOne(id).getSex().getSexType();
         String street_name = peopleRepository.getOne(id).getStreet_name();
         String street_building_number = peopleRepository.getOne(id).getStreet_building_number();
         int flat_number = peopleRepository.getOne(id).getFlat_number();

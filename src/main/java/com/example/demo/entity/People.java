@@ -39,7 +39,13 @@ public class People {
     private int flat_number;
     private int home_phone;
     private int mob_phone;
-    private int sex;
+
+    @ManyToOne
+    private Service priv_service;
+
+    @ManyToOne
+    @JsonProperty(value = "sex")
+    private Sex sex;
 
 
 
