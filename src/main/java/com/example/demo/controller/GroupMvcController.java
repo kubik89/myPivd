@@ -73,7 +73,6 @@ public class GroupMvcController {
     @PostMapping("/delete1/{groupID}")
     public String delForm1(@PathVariable Integer groupID) {
 
-//        HttpEntity<GroupCreateDto> httpEntity = new HttpEntity<>(groupID, HttpHeaders.EMPTY);
         String fullLinkToGroup = "http://localhost:8081/groups/" + groupID;
 
         System.out.println(fullLinkToGroup);

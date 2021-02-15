@@ -18,10 +18,12 @@
 <span style="color: blue" th:text="${responsible.fname}"></span>
 <p></p>
 
-<div th:each="person : ${list}">
-    <span th:text="${person.lname}"></span>
-    <span th:text="${person.fname}"></span>
-
+<div>
+    <form th:each="person : ${list}">
+        <button type="submit" th:formaction="'/view/'+${person.id}">Інфо</button>
+        <span th:text="${person.lname}"></span>
+        <span th:text="${person.fname}"></span>
+    </form>
 </div>
 
 </body>

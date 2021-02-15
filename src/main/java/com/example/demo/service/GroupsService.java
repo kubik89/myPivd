@@ -95,7 +95,7 @@ public class GroupsService implements IGroupService {
         List<People> allByGroup_number = peopleRepository.findAllByGroup_number(groupId);
         List<PeopleInGroups> list = new ArrayList<>();
         allByGroup_number.forEach(people ->
-                list.add(new PeopleInGroups(people.getLname(), people.getFname())));
+                list.add(new PeopleInGroups(people.getId(), people.getLname(), people.getFname())));
         return new GroupMembersDto(list);
     }
 

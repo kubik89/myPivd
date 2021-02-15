@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class PeopleInGroups {
 
+    private int id;
     private String lname;
     private String fname;
 //    private int privInZbir;
