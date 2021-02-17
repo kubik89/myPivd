@@ -48,6 +48,8 @@ public class GroupsMvcFormController {
         HttpEntity<GroupCreateDto> httpEntity = new HttpEntity<>(group, HttpHeaders.EMPTY);
         restTemplate.exchange("http://localhost:8081/groups", HttpMethod.POST, httpEntity, GroupCreateDto.class);
 
+        System.out.println(group);
+
         return "redirect:/form/";
     }
 

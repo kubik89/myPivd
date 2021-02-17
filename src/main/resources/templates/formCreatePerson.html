@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://thymeleaf.org" xmlns:form="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>Create Person</title>
@@ -9,18 +9,25 @@
 
 <form method="post" th:object="${person}" th:action="@{/view/create_person}">
 
-    <input type="text" placeholder="Ім'я" th:field="*{fname}"/>
-    <input type="text" placeholder="Прізвище" th:field="*{lname}"/>
+    <input placeholder="Ім'я" type="text" th:field="*{fname}"/>
+    <input placeholder="Прізвище" type="text" th:field="*{lname}"/>
+
+<!--    <input type="number" th:field="*{sex}"/>-->
 
     <select th:field="*{sex}">
-<!--        <option th:each="person : ${eldersAndHelpers}" th:value="${person.id}"-->
-<!--                th:text="${person.lname}+' '+${person.fname}"></option>-->
+            <option th:each="sex : ${genderList}" th:value="${sex.id}"
+                    th:text="${sex.type}"></option>
+        </select>
+
+    <select th:field="*{groupNumb}">
+        <option th:each="group : ${list}" th:value="${group.number}"
+                th:text="${group.number}"></option>
     </select>
 
-    <input type="text" th:field="*{sex}"/>
-    <input type="text" th:field="*{groupNumb}"/>
 
-    <input type="submit" value="Create person">
+<!--    <input placeholder="Номер групи" type="number" th:field="*{groupNumb}"/>-->
+
+    <input type="submit" value="Створити">
 
 </form>
 

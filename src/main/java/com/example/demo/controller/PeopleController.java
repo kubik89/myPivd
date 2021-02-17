@@ -32,15 +32,16 @@ public class PeopleController {
         return iPeopleService.getEldersOrHelpers();
     }
 
-    @GetMapping("/getGender")
-    public SexDtoList getGenders() {
-        return iPeopleService.getGenders();
-    }
-
     @GetMapping("/{id}")
     public PeopleViewCurrentUserDto getPersonById(@PathVariable int id) {
         return iPeopleService.getPersonById(id);
     }
+
+//    @PostMapping
+//    public People createPerson(@RequestBody @Valid PeopleCreateDto people) {
+//        logger.info("New person created: {}", people.getLname());
+//        return iPeopleService.savePerson(people);
+//    }
 
     @PostMapping
     public People createPerson(@RequestBody @Valid PeopleCreateDto people) {

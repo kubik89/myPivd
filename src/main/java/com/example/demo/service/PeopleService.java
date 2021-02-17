@@ -56,7 +56,8 @@ public class PeopleService implements IPeopleService {
 //        List<People> peopleList = peopleRepository.findAll();
         List<PeopleDto> peopleDtoList = allPersons.stream().map(people ->
                 new PeopleDto(people.getLname(), people.getFname(), people.getGroup_numb().getGroup_number(),
-                        people.getSex().getSexType(), people.getPriv_service().getType())).collect(Collectors.toList());
+//                        people.getSex().getSexType(), people.getPriv_service().getType())).collect(Collectors.toList());
+                        people.getSex().getSexType())).collect(Collectors.toList());
         return new PeopleGetViewDto(peopleDtoList);
     }
 
@@ -96,11 +97,6 @@ public class PeopleService implements IPeopleService {
         List<PeopleJustNameDto> nameDtoList = allPersons.stream().map(people ->
                 new PeopleJustNameDto(people.getId(), people.getLname(), people.getFname())).collect(Collectors.toList());
         return new PeopleEldersAndHelpers(nameDtoList);
-    }
-
-    @Override
-    public SexDtoList getGenders() {
-        return null;
     }
 
 }

@@ -19,5 +19,4 @@ public interface IPeopleService {
 
     PeopleEldersAndHelpers getEldersOrHelpers();
 
-    SexDtoList getGenders();
 }

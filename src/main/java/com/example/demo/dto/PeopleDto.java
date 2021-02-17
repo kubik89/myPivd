@@ -14,16 +14,7 @@ public class PeopleDto {
 //    private String respInGroup;
     private int groupNumb;
     private String sex;
-    private String service_priv;
+//    private String service_priv;
 
-    @Override
-    public String toString() {
-        return "PeopleDto{" +
-                "lname='" + lname + '\'' +
-                ", fname='" + fname + '\'' +
-                ", groupNumb=" + groupNumb +
-                ", sex='" + sex + '\'' +
-                ", service_priv='" + service_priv + '\'' +
-                '}';
-    }
+
 }

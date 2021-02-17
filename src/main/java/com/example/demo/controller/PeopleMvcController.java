@@ -22,6 +22,8 @@ public class PeopleMvcController {
     private RestTemplate restTemplate;
 
     String linkPeople = "http://localhost:8081/people/";
+    String allGenders = "http://localhost:8081/sex/getGenders";
+    String allGroupsURL = "http://localhost:8081/groups/";
 
     @GetMapping("/{id}")
     public String person(@PathVariable int id, Model model) {
@@ -30,6 +32,7 @@ public class PeopleMvcController {
         ResponseEntity<PeopleViewCurrentUserDto> responceEntity = restTemplate.exchange(fullLink, HttpMethod.GET, HttpEntity.EMPTY,
                 PeopleViewCurrentUserDto.class);
         model.addAttribute("some_people", responceEntity.getBody());
+
         return "person";
     }
 
@@ -50,6 +53,13 @@ public class PeopleMvcController {
     @GetMapping("/create_person")
     public String create(Model model) {
 
+        ResponseEntity<SexDtoList> responseEntity1 = restTemplate.exchange(allGenders, HttpMethod.GET, HttpEntity.EMPTY, SexDtoList.class);
+        model.addAttribute("genderList", responseEntity1.getBody().getSexDtoList());
+
+        ResponseEntity<GroupGetViewDto> responseEntity = restTemplate.exchange(allGroupsURL, HttpMethod.GET,
+                HttpEntity.EMPTY, GroupGetViewDto.class);
+        model.addAttribute("list", responseEntity.getBody().getList());
+
         model.addAttribute("person", new PeopleCreateDto());
 
         return "formCreatePerson";
@@ -60,9 +70,13 @@ public class PeopleMvcController {
 
         HttpEntity<PeopleCreateDto> httpEntity = new HttpEntity<>(person, HttpHeaders.EMPTY);
 
-        restTemplate.exchange("http://localhost:8081/people", HttpMethod.POST, httpEntity, PeopleCreateDto.class);
+        System.out.println(person);
+        System.out.println(person.getGroupNumb());
 
-        return "redirect:/view/";
+        restTemplate.exchange("http://localhost:8081/people", HttpMethod.POST, httpEntity, People.class);
+
+//        return "redirect:/view/";
+        return "redirect:/view/create_person";
     }
 
 }
