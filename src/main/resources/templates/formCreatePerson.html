@@ -12,8 +12,6 @@
     <input placeholder="Ім'я" type="text" th:field="*{fname}"/>
     <input placeholder="Прізвище" type="text" th:field="*{lname}"/>
 
-<!--    <input type="number" th:field="*{sex}"/>-->
-
     <select th:field="*{sex}">
             <option th:each="sex : ${genderList}" th:value="${sex.id}"
                     th:text="${sex.type}"></option>
@@ -21,7 +19,7 @@
 
     <select th:field="*{groupNumb}">
         <option th:each="group : ${list}" th:value="${group.number}"
-                th:text="${group.number}"></option>
+                th:text="${group.number}+' '+${group.resplname}+' '+${group.respfname}"></option>
     </select>
 
 

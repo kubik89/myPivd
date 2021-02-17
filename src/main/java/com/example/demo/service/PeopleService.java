@@ -37,9 +37,12 @@ public class PeopleService implements IPeopleService {
         people.setFname(peopleCreateDto.getFname());
         people.setLname(peopleCreateDto.getLname());
 
-        Optional<Group> groupIp = groupRepository.findById(peopleCreateDto.getGroupNumb());
-        Group group = groupIp.orElseThrow(() -> new BadRequestException("I did not find any Group for new User"));
-        people.setGroup_numb(group);
+        Group groupByNumb = groupRepository.findGroupById(peopleCreateDto.getGroupNumb());
+        people.setGroup_numb(groupByNumb);
+
+//        Optional<Group> groupIp = groupRepository.findById(peopleCreateDto.getGroupNumb());
+//        Group group = groupIp.orElseThrow(() -> new BadRequestException("I did not find any Group for new User"));
+//        people.setGroup_numb(group);
 
         Optional<Sex> sexById = sexRepository.findById(peopleCreateDto.getSex());
         Sex sex = sexById.orElseThrow(() -> new BadRequestException("Current sex type did not find"));
