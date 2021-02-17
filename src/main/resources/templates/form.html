@@ -5,41 +5,62 @@
     <title>Form</title>
 </head>
 <body>
-<span>Створення нової групи: </span>
-<span th:text="${form}"></span>
-<span th:text="${hello}"></span>
+<span>Редагування груп: </span>
+<p/>
+
+<form method="get" action="/group/">
+    <button type="submit">Show groups</button>
+</form>
 
 <!--@{/form/post} - це урла яка описана в Mvc контроллері для запуску Post методу
     group - це обєкт який приходить із Post через Get в model.addAttribute("group", new GroupCreateDto());-->
 <form method="post" th:object="${group}" th:action="@{/form/post}">
 
-    <input type="text" th:field="*{number}"/>
-    <input type="text" th:field="*{respId}"/>
+    <input type="number" th:field="*{number}"/>
 
-    <input type="submit" value="Create group">
-<!--    <input type="submit" value="Delete group" th:action="@{/form/delete}">-->
+    <select th:field="*{respId}">
+        <option th:each="person : ${eldersAndHelpers}" th:value="${person.id}"
+                th:text="${person.lname}+' '+${person.fname}"></option>
+    </select>
+
+    <input type="submit" value="Створити групу">
 
 </form>
 
+<p/>
 
-<form method="post" th:object="${group}" th:action="@{/form/update}">
-    <input type="text" th:field="*{number}"/>
-    <input type="text" th:field="*{respId}"/>
+<form th:object="${group}">
+    <select th:field="*{number}">
+        <option th:each="group : ${allGroups}" th:value="${group.number}" th:text="${group.number}"></option>
+    </select>
 
-    <input type="submit" value="Update group">
+    <span> Змінити відповідального на: </span>
+
+    <select th:field="*{respId}">
+        <option th:each="person : ${eldersAndHelpers}" th:value="${person.id}"
+                th:text="${person.lname}+' '+${person.fname}"></option>
+    </select>
+
+    <input formmethod="post" type="submit" th:formaction="'/form/update'" value="Оновити зміни">
+    <input formmethod="post" type="submit" th:formaction="'/form/delete'" value="Видалити групу">
 </form>
 
-<form method="post" th:object="${groupID}" th:action="@{/form/delete}">
-    <input type="text" th:field="*{number}"/>
-    <input type="submit" value="Delete group">
-</form>
+<!--<form th:each="group : ${list}">-->
+<!--    <input type="submit" th:formaction="'/group/members/'+${group.number}" value="Учасники">-->
+<!--    <input formmethod="post" type="submit" th:formaction="'/group/delete1/'+${group.number}" value="Видалити">-->
+<!--    <td th:text="${group.number}"></td>-->
+<!--    <td th:text="${group.respfname}"></td>-->
+<!--    <td th:text="${group.resplname}"></td>-->
 
-<!--<form method="post" th:action="@{/form/delete1}">-->
-<!--    <select>-->
-<!--        <option th:each="group : ${list}" th:value="${group.number}" th:text="${group.number}"></option>-->
-<!--        <input type="submit" value="Delete group">-->
-<!--    </select>-->
+<!--Робочий delete group інпутом по кнопці-->
+<!--<form method="post" th:object="${groupID}" th:action="@{/form/delete}">-->
+<!--    <input type="text" th:field="*{number}"/>-->
+<!--    <input type="submit" value="Delete group">-->
 <!--</form>-->
+
+<!--<select >-->
+<!--    <option th:each="person : ${eldersAndHelpers}" th:value="${person.id}" th:text="${person.lname}"></option>-->
+<!--</select>-->
 
 </body>
 </html>

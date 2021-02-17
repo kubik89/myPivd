@@ -4,11 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class PeopleJustNameDto {
-    private int id;
-    private String lname;
-    private String fname;
+public class PeopleEldersAndHelpers {
+    private List<PeopleJustNameDto> eldersOrHelpers;
 }

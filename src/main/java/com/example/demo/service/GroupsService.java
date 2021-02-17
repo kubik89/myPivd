@@ -71,19 +71,14 @@ public class GroupsService implements IGroupService {
     }
 
     @Override
-    public Group updateGroup(int id, GroupCreateDto group) {
-        if (groupRepository.existsById(id)) {
-            People respId = peopleRepository.getOne(group.getRespId());
-            Group group2 = groupRepository.getOne(id);
+    public Group updateGroup(GroupCreateDto group) {
+        Group groupByNumber = groupRepository.findGroupById(group.getNumber());
+        People respId = peopleRepository.getOne(group.getRespId());
 
-//            group2.setGroup_number(group.getNumber());
-            group2.setResponsible_name(respId);
+        groupByNumber.setResponsible_name(respId);
 
-            logger.info("Group id {} updated", group2.getId());
-            return groupRepository.saveAndFlush(group2);
-        } else {
-            throw new BadRequestException(messageNoGroup);
-        }
+        logger.info("Group id {} updated", groupByNumber.getId());
+        return groupRepository.saveAndFlush(groupByNumber);
     }
 
     @Override
@@ -101,9 +96,11 @@ public class GroupsService implements IGroupService {
 
     public PeopleJustNameDto getResonsibleIdInGroup(int groupId) {
         int responsibleInGroup = groupRepository.findResponsibleInGroup(groupId);
+
+        int id = peopleRepository.findById(responsibleInGroup).get().getId();
         String lname = peopleRepository.findById(responsibleInGroup).get().getLname();
         String fname = peopleRepository.findById(responsibleInGroup).get().getFname();
-        return new PeopleJustNameDto(lname, fname);
+        return new PeopleJustNameDto(id, lname, fname);
     }
 
     public int getCountGroupMembers(int groupId) {

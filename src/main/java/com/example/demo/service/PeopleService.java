@@ -1,19 +1,17 @@
 package com.example.demo.service;
 
 import com.example.demo.dao.SexRepository;
-import com.example.demo.dto.PeopleGetViewDto;
+import com.example.demo.dto.*;
 import com.example.demo.dao.BadRequestException;
 import com.example.demo.dao.GroupRepository;
 import com.example.demo.dao.PeopleRepository;
-import com.example.demo.dto.PeopleCreateDto;
-import com.example.demo.dto.PeopleDto;
-import com.example.demo.dto.PeopleViewCurrentUserDto;
 import com.example.demo.entity.Group;
 import com.example.demo.entity.People;
 import com.example.demo.entity.Sex;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -91,4 +89,18 @@ public class PeopleService implements IPeopleService {
             throw new IllegalArgumentException("Person not found");
         }
     }
-};
+
+    @Override
+    public PeopleEldersAndHelpers getEldersOrHelpers() {
+        List<People> allPersons = peopleRepository.getAllResp();
+        List<PeopleJustNameDto> nameDtoList = allPersons.stream().map(people ->
+                new PeopleJustNameDto(people.getId(), people.getLname(), people.getFname())).collect(Collectors.toList());
+        return new PeopleEldersAndHelpers(nameDtoList);
+    }
+
+    @Override
+    public SexDtoList getGenders() {
+        return null;
+    }
+
+}

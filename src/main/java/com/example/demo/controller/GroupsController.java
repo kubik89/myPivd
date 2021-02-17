@@ -43,9 +43,9 @@ public class GroupsController {
         return igroupService.saveGroup(group);
     }
 
-    @PutMapping(value = "/{id}")
-    public Group updateGroup(@PathVariable int id, @RequestBody GroupCreateDto group) {
-        return igroupService.updateGroup(id, group);
+    @PutMapping
+    public Group updateGroup(@RequestBody GroupCreateDto group) {
+        return igroupService.updateGroup(group);
     }
 
     @DeleteMapping(value = "/{id}")

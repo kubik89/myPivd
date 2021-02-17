@@ -7,7 +7,7 @@
 <body>
 
 <span>Всі групи:</span>
-
+<p/>
     <form th:each="group : ${list}">
         <input type="submit" th:formaction="'/group/members/'+${group.number}" value="Учасники">
         <input formmethod="post" type="submit" th:formaction="'/group/delete1/'+${group.number}" value="Видалити">

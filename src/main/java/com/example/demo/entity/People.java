@@ -44,6 +44,9 @@ public class People {
     private Service priv_service;
 
     @ManyToOne
+    private MeetServices priv_meet;
+
+    @ManyToOne
     @JsonProperty(value = "sex")
     private Sex sex;
 

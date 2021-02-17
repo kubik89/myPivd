@@ -1,8 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.PeopleCreateDto;
-import com.example.demo.dto.PeopleGetViewDto;
-import com.example.demo.dto.PeopleViewCurrentUserDto;
+import com.example.demo.dto.*;
 import com.example.demo.entity.People;
 import com.example.demo.service.IPeopleService;
 import com.example.demo.validator.PeopleValidator;
@@ -29,10 +27,15 @@ public class PeopleController {
         return iPeopleService.getAllPersons();
     }
 
-//    @GetMapping("/{id}")
-//    public People getPersonById(@PathVariable int id) {
-//        return iPeopleService.getPersonById(id);
-//    }
+    @GetMapping("/getEldersOrHelpers")
+    public PeopleEldersAndHelpers getEldersOrHelpers() {
+        return iPeopleService.getEldersOrHelpers();
+    }
+
+    @GetMapping("/getGender")
+    public SexDtoList getGenders() {
+        return iPeopleService.getGenders();
+    }
 
     @GetMapping("/{id}")
     public PeopleViewCurrentUserDto getPersonById(@PathVariable int id) {

@@ -24,6 +24,7 @@ public class GroupMvcController {
     String mainUrl = "http://localhost:8081/groups/";
     String url = "http://localhost:8081/groups/members/?groupId=";
     String getResp = "http://localhost:8081/groups/resp/";
+    String getEldersOrHelpers = "http://localhost:8081/people/getEldersOrHelpers";
 
     @GetMapping("/")
     public String groups(Model model) {
@@ -36,6 +37,36 @@ public class GroupMvcController {
 
         return "allGroups";
     }
+
+    @GetMapping("/show_resp_form")
+    public String showRespInGroup(Model model) {
+// при переході на урлу виконую Get запит і отримую всі групи
+        ResponseEntity<GroupGetViewDto> responseEntity = restTemplate.exchange(mainUrl, HttpMethod.GET,
+                HttpEntity.EMPTY, GroupGetViewDto.class);
+        model.addAttribute("list", responseEntity.getBody().getList());
+
+        ResponseEntity<PeopleEldersAndHelpers> responseEntity1 = restTemplate.exchange(getEldersOrHelpers,
+                HttpMethod.GET, HttpEntity.EMPTY, PeopleEldersAndHelpers.class);
+        model.addAttribute("eldersAndHelpers", responseEntity1.getBody().getEldersOrHelpers());
+
+// при переході на урлу виконую Get запит і отримую всіх призначених
+
+        model.addAttribute("group", Integer.class);
+
+        return "changeRespInGroup";
+    }
+
+//    @PostMapping("/change_resp_in_group/")
+//    public String changeRespInGroup(Integer group) {
+//
+//        HttpEntity<Integer> httpEntity = new HttpEntity<>(group, HttpHeaders.EMPTY);
+//
+////        restTemplate.exchange("http://localhost:8081/groups", HttpMethod.PUT, httpEntity, GroupCreateDto.class);
+//
+//        System.out.println(group);
+//
+//        return "changeRespInGroup";
+//    }
 
 //    @PostMapping("/create")
 //    public String createGroup(GroupCreateDto group) {
@@ -68,7 +99,6 @@ public class GroupMvcController {
 
         return "groups";
     }
-
 
     @PostMapping("/delete1/{groupID}")
     public String delForm1(@PathVariable Integer groupID) {

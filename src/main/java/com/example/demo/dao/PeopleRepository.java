@@ -16,6 +16,9 @@ public interface PeopleRepository extends JpaRepository<People, Integer> {
     @Query("select person from People person order by person.group_numb.group_number, person.lname")
     List<People> findAllPersons();
 
+    @Query("select p from People p where p.priv_meet.id BETWEEN 2 and 3")
+    List<People> getAllResp();
+
 //    @Query("select person.lname, person.fname, person.group_numb.group_number, person.sex " +
 //            "from People person group by person.group_numb.group_number")
 

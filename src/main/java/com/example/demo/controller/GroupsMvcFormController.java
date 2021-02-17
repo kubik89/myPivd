@@ -1,9 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.GroupCountResp;
-import com.example.demo.dto.GroupCreateDto;
-import com.example.demo.dto.GroupGetViewDto;
-import com.example.demo.dto.GroupSomeInt;
+import com.example.demo.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpEntity;
@@ -23,15 +20,24 @@ public class GroupsMvcFormController {
     @Qualifier(value = "groupRestTemplate")
     private RestTemplate restTemplate;
 
+    String mainUrl = "http://localhost:8081/groups/";
+
     @GetMapping("/")
     public String showForm(Model model) {
 
+        ResponseEntity<GroupGetViewDto> responseEntity = restTemplate.exchange(mainUrl, HttpMethod.GET,
+                HttpEntity.EMPTY, GroupGetViewDto.class);
+        model.addAttribute("allGroups", responseEntity.getBody().getList());
+
+        ResponseEntity<PeopleListJustNameDto> exchange = restTemplate.exchange("http://localhost:8081/people/getEldersOrHelpers",
+                HttpMethod.GET, HttpEntity.EMPTY, PeopleListJustNameDto.class);
+        model.addAttribute("eldersAndHelpers", exchange.getBody().getEldersOrHelpers());
+
         model.addAttribute("hello", "Hello my form");
-// group - після натискання на кнопку в формі html, запускається Post запит по урлі і в Get прокидається обєкт group
-// із Post. Такий принцип прокидання лише через Get
         model.addAttribute("group", new GroupCreateDto());
         model.addAttribute("groupID", new GroupCreateDto());
         model.addAttribute("groupID1", "16");
+        model.addAttribute("person", new PeopleDto());
         return "form";
     }
 
@@ -40,19 +46,19 @@ public class GroupsMvcFormController {
     @PostMapping("/post")
     public String form(GroupCreateDto group) {
         HttpEntity<GroupCreateDto> httpEntity = new HttpEntity<>(group, HttpHeaders.EMPTY);
-
         restTemplate.exchange("http://localhost:8081/groups", HttpMethod.POST, httpEntity, GroupCreateDto.class);
 
         return "redirect:/form/";
-//        return "redirect:/group/";
     }
 
     @PostMapping("/update")
     public String updateGroup(GroupCreateDto group) {
 
-        HttpEntity<GroupCreateDto> httpEntity = new HttpEntity<>(group, HttpHeaders.EMPTY);
-        String url = "http://localhost:8081/groups/" + group.getNumber();
+        System.out.println(group);
 
+        HttpEntity<GroupCreateDto> httpEntity = new HttpEntity<>(group, HttpHeaders.EMPTY);
+
+        String url = "http://localhost:8081/groups/";
         restTemplate.exchange(url, HttpMethod.PUT, httpEntity, GroupCreateDto.class);
         return "redirect:/form/";
     }
@@ -74,7 +80,7 @@ public class GroupsMvcFormController {
 //    @PostMapping("/delete1")
 //    public String delForm1(Integer groupID1) {
 //
-//        String fullLinkToGroup = "http://localhost:8081/groups/" + groupID1;
+//        String fullLinkToGroup = "http://localhost:8081/groups/";
 //
 //        System.out.println(fullLinkToGroup);
 //        System.out.println(groupID1);
