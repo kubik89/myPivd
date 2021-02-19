@@ -3,6 +3,8 @@ package com.example.demo.service;
 import com.example.demo.dto.*;
 import com.example.demo.entity.People;
 
+import java.util.List;
+
 public interface IPeopleService {
 
     People savePerson(PeopleCreateDto people);
@@ -18,5 +20,7 @@ public interface IPeopleService {
     People updatePerson(int id, People people);
 
     PeopleEldersAndHelpers getEldersOrHelpers();
+
+    List<PeopleViewCurrentUserDto> getEldOrHelp();
 
 }

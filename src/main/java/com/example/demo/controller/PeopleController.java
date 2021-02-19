@@ -11,7 +11,9 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
+@CrossOrigin
 @RequestMapping(value = "/people")
 @RestController
 
@@ -35,6 +37,11 @@ public class PeopleController {
     @GetMapping("/{id}")
     public PeopleViewCurrentUserDto getPersonById(@PathVariable int id) {
         return iPeopleService.getPersonById(id);
+    }
+
+    @GetMapping("/getEldAndHelp")
+    public List<PeopleViewCurrentUserDto> getEldOrHelp(){
+        return iPeopleService.getEldOrHelp();
     }
 
 //    @PostMapping

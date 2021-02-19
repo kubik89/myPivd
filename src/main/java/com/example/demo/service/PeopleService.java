@@ -11,10 +11,12 @@ import com.example.demo.entity.Sex;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class PeopleService implements IPeopleService {
@@ -60,7 +62,7 @@ public class PeopleService implements IPeopleService {
         List<PeopleDto> peopleDtoList = allPersons.stream().map(people ->
                 new PeopleDto(people.getLname(), people.getFname(), people.getGroup_numb().getGroup_number(),
 //                        people.getSex().getSexType(), people.getPriv_service().getType())).collect(Collectors.toList());
-                        people.getSex().getSexType())).collect(Collectors.toList());
+                        people.getSex().getSexType(), people.getBirthday())).collect(Collectors.toList());
         return new PeopleGetViewDto(peopleDtoList);
     }
 
@@ -100,6 +102,18 @@ public class PeopleService implements IPeopleService {
         List<PeopleJustNameDto> nameDtoList = allPersons.stream().map(people ->
                 new PeopleJustNameDto(people.getId(), people.getLname(), people.getFname())).collect(Collectors.toList());
         return new PeopleEldersAndHelpers(nameDtoList);
+    }
+
+    @Override
+    public List<PeopleViewCurrentUserDto> getEldOrHelp() {
+        List<People> allPersons = peopleRepository.getAllResp();
+        List<PeopleViewCurrentUserDto> list = new ArrayList<>();
+        allPersons.forEach(people ->
+                list.add(new PeopleViewCurrentUserDto(people.getFname(),
+                        people.getLname(),people.getGroup_numb().getGroup_number(),
+                        people.getStreet_name(), people.getStreet_building_number(), people.getFlat_number(),
+                        people.getHome_phone(), people.getMob_phone(), people.getSex().getSexType())));
+        return list;
     }
 
 }

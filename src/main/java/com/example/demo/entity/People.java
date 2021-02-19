@@ -11,6 +11,8 @@ import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 @AllArgsConstructor
@@ -39,6 +41,7 @@ public class People {
     private int flat_number;
     private int home_phone;
     private int mob_phone;
+    private String birthday;
 
     @ManyToOne
     private Service priv_service;

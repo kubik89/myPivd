@@ -5,6 +5,9 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+import java.util.Date;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -15,6 +18,7 @@ public class PeopleDto {
     private int groupNumb;
     private String sex;
 //    private String service_priv;
+    private String birthday;
 
 
 }
