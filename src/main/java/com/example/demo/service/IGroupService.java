@@ -19,4 +19,5 @@ public interface IGroupService {
     PeopleJustNameDto getResonsibleIdInGroup(int groupId);
 
     int getCountGroupMembers(int groupId);
+
 }

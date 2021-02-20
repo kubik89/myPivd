@@ -67,5 +67,4 @@ public class GroupsController {
     public int getCountGroupMembers(@PathVariable int id) {
         return igroupService.getCountGroupMembers(id);
     }
-
 }

@@ -18,4 +18,5 @@ public class PeopleViewCurrentUserDto {
     private int home_phone;
     private int mob_phone;
     private String sex;
+    private String birthday;
 }

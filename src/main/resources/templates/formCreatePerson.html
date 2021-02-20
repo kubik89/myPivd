@@ -11,11 +11,17 @@
 
     <input placeholder="Ім'я" type="text" th:field="*{fname}"/>
     <input placeholder="Прізвище" type="text" th:field="*{lname}"/>
+<!--    <input placeholder="Дата народження" type="date" th:field="*{birthday}"/>-->
     <input placeholder="Дата народження" type="date" th:field="*{birthday}"/>
 
     <select th:field="*{sex}">
             <option th:each="sex : ${genderList}" th:value="${sex.id}"
                     th:text="${sex.type}"></option>
+        </select>
+
+    <select th:field="*{priv_meet}">
+            <option th:each="meetType : ${typesDtoList}" th:value="${meetType.id}"
+                    th:text="${meetType.meet_type}"></option>
         </select>
 
     <select th:field="*{groupNumb}">

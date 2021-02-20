@@ -24,6 +24,7 @@ public class PeopleMvcController {
     String linkPeople = "http://localhost:8081/people/";
     String allGenders = "http://localhost:8081/sex/getGenders";
     String allGroupsURL = "http://localhost:8081/groups/";
+    String allMeetServices = "http://localhost:8081/people/getMeetServiceTypes";
 
     @GetMapping("/{id}")
     public String person(@PathVariable int id, Model model) {
@@ -60,6 +61,10 @@ public class PeopleMvcController {
                 HttpEntity.EMPTY, GroupGetViewDto.class);
         model.addAttribute("list", responseEntity.getBody().getList());
 
+        ResponseEntity<MeetTypesListDto> responseEntity2 = restTemplate.exchange(allMeetServices, HttpMethod.GET,
+                HttpEntity.EMPTY, MeetTypesListDto.class);
+        model.addAttribute("typesDtoList", responseEntity2.getBody().getTypesDtoList());
+
         model.addAttribute("person", new PeopleCreateDto());
 
         return "formCreatePerson";
@@ -72,6 +77,7 @@ public class PeopleMvcController {
 
         System.out.println(person);
         System.out.println(person.getGroupNumb());
+        System.out.println(person.getBirthday());
 
         restTemplate.exchange("http://localhost:8081/people", HttpMethod.POST, httpEntity, People.class);
 

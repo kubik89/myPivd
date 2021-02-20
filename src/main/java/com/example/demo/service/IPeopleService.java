@@ -23,4 +23,6 @@ public interface IPeopleService {
 
     List<PeopleViewCurrentUserDto> getEldOrHelp();
 
+    MeetTypesListDto getAllMeetTypes();
+
 }

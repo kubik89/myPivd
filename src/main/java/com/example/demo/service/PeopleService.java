@@ -1,11 +1,9 @@
 package com.example.demo.service;
 
-import com.example.demo.dao.SexRepository;
+import com.example.demo.dao.*;
 import com.example.demo.dto.*;
-import com.example.demo.dao.BadRequestException;
-import com.example.demo.dao.GroupRepository;
-import com.example.demo.dao.PeopleRepository;
 import com.example.demo.entity.Group;
+import com.example.demo.entity.MeetServices;
 import com.example.demo.entity.People;
 import com.example.demo.entity.Sex;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +22,15 @@ public class PeopleService implements IPeopleService {
     PeopleRepository peopleRepository;
     GroupRepository groupRepository;
     SexRepository sexRepository;
+    MeetRepository meetRepository;
 
     @Autowired
-    public PeopleService(PeopleRepository peopleRepository, GroupRepository groupRepository, SexRepository sexRepository) {
+    public PeopleService(PeopleRepository peopleRepository, GroupRepository groupRepository, SexRepository sexRepository,
+                         MeetRepository meetRepository) {
         this.peopleRepository = peopleRepository;
         this.groupRepository = groupRepository;
         this.sexRepository = sexRepository;
+        this.meetRepository = meetRepository;
     }
 
     @Override
@@ -38,6 +39,12 @@ public class PeopleService implements IPeopleService {
 
         people.setFname(peopleCreateDto.getFname());
         people.setLname(peopleCreateDto.getLname());
+        people.setBirthday(peopleCreateDto.getBirthday());
+
+        Optional<MeetServices> byId = meetRepository.findById(peopleCreateDto.getPriv_meet());
+        MeetServices meetServices = byId.orElseThrow(() -> new BadRequestException("I did not find any services in meet " +
+                "for new User"));
+        people.setPriv_meet(meetServices);
 
         Group groupByNumb = groupRepository.findGroupById(peopleCreateDto.getGroupNumb());
         people.setGroup_numb(groupByNumb);
@@ -77,8 +84,9 @@ public class PeopleService implements IPeopleService {
         int flat_number = peopleRepository.getOne(id).getFlat_number();
         int home_phone = peopleRepository.getOne(id).getHome_phone();
         int mob_phone = peopleRepository.getOne(id).getMob_phone();
+        String birthday = peopleRepository.getOne(id).getBirthday();
         return new PeopleViewCurrentUserDto(fname, lname, group_number, street_name, street_building_number, flat_number,
-                home_phone, mob_phone, sex);
+                home_phone, mob_phone, sex, birthday);
     }
 
     @Override
@@ -110,10 +118,18 @@ public class PeopleService implements IPeopleService {
         List<PeopleViewCurrentUserDto> list = new ArrayList<>();
         allPersons.forEach(people ->
                 list.add(new PeopleViewCurrentUserDto(people.getFname(),
-                        people.getLname(),people.getGroup_numb().getGroup_number(),
+                        people.getLname(), people.getGroup_numb().getGroup_number(),
                         people.getStreet_name(), people.getStreet_building_number(), people.getFlat_number(),
-                        people.getHome_phone(), people.getMob_phone(), people.getSex().getSexType())));
+                        people.getHome_phone(), people.getMob_phone(), people.getSex().getSexType(), people.getBirthday())));
         return list;
+    }
+
+    @Override
+    public MeetTypesListDto getAllMeetTypes() {
+        List<MeetServices> allPriv_meet = peopleRepository.getAllPriv_meet();
+        List<MeetTypesDto> meetTypesDtoList = allPriv_meet.stream().map(meetServices ->
+                new MeetTypesDto(meetServices.getId() ,meetServices.getType())).collect(Collectors.toList());
+        return new MeetTypesListDto(meetTypesDtoList);
     }
 
 }
