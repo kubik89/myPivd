@@ -35,13 +35,16 @@ public class People {
 
     @NotBlank(message = "Пусте значення lName")
     private String lname;
-    private int nadija_na;
     private String street_name;
     private String street_building_number;
     private int flat_number;
     private int home_phone;
     private int mob_phone;
     private String birthday;
+    private String date_chreshchennja;
+
+    @ManyToOne
+    private Hope nadija_na;
 
     @ManyToOne
     private ServiceInS priv_service;

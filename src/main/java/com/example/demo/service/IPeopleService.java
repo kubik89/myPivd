@@ -29,4 +29,6 @@ public interface IPeopleService {
 
     ServiceTypesDto getAllServiceTypes();
 
+    HopeTypesDto getAllHopes();
+
 }

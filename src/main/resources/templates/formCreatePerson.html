@@ -11,18 +11,28 @@
 
     <input placeholder="Ім'я" type="text" th:field="*{fname}"/>
     <input placeholder="Прізвище" type="text" th:field="*{lname}"/>
-<!--    <input placeholder="Дата народження" type="date" th:field="*{birthday}"/>-->
+    <!--    <input placeholder="Дата народження" type="date" th:field="*{birthday}"/>-->
     <input placeholder="Дата народження" type="date" th:field="*{birthday}"/>
+    <input placeholder="Дата хрещення" type="date" th:field="*{date_chreshchennja}"/>
 
     <select th:field="*{sex}">
-            <option th:each="sex : ${genderList}" th:value="${sex.id}"
-                    th:text="${sex.type}"></option>
-        </select>
+        <option th:each="sex : ${genderList}" th:value="${sex.id}"
+                th:text="${sex.type}"></option>
+    </select>
+    <br>
+    <br>
+    <input placeholder="Вулиця" type="text" th:field="*{street_name}"/>
+    <input placeholder="Будинок" type="text" th:field="*{street_building_number}"/>
+    <input placeholder="Квартира" type="number" th:field="*{flat_number}"/>
+    <input placeholder="Дом.тел." type="number" th:field="*{home_phone}"/>
+    <input placeholder="Моб." type="number" th:field="*{mob_phone}"/>
+    <br>
+    <br>
 
     <select th:field="*{priv_meet}">
-            <option th:each="meetType : ${typesDtoList}" th:value="${meetType.id}"
-                    th:text="${meetType.meet_type}"></option>
-        </select>
+        <option th:each="meetType : ${typesDtoList}" th:value="${meetType.id}"
+                th:text="${meetType.meet_type}"></option>
+    </select>
 
     <select th:field="*{groupNumb}">
         <option th:each="group : ${list}" th:value="${group.number}"
@@ -34,9 +44,12 @@
                 th:text="${service.type}"></option>
     </select>
 
+    <select th:field="*{hope_id}">
+        <option th:each="hope : ${hopeList}" th:value="${hope.id}"
+                th:text="${hope.hope_type}"></option>
+    </select>
 
-
-<!--    <input placeholder="Номер групи" type="number" th:field="*{groupNumb}"/>-->
+    <!--    <input placeholder="Номер групи" type="number" th:field="*{groupNumb}"/>-->
 
     <input type="submit" value="Створити">
 

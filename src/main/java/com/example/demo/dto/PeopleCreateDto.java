@@ -19,9 +19,18 @@ public class PeopleCreateDto {
     private int groupNumb;
     private int priv_meet;
     private int serviceInS;
+    private String street_name;
+    private String street_building_number;
+    private int flat_number;
+    private int home_phone;
+    private int mob_phone;
+    private int hope_id;
+
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private String birthday;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private String date_chreshchennja;
 
 }

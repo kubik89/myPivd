@@ -2,11 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.dao.*;
 import com.example.demo.dto.*;
-import com.example.demo.entity.Group;
-import com.example.demo.entity.MeetServices;
-import com.example.demo.entity.People;
-import com.example.demo.entity.Sex;
-import com.example.demo.entity.ServiceInS;
+import com.example.demo.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,15 +21,17 @@ public class PeopleService implements IPeopleService {
     SexRepository sexRepository;
     MeetRepository meetRepository;
     ServiceInSRepository serviceInSRepository;
+    HopeRepository hopeRepository;
 
     @Autowired
     public PeopleService(PeopleRepository peopleRepository, GroupRepository groupRepository, SexRepository sexRepository,
-                         MeetRepository meetRepository, ServiceInSRepository serviceInSRepository) {
+                         MeetRepository meetRepository, ServiceInSRepository serviceInSRepository, HopeRepository hopeRepository) {
         this.peopleRepository = peopleRepository;
         this.groupRepository = groupRepository;
         this.sexRepository = sexRepository;
         this.meetRepository = meetRepository;
         this.serviceInSRepository = serviceInSRepository;
+        this.hopeRepository = hopeRepository;
     }
 
     @Override
@@ -43,6 +41,12 @@ public class PeopleService implements IPeopleService {
         people.setFname(peopleCreateDto.getFname());
         people.setLname(peopleCreateDto.getLname());
         people.setBirthday(peopleCreateDto.getBirthday());
+        people.setDate_chreshchennja(peopleCreateDto.getDate_chreshchennja());
+        people.setStreet_name(peopleCreateDto.getStreet_name());
+        people.setStreet_building_number(peopleCreateDto.getStreet_building_number());
+        people.setFlat_number(peopleCreateDto.getFlat_number());
+        people.setHome_phone(peopleCreateDto.getHome_phone());
+        people.setMob_phone(peopleCreateDto.getMob_phone());
 
         Optional<MeetServices> byId = meetRepository.findById(peopleCreateDto.getPriv_meet());
         MeetServices meetServices = byId.orElseThrow(() -> new BadRequestException("I did not find any services in meet " +
@@ -50,9 +54,13 @@ public class PeopleService implements IPeopleService {
         people.setPriv_meet(meetServices);
 
         Optional<ServiceInS> byId1 = serviceInSRepository.findById(peopleCreateDto.getServiceInS());
-        ServiceInS serviceInS = byId1.orElseThrow(() -> new BadRequestException("I did not find any services in meet " +
+        ServiceInS serviceInS = byId1.orElseThrow(() -> new BadRequestException("I did not find any services in S " +
                 "for new User"));
         people.setPriv_service(serviceInS);
+
+        Optional<Hope> byId2 = hopeRepository.findById(peopleCreateDto.getHope_id());
+        Hope hope = byId2.orElseThrow(() -> new BadRequestException("I did not find any hope for new User"));
+        people.setNadija_na(hope);
 
         Group groupByNumb = groupRepository.findGroupById(peopleCreateDto.getGroupNumb());
         people.setGroup_numb(groupByNumb);
@@ -146,5 +154,9 @@ public class PeopleService implements IPeopleService {
         return new ServiceTypesDto(collect);
     }
 
-
+    @Override
+    public HopeTypesDto getAllHopes() {
+        List<Hope> hopeList = hopeRepository.findAll().stream().collect(Collectors.toList());
+        return new HopeTypesDto(hopeList);
+    }
 }

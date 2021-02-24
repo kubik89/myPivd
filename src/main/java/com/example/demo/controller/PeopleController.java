@@ -54,6 +54,11 @@ public class PeopleController {
         return iPeopleService.getAllServiceTypes();
     }
 
+    @GetMapping("/getAllHopes")
+    public HopeTypesDto getAllHopes() {
+        return iPeopleService.getAllHopes();
+    }
+
 //    @PostMapping
 //    public People createPerson(@RequestBody @Valid PeopleCreateDto people) {
 //        logger.info("New person created: {}", people.getLname());
