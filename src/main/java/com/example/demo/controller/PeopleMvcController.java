@@ -27,6 +27,7 @@ public class PeopleMvcController {
     String allMeetServices = "http://localhost:8081/people/getMeetServiceTypes";
     String allServiceInS = "http://localhost:8081/people/getAllServicesInS";
     String allHopes = "http://localhost:8081/people/getAllHopes";
+    String getPersonById = "http://localhost:8081/people/";
 
     @GetMapping("/{id}")
     public String person(@PathVariable int id, Model model) {
@@ -78,19 +79,33 @@ public class PeopleMvcController {
         return "formCreatePerson";
     }
 
+    @GetMapping("/update_person")
+    public String update(Model model) {
+
+        String newLink = getPersonById + 1196475535;
+
+        ResponseEntity<PeopleGetViewDto> entity = restTemplate.exchange(newLink, HttpMethod.GET, HttpEntity.EMPTY,
+                PeopleGetViewDto.class);
+        model.addAttribute("people", entity.getBody().getPeople().get(1196475535));
+
+        return "formUpdatePerson";
+    }
+
+
     @PostMapping("/create_person")
     public String createPersonForm(PeopleCreateDto person) {
 
         HttpEntity<PeopleCreateDto> httpEntity = new HttpEntity<>(person, HttpHeaders.EMPTY);
 
-        System.out.println(person);
-        System.out.println(person.getGroupNumb());
-        System.out.println(person.getBirthday());
+//        System.out.println(person);
+//        System.out.println(person.getGroupNumb());
+//        System.out.println(person.getBirthday());
 
         restTemplate.exchange("http://localhost:8081/people", HttpMethod.POST, httpEntity, People.class);
 
 //        return "redirect:/view/";
         return "redirect:/view/create_person";
     }
+
 
 }

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Update</title>
+</head>
+<body>
+
+<span>Редагування людини: </span>
+
+<form method="get" th:object="${people}" th:action="@{/view/update_person}">
+
+    <input placeholder="Ім'я" type="text" th:field="*{getLname()}"/>
+
+
+</form>
+
+</body>
+</html>

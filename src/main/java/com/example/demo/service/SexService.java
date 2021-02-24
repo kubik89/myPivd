@@ -23,7 +23,7 @@ public class SexService implements ISexService {
     @Override
     public SexDtoList getGenders() {
         List<Sex> sexList = sexRepository.getAllGenders();
-        List<SexDto> sexDto = sexList.stream().map(sex -> new SexDto(sex.getId(), sex.getSexType()))
+        List<SexDto> sexDto = sexList.stream().map(sex -> new SexDto(sex.getId(), sex.getSexType().substring(0,1)))
                 .collect(Collectors.toList());
         return new SexDtoList(sexDto);
     }
