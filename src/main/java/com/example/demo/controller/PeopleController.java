@@ -49,6 +49,11 @@ public class PeopleController {
         return iPeopleService.getAllMeetTypes();
     }
 
+    @GetMapping("/getAllServicesInS")
+    public ServiceTypesDto getAllServiceTypes() {
+        return iPeopleService.getAllServiceTypes();
+    }
+
 //    @PostMapping
 //    public People createPerson(@RequestBody @Valid PeopleCreateDto people) {
 //        logger.info("New person created: {}", people.getLname());

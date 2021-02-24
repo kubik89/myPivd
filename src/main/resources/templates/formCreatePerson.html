@@ -29,6 +29,12 @@
                 th:text="${group.number}+' '+${group.resplname}+' '+${group.respfname}"></option>
     </select>
 
+    <select th:field="*{serviceInS}">
+        <option th:each="service : ${serviceList}" th:value="${service.id}"
+                th:text="${service.type}"></option>
+    </select>
+
+
 
 <!--    <input placeholder="Номер групи" type="number" th:field="*{groupNumb}"/>-->
 

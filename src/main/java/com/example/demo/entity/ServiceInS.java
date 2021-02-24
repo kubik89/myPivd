@@ -13,7 +13,7 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class Service {
+public class ServiceInS {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id

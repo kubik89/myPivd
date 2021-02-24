@@ -6,6 +6,7 @@ import com.example.demo.entity.Group;
 import com.example.demo.entity.MeetServices;
 import com.example.demo.entity.People;
 import com.example.demo.entity.Sex;
+import com.example.demo.entity.ServiceInS;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,14 +24,16 @@ public class PeopleService implements IPeopleService {
     GroupRepository groupRepository;
     SexRepository sexRepository;
     MeetRepository meetRepository;
+    ServiceInSRepository serviceInSRepository;
 
     @Autowired
     public PeopleService(PeopleRepository peopleRepository, GroupRepository groupRepository, SexRepository sexRepository,
-                         MeetRepository meetRepository) {
+                         MeetRepository meetRepository, ServiceInSRepository serviceInSRepository) {
         this.peopleRepository = peopleRepository;
         this.groupRepository = groupRepository;
         this.sexRepository = sexRepository;
         this.meetRepository = meetRepository;
+        this.serviceInSRepository = serviceInSRepository;
     }
 
     @Override
@@ -45,6 +48,11 @@ public class PeopleService implements IPeopleService {
         MeetServices meetServices = byId.orElseThrow(() -> new BadRequestException("I did not find any services in meet " +
                 "for new User"));
         people.setPriv_meet(meetServices);
+
+        Optional<ServiceInS> byId1 = serviceInSRepository.findById(peopleCreateDto.getServiceInS());
+        ServiceInS serviceInS = byId1.orElseThrow(() -> new BadRequestException("I did not find any services in meet " +
+                "for new User"));
+        people.setPriv_service(serviceInS);
 
         Group groupByNumb = groupRepository.findGroupById(peopleCreateDto.getGroupNumb());
         people.setGroup_numb(groupByNumb);
@@ -131,5 +139,12 @@ public class PeopleService implements IPeopleService {
                 new MeetTypesDto(meetServices.getId() ,meetServices.getType())).collect(Collectors.toList());
         return new MeetTypesListDto(meetTypesDtoList);
     }
+
+    @Override
+    public ServiceTypesDto getAllServiceTypes() {
+        List<ServiceInS> collect = serviceInSRepository.findAll().stream().collect(Collectors.toList());
+        return new ServiceTypesDto(collect);
+    }
+
 
 }

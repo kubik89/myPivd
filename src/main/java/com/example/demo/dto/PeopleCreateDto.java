@@ -18,6 +18,7 @@ public class PeopleCreateDto {
     private int sex;
     private int groupNumb;
     private int priv_meet;
+    private int serviceInS;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private String birthday;

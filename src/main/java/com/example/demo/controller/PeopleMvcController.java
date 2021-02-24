@@ -25,6 +25,7 @@ public class PeopleMvcController {
     String allGenders = "http://localhost:8081/sex/getGenders";
     String allGroupsURL = "http://localhost:8081/groups/";
     String allMeetServices = "http://localhost:8081/people/getMeetServiceTypes";
+    String allServiceInS = "http://localhost:8081/people/getAllServicesInS";
 
     @GetMapping("/{id}")
     public String person(@PathVariable int id, Model model) {
@@ -64,6 +65,9 @@ public class PeopleMvcController {
         ResponseEntity<MeetTypesListDto> responseEntity2 = restTemplate.exchange(allMeetServices, HttpMethod.GET,
                 HttpEntity.EMPTY, MeetTypesListDto.class);
         model.addAttribute("typesDtoList", responseEntity2.getBody().getTypesDtoList());
+
+        ResponseEntity<ServiceTypesDto> responseEntity3 = restTemplate.exchange(allServiceInS, HttpMethod.GET, HttpEntity.EMPTY, ServiceTypesDto.class);
+        model.addAttribute("serviceList", responseEntity3.getBody().getServiceList());
 
         model.addAttribute("person", new PeopleCreateDto());
 

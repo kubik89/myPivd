@@ -44,7 +44,7 @@ public class People {
     private String birthday;
 
     @ManyToOne
-    private Service priv_service;
+    private ServiceInS priv_service;
 
     @ManyToOne
     private MeetServices priv_meet;

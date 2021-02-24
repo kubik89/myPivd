@@ -2,6 +2,8 @@ package com.example.demo.service;
 
 import com.example.demo.dto.*;
 import com.example.demo.entity.People;
+import com.example.demo.entity.ServiceInS;
+import com.example.demo.entity.ServiceInS;
 
 import java.util.List;
 
@@ -24,5 +26,7 @@ public interface IPeopleService {
     List<PeopleViewCurrentUserDto> getEldOrHelp();
 
     MeetTypesListDto getAllMeetTypes();
+
+    ServiceTypesDto getAllServiceTypes();
 
 }
