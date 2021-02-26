@@ -21,10 +21,12 @@
 <div>
     <form th:each="person : ${list}">
         <button type="submit" th:formaction="'/view/'+${person.id}">Інфо</button>
+        <button type="submit" th:formaction="'/view/edit/'+${person.id}">Ред.</button>
         <span th:text="${person.lname}"></span>
         <span th:text="${person.fname}"></span>
     </form>
 </div>
+
 
 </body>
 </html>

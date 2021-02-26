@@ -13,6 +13,7 @@ import java.util.Date;
 @Data
 
 public class PeopleCreateDto {
+    private int id;
     private String fname;
     private String lname;
     private int sex;
@@ -27,10 +28,10 @@ public class PeopleCreateDto {
     private int hope_id;
 
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private String birthday;
-
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private String date_chreshchennja;
+//    @DateTimeFormat(pattern = "yyyy-MM-dd")
+//    private String birthday;
+//
+//    @DateTimeFormat(pattern = "yyyy-MM-dd")
+//    private String date_chreshchennja;
 
 }

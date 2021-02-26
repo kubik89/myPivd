@@ -38,30 +38,30 @@ public class PeopleService implements IPeopleService {
 
         people.setFname(peopleCreateDto.getFname());
         people.setLname(peopleCreateDto.getLname());
-        people.setBirthday(peopleCreateDto.getBirthday());
-        people.setDate_chreshchennja(peopleCreateDto.getDate_chreshchennja());
-        people.setStreet_name(peopleCreateDto.getStreet_name());
-        people.setStreet_building_number(peopleCreateDto.getStreet_building_number());
-        people.setFlat_number(peopleCreateDto.getFlat_number());
-        people.setHome_phone(peopleCreateDto.getHome_phone());
-        people.setMob_phone(peopleCreateDto.getMob_phone());
-
-        Optional<MeetServices> byId = meetRepository.findById(peopleCreateDto.getPriv_meet());
-        MeetServices meetServices = byId.orElseThrow(() -> new BadRequestException("I did not find any services in meet " +
-                "for new User"));
-        people.setPriv_meet(meetServices);
-
-        Optional<ServiceInS> byId1 = serviceInSRepository.findById(peopleCreateDto.getServiceInS());
-        ServiceInS serviceInS = byId1.orElseThrow(() -> new BadRequestException("I did not find any services in S " +
-                "for new User"));
-        people.setPriv_service(serviceInS);
-
-        Optional<Hope> byId2 = hopeRepository.findById(peopleCreateDto.getHope_id());
-        Hope hope = byId2.orElseThrow(() -> new BadRequestException("I did not find any hope for new User"));
-        people.setNadija_na(hope);
-
-        Group groupByNumb = groupRepository.findGroupById(peopleCreateDto.getGroupNumb());
-        people.setGroup_numb(groupByNumb);
+//        people.setBirthday(peopleCreateDto.getBirthday());
+//        people.setDate_chreshchennja(peopleCreateDto.getDate_chreshchennja());
+//        people.setStreet_name(peopleCreateDto.getStreet_name());
+//        people.setStreet_building_number(peopleCreateDto.getStreet_building_number());
+//        people.setFlat_number(peopleCreateDto.getFlat_number());
+//        people.setHome_phone(peopleCreateDto.getHome_phone());
+//        people.setMob_phone(peopleCreateDto.getMob_phone());
+//
+//        Optional<MeetServices> byId = meetRepository.findById(peopleCreateDto.getPriv_meet());
+//        MeetServices meetServices = byId.orElseThrow(() -> new BadRequestException("I did not find any services in meet " +
+//                "for new User"));
+//        people.setPriv_meet(meetServices);
+//
+//        Optional<ServiceInS> byId1 = serviceInSRepository.findById(peopleCreateDto.getServiceInS());
+//        ServiceInS serviceInS = byId1.orElseThrow(() -> new BadRequestException("I did not find any services in S " +
+//                "for new User"));
+//        people.setPriv_service(serviceInS);
+//
+//        Optional<Hope> byId2 = hopeRepository.findById(peopleCreateDto.getHope_id());
+//        Hope hope = byId2.orElseThrow(() -> new BadRequestException("I did not find any hope for new User"));
+//        people.setNadija_na(hope);
+//
+//        Group groupByNumb = groupRepository.findGroupById(peopleCreateDto.getGroupNumb());
+//        people.setGroup_numb(groupByNumb);
 
         Optional<Sex> sexById = sexRepository.findById(peopleCreateDto.getSex());
         Sex sex = sexById.orElseThrow(() -> new BadRequestException("Current sex type did not find"));
@@ -93,10 +93,27 @@ public class PeopleService implements IPeopleService {
     }
 
     @Override
-    public People updatePerson(int id, People people) {
+    public People updatePerson(int id, PeopleCreateDto people) {
         if (peopleRepository.existsById(id)) {
             people.setId(id);
-            return peopleRepository.saveAndFlush(people);
+
+            People people1 = new People();
+            people1.setFname(people.getFname());
+            people1.setLname(people.getLname());
+//            people1.setStreet_name(people.getStreet_name());
+//            people1.setStreet_building_number(people.getStreet_building_number());
+//            people1.setFlat_number(people.getFlat_number());
+//            people1.setHome_phone(people.getHome_phone());
+//            people1.setMob_phone(people.getMob_phone());
+//
+//            Group groupByNumb = groupRepository.findGroupById(people.getGroupNumb());
+//            people1.setGroup_numb(groupByNumb);
+
+            Optional<Sex> sexById = sexRepository.findById(people.getSex());
+            Sex sex = sexById.orElseThrow(() -> new BadRequestException("Current sex type did not find"));
+            people1.setSex(sex);
+
+            return peopleRepository.saveAndFlush(people1);
         } else {
             throw new IllegalArgumentException("Person not found");
         }
@@ -140,7 +157,7 @@ public class PeopleService implements IPeopleService {
     }
 
     public PeopleViewCurrentUserDto convertToPeopleViewCurrentUserDto(People people) {
-        return new PeopleViewCurrentUserDto(people.getFname(),
+        return new PeopleViewCurrentUserDto(people.getId(), people.getFname(),
                 people.getLname(), people.getGroup_numb().getGroup_number(), people.getStreet_name(),
                 people.getStreet_building_number(), people.getFlat_number(), people.getHome_phone(), people.getMob_phone(),
                 people.getSex().getSexType(), people.getBirthday());

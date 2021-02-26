@@ -72,7 +72,7 @@ public class PeopleController {
     }
 
     @PutMapping("/{id}")
-    public People updatePerson(@PathVariable int id, @RequestBody People people) {
+    public People updatePerson(@PathVariable int id, @RequestBody PeopleCreateDto people) {
         return iPeopleService.updatePerson(id, people);
     }
 

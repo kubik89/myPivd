@@ -40,6 +40,8 @@ public class PeopleMvcController {
         return "person";
     }
 
+
+
     @GetMapping("/")
     public String index(Model model) {
 
@@ -76,19 +78,44 @@ public class PeopleMvcController {
 
         model.addAttribute("person", new PeopleCreateDto());
 
+        model.addAttribute("person1", new PeopleViewCurrentUserDto());
         return "formCreatePerson";
     }
 
-    @GetMapping("/update_person")
-    public String update(Model model) {
+    @GetMapping("/edit/{id}")
+    public String editPerson(@PathVariable int id, Model model) {
 
-        String newLink = getPersonById + 1196475535;
+        String fullLink = linkPeople + id;
 
-        ResponseEntity<PeopleGetViewDto> entity = restTemplate.exchange(newLink, HttpMethod.GET, HttpEntity.EMPTY,
-                PeopleGetViewDto.class);
-        model.addAttribute("people", entity.getBody().getPeople().get(1196475535));
+        ResponseEntity<PeopleViewCurrentUserDto> responceEntity = restTemplate.exchange(fullLink, HttpMethod.GET, HttpEntity.EMPTY,
+                PeopleViewCurrentUserDto.class);
+        model.addAttribute("edit_people", responceEntity.getBody());
 
-        return "formUpdatePerson";
+        model.addAttribute("person1", new PeopleCreateDto());
+
+        ResponseEntity<SexDtoList> responseEntity1 = restTemplate.exchange(allGenders, HttpMethod.GET, HttpEntity.EMPTY, SexDtoList.class);
+        model.addAttribute("genderList", responseEntity1.getBody().getSexDtoList());
+
+        return "edit_person";
+    }
+
+    @PostMapping("/edit/")
+    public String updatePerson(PeopleCreateDto person1) {
+
+        String newLinkUpdate = "http://localhost:8081/people/" + person1;
+
+        System.out.println(newLinkUpdate);
+        System.out.println("Lname " + person1.getLname());
+//        System.out.println(person1.getGroupNumb());
+        System.out.println("Sex " + person1.getSex());
+        System.out.println(person1);
+
+
+        HttpEntity<PeopleCreateDto> httpEntity = new HttpEntity<>(person1, HttpHeaders.EMPTY);
+//        restTemplate.exchange(newLinkUpdate, HttpMethod.PUT, httpEntity, People.class);
+
+
+        return "redirect:/view/create_person";
     }
 
 

@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class PeopleViewCurrentUserDto {
+    private int id;
     private String fname;
     private String lname;
     private int group;

@@ -20,7 +20,7 @@ public class Group {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Min(value = 1)
+//    @Min(value = 1)
     private int group_number;
 
     @ManyToOne
