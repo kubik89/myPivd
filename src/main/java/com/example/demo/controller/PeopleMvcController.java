@@ -93,8 +93,22 @@ public class PeopleMvcController {
 
 //        model.addAttribute("person1", new PeopleViewCurrentUserDto());
 
+        ResponseEntity<GroupGetViewDto> responseEntity = restTemplate.exchange(allGroupsURL, HttpMethod.GET,
+                HttpEntity.EMPTY, GroupGetViewDto.class);
+        model.addAttribute("groups", responseEntity.getBody().getList());
+
         ResponseEntity<SexDtoList> responseEntity1 = restTemplate.exchange(allGenders, HttpMethod.GET, HttpEntity.EMPTY, SexDtoList.class);
         model.addAttribute("genderList", responseEntity1.getBody().getSexDtoList());
+
+        ResponseEntity<MeetTypesListDto> responseEntity2 = restTemplate.exchange(allMeetServices, HttpMethod.GET,
+                HttpEntity.EMPTY, MeetTypesListDto.class);
+        model.addAttribute("typesDtoList", responseEntity2.getBody().getTypesDtoList());
+
+        ResponseEntity<ServiceTypesDto> responseEntity3 = restTemplate.exchange(allServiceInS, HttpMethod.GET, HttpEntity.EMPTY, ServiceTypesDto.class);
+        model.addAttribute("serviceList", responseEntity3.getBody().getServiceList());
+
+        ResponseEntity<HopeTypesDto> responseEntity4 = restTemplate.exchange(allHopes, HttpMethod.GET, HttpEntity.EMPTY, HopeTypesDto.class);
+        model.addAttribute("hopeList", responseEntity4.getBody().getHopeList());
 
         return "edit_person";
     }

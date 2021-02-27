@@ -1,5 +1,6 @@
 package com.example.demo.dto;
 
+import com.example.demo.entity.MeetServices;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,7 +13,7 @@ public class PeopleViewCurrentUserDto {
     private String fname;
     private String lname;
     private int group;
-////    private int nadija_na;
+    private int hope_on;
     private String street_name;
     private String street_building_number;
     private int flat_number;
@@ -20,6 +21,9 @@ public class PeopleViewCurrentUserDto {
     private int mob_phone;
     private String sex;
     private String birthday;
+    private String dateChreshchennja;
+    private int privInMeet;
+    private int privInService;
 
 }
 

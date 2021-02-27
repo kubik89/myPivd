@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class PeopleService implements IPeopleService {
@@ -110,7 +111,26 @@ public class PeopleService implements IPeopleService {
         people1.setFlat_number(people.getFlat_number());
         people1.setHome_phone(people.getHome_phone());
         people1.setMob_phone(people.getMob_phone());
-//
+        people1.setDate_chreshchennja(people.getDateChreshchennja());
+
+        meetRepository.findAll().forEach(meetServices -> {
+            if (people.getPrivInMeet() == meetServices.getId()) {
+                people1.setPriv_meet(meetServices);
+            }
+        });
+
+        serviceInSRepository.findAll().forEach(servServices -> {
+            if (people.getPrivInService() == servServices.getId()) {
+                people1.setPriv_service(servServices);
+            }
+        });
+
+        hopeRepository.findAll().forEach(hope -> {
+            if (people.getHope_on() == hope.getId()) {
+                people1.setNadija_na(hope);
+            }
+        });
+
         Group groupByNumb = groupRepository.findGroupById(people.getGroup());
         people1.setGroup_numb(groupByNumb);
 
@@ -168,16 +188,21 @@ public class PeopleService implements IPeopleService {
     }
 
     public PeopleViewCurrentUserDto convertToPeopleViewCurrentUserDto(People people) {
-        return new PeopleViewCurrentUserDto(people.getId(),
+        return new PeopleViewCurrentUserDto(
+                people.getId(),
                 people.getFname(),
                 people.getLname(),
                 people.getGroup_numb().getGroup_number(),
+                people.getNadija_na().getId(),
                 people.getStreet_name(),
                 people.getStreet_building_number(),
                 people.getFlat_number(),
                 people.getHome_phone(),
                 people.getMob_phone(),
                 people.getSex().getSexType(),
-                people.getBirthday());
+                people.getBirthday(),
+                people.getDate_chreshchennja(),
+                people.getPriv_meet().getId(),
+                people.getPriv_service().getId());
     }
 }
