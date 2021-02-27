@@ -12,7 +12,7 @@ public class PeopleViewCurrentUserDto {
     private String fname;
     private String lname;
     private int group;
-//    private int nadija_na;
+////    private int nadija_na;
     private String street_name;
     private String street_building_number;
     private int flat_number;
@@ -20,4 +20,7 @@ public class PeopleViewCurrentUserDto {
     private int mob_phone;
     private String sex;
     private String birthday;
+
 }
+
+

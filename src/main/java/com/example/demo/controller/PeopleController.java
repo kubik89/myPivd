@@ -71,9 +71,9 @@ public class PeopleController {
         return iPeopleService.savePerson(people);
     }
 
-    @PutMapping("/{id}")
-    public People updatePerson(@PathVariable int id, @RequestBody PeopleCreateDto people) {
-        return iPeopleService.updatePerson(id, people);
+    @PutMapping
+    public People updatePerson(@RequestBody PeopleViewCurrentUserDto people) {
+        return iPeopleService.updatePerson(people);
     }
 
     @DeleteMapping("/{id}")
@@ -81,9 +81,9 @@ public class PeopleController {
         iPeopleService.deletePerson(id);
     }
 
-    @InitBinder
-    public void myInitBinder(WebDataBinder webDataBinder) {
-        webDataBinder.addValidators(new PeopleValidator());
-    }
+//    @InitBinder
+//    public void myInitBinder(WebDataBinder webDataBinder) {
+//        webDataBinder.addValidators(new PeopleValidator());
+//    }
 
 }

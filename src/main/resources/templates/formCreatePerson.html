@@ -12,8 +12,8 @@
     <input placeholder="Ім'я" type="text" th:field="*{fname}"/>
     <input placeholder="Прізвище" type="text" th:field="*{lname}"/>
     <!--    <input placeholder="Дата народження" type="date" th:field="*{birthday}"/>-->
-    <input placeholder="Дата народження" type="date" th:field="*{birthday}"/>
-    <input placeholder="Дата хрещення" type="date" th:field="*{date_chreshchennja}"/>
+<!--    <input placeholder="Дата народження" type="date" th:field="*{birthday}"/>-->
+<!--    <input placeholder="Дата хрещення" type="date" th:field="*{date_chreshchennja}"/>-->
 
     <select th:field="*{sex}">
         <option th:each="sex : ${genderList}" th:value="${sex.id}"

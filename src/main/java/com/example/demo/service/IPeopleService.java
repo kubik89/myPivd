@@ -19,7 +19,7 @@ public interface IPeopleService {
 
     void deletePerson(int id);
 
-    People updatePerson(int id, PeopleCreateDto people);
+    People updatePerson(PeopleViewCurrentUserDto people);
 
     PeopleEldersAndHelpers getEldersOrHelpers();
 

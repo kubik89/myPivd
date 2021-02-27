@@ -91,29 +91,28 @@ public class PeopleMvcController {
                 PeopleViewCurrentUserDto.class);
         model.addAttribute("edit_people", responceEntity.getBody());
 
-        model.addAttribute("person1", new PeopleCreateDto());
+//        model.addAttribute("person1", new PeopleViewCurrentUserDto());
 
-        ResponseEntity<SexDtoList> responseEntity1 = restTemplate.exchange(allGenders, HttpMethod.GET, HttpEntity.EMPTY, SexDtoList.class);
-        model.addAttribute("genderList", responseEntity1.getBody().getSexDtoList());
+//        ResponseEntity<SexDtoList> responseEntity1 = restTemplate.exchange(allGenders, HttpMethod.GET, HttpEntity.EMPTY, SexDtoList.class);
+//        model.addAttribute("genderList", responseEntity1.getBody().getSexDtoList());
 
         return "edit_person";
     }
 
     @PostMapping("/edit/")
-    public String updatePerson(PeopleCreateDto person1) {
+    public String updatePerson(PeopleViewCurrentUserDto person1) {
 
-        String newLinkUpdate = "http://localhost:8081/people/" + person1;
+        String newLinkUpdate = "http://localhost:8081/people/";
 
         System.out.println(newLinkUpdate);
-        System.out.println("Lname " + person1.getLname());
+//        System.out.println("Lname " + person1.getLname());
 //        System.out.println(person1.getGroupNumb());
-        System.out.println("Sex " + person1.getSex());
+//        System.out.println("Sex " + person1.getSex());
         System.out.println(person1);
 
 
-        HttpEntity<PeopleCreateDto> httpEntity = new HttpEntity<>(person1, HttpHeaders.EMPTY);
-//        restTemplate.exchange(newLinkUpdate, HttpMethod.PUT, httpEntity, People.class);
-
+        HttpEntity<PeopleViewCurrentUserDto> httpEntity = new HttpEntity<>(person1, HttpHeaders.EMPTY);
+        restTemplate.exchange(newLinkUpdate, HttpMethod.PUT, httpEntity, People.class);
 
         return "redirect:/view/create_person";
     }

@@ -93,30 +93,45 @@ public class PeopleService implements IPeopleService {
     }
 
     @Override
-    public People updatePerson(int id, PeopleCreateDto people) {
-        if (peopleRepository.existsById(id)) {
-            people.setId(id);
+    public People updatePerson(PeopleViewCurrentUserDto people) {
+        People people1 = new People();
 
-            People people1 = new People();
-            people1.setFname(people.getFname());
-            people1.setLname(people.getLname());
-//            people1.setStreet_name(people.getStreet_name());
-//            people1.setStreet_building_number(people.getStreet_building_number());
-//            people1.setFlat_number(people.getFlat_number());
-//            people1.setHome_phone(people.getHome_phone());
-//            people1.setMob_phone(people.getMob_phone());
-//
-//            Group groupByNumb = groupRepository.findGroupById(people.getGroupNumb());
-//            people1.setGroup_numb(groupByNumb);
-
-            Optional<Sex> sexById = sexRepository.findById(people.getSex());
-            Sex sex = sexById.orElseThrow(() -> new BadRequestException("Current sex type did not find"));
-            people1.setSex(sex);
-
-            return peopleRepository.saveAndFlush(people1);
+        if (peopleRepository.existsById(people.getId())) {
+            people1.setId(people.getId());
         } else {
             throw new IllegalArgumentException("Person not found");
         }
+
+        people1.setFname(people.getFname());
+        people1.setLname(people.getLname());
+        people1.setBirthday(people.getBirthday());
+        people1.setStreet_name(people.getStreet_name());
+        people1.setStreet_building_number(people.getStreet_building_number());
+        people1.setFlat_number(people.getFlat_number());
+        people1.setHome_phone(people.getHome_phone());
+        people1.setMob_phone(people.getMob_phone());
+//
+        Group groupByNumb = groupRepository.findGroupById(people.getGroup());
+        people1.setGroup_numb(groupByNumb);
+
+//            Optional<Sex> sexById = sexRepository.findById(people.getSex());
+//            Sex sex = sexById.orElseThrow(() -> new BadRequestException("Current sex type did not find"));
+//            people1.setSex(sex);
+
+        if (people.getSex().startsWith("Ч") || people.getSex().startsWith("ч")) {
+            sexRepository.findAll().forEach(sexType -> {
+                if (sexType.getSexType().startsWith("Ч")) {
+                    people1.setSex(sexType);
+                }
+            });
+        } else if (people.getSex().startsWith("Ж") || people.getSex().startsWith("ж")) {
+            sexRepository.findAll().forEach(sexType -> {
+                if (sexType.getSexType().startsWith("Ж")) {
+                    people1.setSex(sexType);
+                }
+            });
+        }
+        return peopleRepository.saveAndFlush(people1);
     }
 
     @Override
@@ -157,9 +172,16 @@ public class PeopleService implements IPeopleService {
     }
 
     public PeopleViewCurrentUserDto convertToPeopleViewCurrentUserDto(People people) {
-        return new PeopleViewCurrentUserDto(people.getId(), people.getFname(),
-                people.getLname(), people.getGroup_numb().getGroup_number(), people.getStreet_name(),
-                people.getStreet_building_number(), people.getFlat_number(), people.getHome_phone(), people.getMob_phone(),
-                people.getSex().getSexType(), people.getBirthday());
+        return new PeopleViewCurrentUserDto(people.getId(),
+                people.getFname(),
+                people.getLname(),
+                people.getGroup_numb().getGroup_number(),
+                people.getStreet_name(),
+                people.getStreet_building_number(),
+                people.getFlat_number(),
+                people.getHome_phone(),
+                people.getMob_phone(),
+                people.getSex().getSexType(),
+                people.getBirthday());
     }
 }
