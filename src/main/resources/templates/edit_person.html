@@ -5,6 +5,10 @@
     <title>Current User</title>
 </head>
 <body>
+<form method="get" action="/main/">
+    <button type="submit"> <- До головного меню</button>
+</form>
+
 <span>Редагування людини: </span>
 
 <form th:each="person1 : ${edit_people}">
@@ -63,7 +67,8 @@
     <span>Дата хрещення</span>
     <input placeholder="Дата хрещення" type="date" th:value="${person1.dateChreshchennja}" name="dateChreshchennja"/>
 
-    <button formmethod="post" th:formaction="'/view/edit/'" th:object="${person1}" type="submit">Send</button>
+    <button formmethod="post" th:formaction="'/view/edit/'" th:object="${person1}" type="submit">Оновити</button>
+    <button type="reset">Скасувати</button>
 
 </form>
 

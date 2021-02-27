@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.dto.*;
 import com.example.demo.entity.People;
 import com.example.demo.service.IPeopleService;
+import com.example.demo.validator.PeopleCreateValidator;
 import com.example.demo.validator.PeopleValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -66,13 +67,13 @@ public class PeopleController {
 //    }
 
     @PostMapping
-    public People createPerson(@RequestBody @Valid PeopleCreateDto people) {
+    public People createPerson(@RequestBody PeopleCreateDto people) {
         logger.info("New person created: {}", people.getLname());
         return iPeopleService.savePerson(people);
     }
 
     @PutMapping
-    public People updatePerson(@RequestBody @Valid PeopleViewCurrentUserDto people) {
+    public People updatePerson(@RequestBody PeopleViewCurrentUserDto people) {
         return iPeopleService.updatePerson(people);
     }
 
@@ -81,9 +82,14 @@ public class PeopleController {
         iPeopleService.deletePerson(id);
     }
 
-    @InitBinder
-    public void myInitBinder(WebDataBinder webDataBinder) {
-        webDataBinder.addValidators(new PeopleValidator());
-    }
+//    @InitBinder
+//    public void myInitBinder(WebDataBinder webDataBinder) {
+//        webDataBinder.addValidators(new PeopleValidator());
+//    }
+//
+//    @InitBinder
+//    public void myCreateInitBinder(WebDataBinder webDataBinder) {
+//        webDataBinder.addValidators(new PeopleCreateValidator());
+//    }
 
 }

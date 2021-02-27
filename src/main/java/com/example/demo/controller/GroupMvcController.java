@@ -38,23 +38,23 @@ public class GroupMvcController {
         return "allGroups";
     }
 
-    @GetMapping("/show_resp_form")
-    public String showRespInGroup(Model model) {
-// при переході на урлу виконую Get запит і отримую всі групи
-        ResponseEntity<GroupGetViewDto> responseEntity = restTemplate.exchange(mainUrl, HttpMethod.GET,
-                HttpEntity.EMPTY, GroupGetViewDto.class);
-        model.addAttribute("list", responseEntity.getBody().getList());
-
-        ResponseEntity<PeopleEldersAndHelpers> responseEntity1 = restTemplate.exchange(getEldersOrHelpers,
-                HttpMethod.GET, HttpEntity.EMPTY, PeopleEldersAndHelpers.class);
-        model.addAttribute("eldersAndHelpers", responseEntity1.getBody().getEldersOrHelpers());
-
-// при переході на урлу виконую Get запит і отримую всіх призначених
-
-        model.addAttribute("group", Integer.class);
-
-        return "changeRespInGroup";
-    }
+//    @GetMapping("/show_resp_form")
+//    public String showRespInGroup(Model model) {
+//// при переході на урлу виконую Get запит і отримую всі групи
+//        ResponseEntity<GroupGetViewDto> responseEntity = restTemplate.exchange(mainUrl, HttpMethod.GET,
+//                HttpEntity.EMPTY, GroupGetViewDto.class);
+//        model.addAttribute("list", responseEntity.getBody().getList());
+//
+//        ResponseEntity<PeopleEldersAndHelpers> responseEntity1 = restTemplate.exchange(getEldersOrHelpers,
+//                HttpMethod.GET, HttpEntity.EMPTY, PeopleEldersAndHelpers.class);
+//        model.addAttribute("eldersAndHelpers", responseEntity1.getBody().getEldersOrHelpers());
+//
+//// при переході на урлу виконую Get запит і отримую всіх призначених
+//
+//        model.addAttribute("group", Integer.class);
+//
+//        return "changeRespInGroup";
+//    }
 
 //    @PostMapping("/change_resp_in_group/")
 //    public String changeRespInGroup(Integer group) {

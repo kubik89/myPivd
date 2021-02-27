@@ -118,32 +118,24 @@ public class PeopleMvcController {
 
         String newLinkUpdate = "http://localhost:8081/people/";
 
-        System.out.println(newLinkUpdate);
+//        System.out.println(newLinkUpdate);
 //        System.out.println("Lname " + person1.getLname());
 //        System.out.println(person1.getGroupNumb());
-        System.out.println(person1);
-        System.out.println("Sex " + person1.getSex());
-
+//        System.out.println(person1);
+//        System.out.println("Sex " + person1.getSex());
 
         HttpEntity<PeopleViewCurrentUserDto> httpEntity = new HttpEntity<>(person1, HttpHeaders.EMPTY);
         restTemplate.exchange(newLinkUpdate, HttpMethod.PUT, httpEntity, People.class);
 
-        return "redirect:/view/create_person";
+        return "redirect:/main/";
     }
-
 
     @PostMapping("/create_person")
     public String createPersonForm(PeopleCreateDto person) {
 
         HttpEntity<PeopleCreateDto> httpEntity = new HttpEntity<>(person, HttpHeaders.EMPTY);
-
-//        System.out.println(person);
-//        System.out.println(person.getGroupNumb());
-//        System.out.println(person.getBirthday());
-
         restTemplate.exchange("http://localhost:8081/people", HttpMethod.POST, httpEntity, People.class);
 
-//        return "redirect:/view/";
         return "redirect:/view/create_person";
     }
 

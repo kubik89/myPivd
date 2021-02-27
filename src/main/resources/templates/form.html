@@ -9,27 +9,35 @@
 <p/>
 
 <form method="get" action="/group/">
-    <button type="submit">Show groups</button>
+    <button type="submit">показати групи</button>
 </form>
 
+<form method="get" action="/main/">
+    <button type="submit"> <- До головного меню</button>
+</form>
+
+<p/>
 <!--@{/form/post} - це урла яка описана в Mvc контроллері для запуску Post методу
     group - це обєкт який приходить із Post через Get в model.addAttribute("group", new GroupCreateDto());-->
 <form method="post" th:object="${group}" th:action="@{/form/post}">
 
-    <input type="number" th:field="*{number}"/>
+    <span>Нова група </span>
+    <input style="width: 35px" type="number" th:value="${nextNumber}" name="number"/>
 
+    <span>Відповідальний </span>
     <select th:field="*{respId}">
         <option th:each="person : ${eldersAndHelpers}" th:value="${person.id}"
                 th:text="${person.lname}+' '+${person.fname}"></option>
     </select>
 
-    <input type="submit" value="Створити групу">
+    <input style="background-color: antiquewhite" type="submit" value="Створити групу">
 
 </form>
 
 <p/>
 
 <form th:object="${group}">
+    <span>Група </span>
     <select th:field="*{number}">
         <option th:each="group : ${allGroups}" th:value="${group.number}" th:text="${group.number}"></option>
     </select>

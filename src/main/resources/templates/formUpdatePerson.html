@@ -6,6 +6,10 @@
 </head>
 <body>
 
+<form method="get" action="/main/">
+    <button type="submit"> <- До головного меню</button>
+</form>
+
 <span>Редагування людини: </span>
 
 <form method="get" th:object="${people}" th:action="@{/view/update_person}">

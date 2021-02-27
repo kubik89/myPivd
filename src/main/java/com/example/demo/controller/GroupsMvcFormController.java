@@ -33,6 +33,10 @@ public class GroupsMvcFormController {
                 HttpMethod.GET, HttpEntity.EMPTY, PeopleListJustNameDto.class);
         model.addAttribute("eldersAndHelpers", exchange.getBody().getEldersOrHelpers());
 
+        ResponseEntity<Integer> nextGroupNumber = restTemplate.exchange("http://localhost:8081/groups/getNextGroupNumber", HttpMethod.GET, HttpEntity.EMPTY,
+                Integer.class);
+        model.addAttribute("nextNumber", nextGroupNumber.getBody());
+
         model.addAttribute("hello", "Hello my form");
         model.addAttribute("group", new GroupCreateDto());
         model.addAttribute("groupID", new GroupCreateDto());

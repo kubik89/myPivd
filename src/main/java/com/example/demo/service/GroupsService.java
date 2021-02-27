@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -105,6 +106,13 @@ public class GroupsService implements IGroupService {
 
     public int getCountGroupMembers(int groupId) {
         return groupRepository.getCountOfGroupMembers(groupId);
+    }
+
+    public int getNextFreeGroupNumber() {
+        List<Integer> grNumbers = new ArrayList<>();
+        groupRepository.findAll().stream().forEach(group -> grNumbers.add(group.getGroup_number()));
+        grNumbers.sort((o1, o2) -> o2 - o1);
+        return grNumbers.get(0) + 1;
     }
 
 }

@@ -20,4 +20,6 @@ public interface IGroupService {
 
     int getCountGroupMembers(int groupId);
 
+    int getNextFreeGroupNumber();
+
 }
