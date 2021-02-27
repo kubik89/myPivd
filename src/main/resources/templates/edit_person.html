@@ -11,21 +11,16 @@
     <input hidden placeholder="ID" type="text" th:value="${person1.id}" name="id"/>
     <input placeholder="Прізвище" type="text" th:value="${person1.lname}" name="lname"/>
     <input placeholder="Ім'я" type="text" th:value="${person1.fname}" name="fname"/>
-    <input placeholder="Стать" type="text" th:value="${person1.sex}" name="sex"/>
 
-<!--            <input th:each="sex : ${genderList}" type="radio"  th:value="${person1.sex}" name="sex" th:text="${sex.type}"/>-->
-
-<!--    <input type="radio" th:each="sex : ${genderList}" th:value="${sex.id}" th:text="${sex.type}"-->
-<!--           checked name="${person1.sex}"/>-->
-
-<!--    <select th:field="*{person1.sex}">-->
-<!--        <option th:each="sex : ${genderList}" th:value="${sex.id}"-->
-<!--                th:text="${sex.type}"></option>-->
-<!--    </select>-->
+    <select name="sex">
+        <option th:each="sex1 : ${genderList}" th:value="${sex1.type}" th:text="${sex1.type}"
+                th:selected="${sex1.type} == ${person1.sex}"></option>
+    </select>
 
     <input placeholder="Група" type="number" th:value="${person1.group}" name="group"/>
     <input placeholder="Вулиця" type="text" th:value="${person1.street_name}" name="street_name"/>
-    <input placeholder="Будинок" type="text" th:value="${person1.street_building_number}" name="street_building_number"/>
+    <input placeholder="Будинок" type="text" th:value="${person1.street_building_number}"
+           name="street_building_number"/>
     <input placeholder="Квартира" type="number" th:value="${person1.flat_number}" name="flat_number"/>
     <input placeholder="Дом.тел." type="number" th:value="${person1.home_phone}" name="home_phone"/>
     <input placeholder="Моб." type="number" th:value="${person1.mob_phone}" name="mob_phone"/>

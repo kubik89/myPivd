@@ -114,10 +114,6 @@ public class PeopleService implements IPeopleService {
         Group groupByNumb = groupRepository.findGroupById(people.getGroup());
         people1.setGroup_numb(groupByNumb);
 
-//            Optional<Sex> sexById = sexRepository.findById(people.getSex());
-//            Sex sex = sexById.orElseThrow(() -> new BadRequestException("Current sex type did not find"));
-//            people1.setSex(sex);
-
         if (people.getSex().startsWith("Ч") || people.getSex().startsWith("ч")) {
             sexRepository.findAll().forEach(sexType -> {
                 if (sexType.getSexType().startsWith("Ч")) {

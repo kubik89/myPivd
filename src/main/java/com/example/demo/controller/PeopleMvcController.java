@@ -93,8 +93,8 @@ public class PeopleMvcController {
 
 //        model.addAttribute("person1", new PeopleViewCurrentUserDto());
 
-//        ResponseEntity<SexDtoList> responseEntity1 = restTemplate.exchange(allGenders, HttpMethod.GET, HttpEntity.EMPTY, SexDtoList.class);
-//        model.addAttribute("genderList", responseEntity1.getBody().getSexDtoList());
+        ResponseEntity<SexDtoList> responseEntity1 = restTemplate.exchange(allGenders, HttpMethod.GET, HttpEntity.EMPTY, SexDtoList.class);
+        model.addAttribute("genderList", responseEntity1.getBody().getSexDtoList());
 
         return "edit_person";
     }
@@ -107,8 +107,8 @@ public class PeopleMvcController {
         System.out.println(newLinkUpdate);
 //        System.out.println("Lname " + person1.getLname());
 //        System.out.println(person1.getGroupNumb());
-//        System.out.println("Sex " + person1.getSex());
         System.out.println(person1);
+        System.out.println("Sex " + person1.getSex());
 
 
         HttpEntity<PeopleViewCurrentUserDto> httpEntity = new HttpEntity<>(person1, HttpHeaders.EMPTY);
