@@ -9,36 +9,44 @@
 
 <form method="post" th:object="${person}" th:action="@{/view/create_person}">
 
+    <p>Про людину: </p>
     <input placeholder="Ім'я" type="text" th:field="*{fname}"/>
     <input placeholder="Прізвище" type="text" th:field="*{lname}"/>
-    <!--    <input placeholder="Дата народження" type="date" th:field="*{birthday}"/>-->
-<!--    <input placeholder="Дата народження" type="date" th:field="*{birthday}"/>-->
-<!--    <input placeholder="Дата хрещення" type="date" th:field="*{date_chreshchennja}"/>-->
 
+    <span>Стать: </span>
     <select th:field="*{sex}">
         <option th:each="sex : ${genderList}" th:value="${sex.id}"
                 th:text="${sex.type}"></option>
     </select>
+
+    <span>Дата народження</span>
+    <input placeholder="Дата народження" type="date" th:field="*{birthday}"/>
+
     <br>
-    <br>
+    <p>Контактні дані: </p>
     <input placeholder="Вулиця" type="text" th:field="*{street_name}"/>
     <input placeholder="Будинок" type="text" th:field="*{street_building_number}"/>
     <input placeholder="Квартира" type="number" th:field="*{flat_number}"/>
     <input placeholder="Дом.тел." type="number" th:field="*{home_phone}"/>
+
+    <span>Моб.</span>
     <input placeholder="Моб." type="number" th:field="*{mob_phone}"/>
-    <br>
-    <br>
 
-    <select th:field="*{priv_meet}">
-        <option th:each="meetType : ${typesDtoList}" th:value="${meetType.id}"
-                th:text="${meetType.meet_type}"></option>
-    </select>
-
+    <br>
+    <p>Зборова інформація: </p>
+    <span>Група: </span>
     <select th:field="*{groupNumb}">
         <option th:each="group : ${list}" th:value="${group.number}"
                 th:text="${group.number}+' '+${group.resplname}+' '+${group.respfname}"></option>
     </select>
 
+    <span>В зборі: </span>
+    <select th:field="*{priv_meet}">
+        <option th:each="meetType : ${typesDtoList}" th:value="${meetType.id}"
+                th:text="${meetType.meet_type}"></option>
+    </select>
+
+    <span>В служінні: </span>
     <select th:field="*{serviceInS}">
         <option th:each="service : ${serviceList}" th:value="${service.id}"
                 th:text="${service.type}"></option>
@@ -49,7 +57,7 @@
                 th:text="${hope.hope_type}"></option>
     </select>
 
-    <!--    <input placeholder="Номер групи" type="number" th:field="*{groupNumb}"/>-->
+    <input placeholder="Дата хрещення" type="date" th:field="*{date_chreshchennja}"/>
 
     <input type="submit" value="Створити">
 

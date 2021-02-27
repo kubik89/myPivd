@@ -31,9 +31,10 @@ public class People {
 //    @Min(message = "Group number must be min 1", value = 1)
     private Group group_numb;
 
+    @NotBlank(message = "Пусте значення Ім'я")
     private String fname;
 
-    @NotBlank(message = "Пусте значення lName")
+    @NotBlank(message = "Пусте значення Прізвище")
     private String lname;
     private String street_name;
     private String street_building_number;

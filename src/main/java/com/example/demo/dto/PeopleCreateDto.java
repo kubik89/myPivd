@@ -28,10 +28,10 @@ public class PeopleCreateDto {
     private int hope_id;
 
 
-//    @DateTimeFormat(pattern = "yyyy-MM-dd")
-//    private String birthday;
-//
-//    @DateTimeFormat(pattern = "yyyy-MM-dd")
-//    private String date_chreshchennja;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private String birthday;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private String date_chreshchennja;
 
 }

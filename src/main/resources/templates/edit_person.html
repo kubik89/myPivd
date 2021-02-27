@@ -5,28 +5,51 @@
     <title>Current User</title>
 </head>
 <body>
+<span>Редагування людини: </span>
 
 <form th:each="person1 : ${edit_people}">
 
+    <p>Про людину: </p>
     <input hidden placeholder="ID" type="text" th:value="${person1.id}" name="id"/>
     <input placeholder="Прізвище" type="text" th:value="${person1.lname}" name="lname"/>
     <input placeholder="Ім'я" type="text" th:value="${person1.fname}" name="fname"/>
 
+    <span>Стать: </span>
     <select name="sex">
         <option th:each="sex1 : ${genderList}" th:value="${sex1.type}" th:text="${sex1.type}"
                 th:selected="${sex1.type} == ${person1.sex}"></option>
     </select>
+    <span>Дата народження</span>
+    <input placeholder="Дата народження" type="date" th:value="${person1.birthday}" name="birthday"/>
 
+    <br>
+    <p>Контактні дані: </p>
+    <input placeholder="Вулиця" type="text" th:value="${person1.street_name}" name="street_name"/>
+    <input placeholder="Будинок" type="text" th:value="${person1.street_building_number}"
+           name="street_building_number"/>
+    <input placeholder="Квартира" type="number" th:value="${person1.flat_number}" name="flat_number"/>
+    <input placeholder="Дом.тел." type="number" th:value="${person1.home_phone}" name="home_phone"/>
+
+    <span>Моб.</span>
+    <input placeholder="Моб." type="number" th:value="${person1.mob_phone}" name="mob_phone"/>
+
+
+    <br>
+    <p>Зборова інформація: </p>
+    <span>Група: </span>
     <select name="group">
-        <option th:each="group : ${groups}" th:value="${group.number}" th:text="${group.number}"
+        <option th:each="group : ${groups}" th:value="${group.number}" th:text="${group.number}+' '+${group.resplname}+'
+        '+${group.respfname}"
                 th:selected="${group.number} == ${person1.group}"></option>
     </select>
 
+    <span>В зборі: </span>
     <select name="privInMeet">
         <option th:each="prMeet : ${typesDtoList}" th:value="${prMeet.id}" th:text="${prMeet.meet_type}"
                 th:selected="${prMeet.id} == ${person1.privInMeet}"></option>
     </select>
 
+    <span>В служінні: </span>
     <select name="privInService">
         <option th:each="prServ : ${serviceList}" th:value="${prServ.id}" th:text="${prServ.type}"
                 th:selected="${prServ.id} == ${person1.privInService}"></option>
@@ -37,13 +60,7 @@
                 th:selected="${hope.id} == ${person1.hope_on}"></option>
     </select>
 
-    <input placeholder="Вулиця" type="text" th:value="${person1.street_name}" name="street_name"/>
-    <input placeholder="Будинок" type="text" th:value="${person1.street_building_number}"
-           name="street_building_number"/>
-    <input placeholder="Квартира" type="number" th:value="${person1.flat_number}" name="flat_number"/>
-    <input placeholder="Дом.тел." type="number" th:value="${person1.home_phone}" name="home_phone"/>
-    <input placeholder="Моб." type="number" th:value="${person1.mob_phone}" name="mob_phone"/>
-    <input placeholder="Дата народження" type="date" th:value="${person1.birthday}" name="birthday"/>
+    <span>Дата хрещення</span>
     <input placeholder="Дата хрещення" type="date" th:value="${person1.dateChreshchennja}" name="dateChreshchennja"/>
 
     <button formmethod="post" th:formaction="'/view/edit/'" th:object="${person1}" type="submit">Send</button>

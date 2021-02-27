@@ -39,30 +39,30 @@ public class PeopleService implements IPeopleService {
 
         people.setFname(peopleCreateDto.getFname());
         people.setLname(peopleCreateDto.getLname());
-//        people.setBirthday(peopleCreateDto.getBirthday());
-//        people.setDate_chreshchennja(peopleCreateDto.getDate_chreshchennja());
-//        people.setStreet_name(peopleCreateDto.getStreet_name());
-//        people.setStreet_building_number(peopleCreateDto.getStreet_building_number());
-//        people.setFlat_number(peopleCreateDto.getFlat_number());
-//        people.setHome_phone(peopleCreateDto.getHome_phone());
-//        people.setMob_phone(peopleCreateDto.getMob_phone());
+        people.setBirthday(peopleCreateDto.getBirthday());
+        people.setDate_chreshchennja(peopleCreateDto.getDate_chreshchennja());
+        people.setStreet_name(peopleCreateDto.getStreet_name());
+        people.setStreet_building_number(peopleCreateDto.getStreet_building_number());
+        people.setFlat_number(peopleCreateDto.getFlat_number());
+        people.setHome_phone(peopleCreateDto.getHome_phone());
+        people.setMob_phone(peopleCreateDto.getMob_phone());
 //
-//        Optional<MeetServices> byId = meetRepository.findById(peopleCreateDto.getPriv_meet());
-//        MeetServices meetServices = byId.orElseThrow(() -> new BadRequestException("I did not find any services in meet " +
-//                "for new User"));
-//        people.setPriv_meet(meetServices);
-//
-//        Optional<ServiceInS> byId1 = serviceInSRepository.findById(peopleCreateDto.getServiceInS());
-//        ServiceInS serviceInS = byId1.orElseThrow(() -> new BadRequestException("I did not find any services in S " +
-//                "for new User"));
-//        people.setPriv_service(serviceInS);
-//
-//        Optional<Hope> byId2 = hopeRepository.findById(peopleCreateDto.getHope_id());
-//        Hope hope = byId2.orElseThrow(() -> new BadRequestException("I did not find any hope for new User"));
-//        people.setNadija_na(hope);
-//
-//        Group groupByNumb = groupRepository.findGroupById(peopleCreateDto.getGroupNumb());
-//        people.setGroup_numb(groupByNumb);
+        Optional<MeetServices> byId = meetRepository.findById(peopleCreateDto.getPriv_meet());
+        MeetServices meetServices = byId.orElseThrow(() -> new BadRequestException("I did not find any services in meet " +
+                "for new User"));
+        people.setPriv_meet(meetServices);
+
+        Optional<ServiceInS> byId1 = serviceInSRepository.findById(peopleCreateDto.getServiceInS());
+        ServiceInS serviceInS = byId1.orElseThrow(() -> new BadRequestException("I did not find any services in S " +
+                "for new User"));
+        people.setPriv_service(serviceInS);
+
+        Optional<Hope> byId2 = hopeRepository.findById(peopleCreateDto.getHope_id());
+        Hope hope = byId2.orElseThrow(() -> new BadRequestException("I did not find any hope for new User"));
+        people.setNadija_na(hope);
+
+        Group groupByNumb = groupRepository.findGroupById(peopleCreateDto.getGroupNumb());
+        people.setGroup_numb(groupByNumb);
 
         Optional<Sex> sexById = sexRepository.findById(peopleCreateDto.getSex());
         Sex sex = sexById.orElseThrow(() -> new BadRequestException("Current sex type did not find"));
