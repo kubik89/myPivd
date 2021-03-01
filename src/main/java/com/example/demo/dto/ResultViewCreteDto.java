@@ -17,4 +17,5 @@ public class ResultViewCreteDto {
     private int b_learning;
     private String resultForDate;
     private String dateInput;
+    private String comment;
 }

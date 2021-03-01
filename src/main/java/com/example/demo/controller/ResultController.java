@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.DateMonthYearDto;
 import com.example.demo.dto.ResultViewCreteDto;
 import com.example.demo.entity.Result;
 import com.example.demo.service.IResultService;
@@ -43,7 +44,7 @@ public class ResultController {
     }
 
     @GetMapping("/lastMonthValue")
-    public String getValueOfLastMonth() {
+    public DateMonthYearDto getValueOfLastMonth() {
         return iResultService.getValueOfLastResultMonth();
     }
 

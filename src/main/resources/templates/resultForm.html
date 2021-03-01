@@ -10,51 +10,57 @@
 <br/>
 <form method="post" th:object="${newResult}" th:action="@{/result/create}">
 
-        <select style="padding: 6px 6px; margin: 4px 4px; box-sizing: border-box; font-size: medium"
-                th:field="*{people_id}">
-            <option th:each="name : ${allPersonName}" th:value="${name.id}"
-                    th:text="${name.lname}+' '+${name.fname}"></option>
-        </select>
-        <span>Людина: </span>
+<select style="padding: 6px 6px; margin: 4px 4px; box-sizing: border-box; font-size: medium"
+        th:field="*{people_id}">
+    <option th:each="name : ${allPersonName}" th:value="${name.id}"
+            th:text="${name.lname}+' '+${name.fname}"></option>
+</select>
+<span>Людина: </span>
 
-        <br/>
-        <input style="padding: 6px 8px; margin: 4px 4px; box-sizing: border-box; font-size: medium"
-               placeholder="Години"
-               type="number" th:field="*{hour}"/>
-        <span>Год</span>
+<br/>
+<input style="padding: 6px 8px; margin: 4px 4px; box-sizing: border-box; font-size: medium"
+       placeholder="Години"
+       type="number" th:field="*{hour}"/>
+<span>Год</span>
 
-        <br/>
-        <input style="padding: 6px 8px; margin: 4px 4px; box-sizing: border-box; font-size: medium"
-               placeholder="Публікації" type="number" th:field="*{publication}"/>
-        <span>Публ.</span>
+<br/>
+<input style="padding: 6px 8px; margin: 4px 4px; box-sizing: border-box; font-size: medium"
+       placeholder="Публікації" type="number" th:field="*{publication}"/>
+<span>Публ.</span>
 
-        <br/>
-        <input style="padding: 6px 8px; margin: 4px 4px; box-sizing: border-box; font-size: medium"
-               placeholder="Відео" type="number" th:field="*{video}"/>
-        <span>Відео</span>
+<br/>
+<input style="padding: 6px 8px; margin: 4px 4px; box-sizing: border-box; font-size: medium"
+       placeholder="Відео" type="number" th:field="*{video}"/>
+<span>Відео</span>
 
-        <br/>
-        <input style="padding: 6px 8px; margin: 4px 4px; box-sizing: border-box; font-size: medium"
-               placeholder="Повт.від." type="number" th:field="*{p_v}"/>
-        <span>Повт.від.</span>
+<br/>
+<input style="padding: 6px 8px; margin: 4px 4px; box-sizing: border-box; font-size: medium"
+       placeholder="Повт.від." type="number" th:field="*{p_v}"/>
+<span>Повт.від.</span>
 
-        <br/>
-        <input style="padding: 6px 8px; margin: 4px 4px; box-sizing: border-box; font-size: medium"
-               placeholder="Б.вивч." type="number" th:field="*{b_learning}"/>
-        <span>Б.вивч.</span>
+<br/>
+<input style="padding: 6px 8px; margin: 4px 4px; box-sizing: border-box; font-size: medium"
+       placeholder="Б.вивч." type="number" th:field="*{b_learning}"/>
+<span>Б.вивч.</span>
 
-        <br/>
-        <input style="padding: 6px 8px; margin: 4px 4px; box-sizing: border-box; font-size: medium"
-               placeholder="за місяць" readonly type="date" th:value="${dateLastMonth}" name="resultForDate"/>
-        <span>за місяць</span>
+<br/>
+<input style="padding: 6px 8px; margin: 4px 4px; box-sizing: border-box; font-size: medium"
+       placeholder="за місяць" readonly type="date" th:value="${dateLastMonth.date}"
+       name="resultForDate"/>
+<span th:text="'За ' + ${dateLastMonth.monthName}+' '+${dateLastMonth.year}"></span>
 
-        <br/>
-        <input style="padding: 6px 8px; margin: 4px 4px; box-sizing: border-box; font-size: medium"
-               placeholder="дата введення" readonly type="date" th:value="${currentDate}" name="dateInput"/>
-        <span>Дата введення</span>
+<br/>
+<input style="padding: 6px 8px; margin: 4px 4px; box-sizing: border-box; font-size: medium"
+       placeholder="дата введення" readonly type="date" th:value="${currentDate}" name="dateInput"/>
+<span>Дата введення</span>
 
-        <br/>
-        <button type="submit">Додати</button>
+<br/>
+<input style="padding: 6px 8px; margin: 4px 4px; box-sizing: border-box; font-size: medium"
+       type="text" placeholder="коментар" th:field="*{comment}">
+<span>Коментар</span>
+
+<br/>
+<button type="submit">Додати</button>
 
 </form>
 

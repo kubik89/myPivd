@@ -27,4 +27,5 @@ public class Result {
     private int b_learning;
     private String resultForDate;
     private String dateInput;
+    private String comment;
 }

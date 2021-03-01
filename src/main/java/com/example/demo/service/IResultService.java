@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.DateMonthYearDto;
 import com.example.demo.dto.ResultViewCreteDto;
 import com.example.demo.entity.Result;
 
@@ -14,7 +15,7 @@ public interface IResultService {
     List<Result> getAllResultsPioneers();
     List<Result> getAllResultsInMeet();
     List<Result> getAllResultsInMonth(int month) throws ParseException;
-    String getValueOfLastResultMonth();
+    DateMonthYearDto getValueOfLastResultMonth();
 
     Result insert (ResultViewCreteDto result);
 

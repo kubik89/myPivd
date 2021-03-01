@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.dao.PeopleRepository;
 import com.example.demo.dao.ResultRepository;
+import com.example.demo.dto.DateMonthYearDto;
 import com.example.demo.dto.ResultViewCreteDto;
 import com.example.demo.entity.People;
 import com.example.demo.entity.Result;
@@ -85,14 +86,14 @@ public class ResultService implements IResultService {
     }
 
     @Override
-    public String getValueOfLastResultMonth() {
+    public DateMonthYearDto getValueOfLastResultMonth() {
 
 //        сьогоднішню дату повну в стрічці перетворити в мин.місяць і окремо витягнути номер місяця й рік
         LocalDate lastDayOfLastMonth = LocalDate.now().withDayOfMonth(1).minusDays(1);
         String date = lastDayOfLastMonth.toString();
-
-
-        return date;
+        String monthName = lastDayOfLastMonth.getMonth().name();
+        int year = lastDayOfLastMonth.getYear();
+        return new DateMonthYearDto(date, monthName, year);
     }
 
     @Override
@@ -108,6 +109,7 @@ public class ResultService implements IResultService {
             newResult.setB_learning(result.getB_learning());
             newResult.setResultForDate(result.getResultForDate());
             newResult.setDateInput(result.getDateInput());
+            newResult.setComment(result.getComment());
             resultRepository.saveAndFlush(newResult);
         }
         return newResult;

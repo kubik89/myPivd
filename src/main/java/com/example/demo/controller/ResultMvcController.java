@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.DateMonthYearDto;
 import com.example.demo.dto.GroupCreateDto;
 import com.example.demo.dto.PeopleJustNameDto;
 import com.example.demo.dto.ResultViewCreteDto;
@@ -39,8 +40,8 @@ public class ResultMvcController {
                 HttpEntity.EMPTY, PeopleJustNameDto[].class);
         model.addAttribute("allPersonName", justNameEntity.getBody());
 
-        ResponseEntity<String> dateLastMonth = restTemlpate.exchange(getLastMonthLastDay, HttpMethod.GET,
-                HttpEntity.EMPTY, String.class);
+        ResponseEntity<DateMonthYearDto> dateLastMonth = restTemlpate.exchange(getLastMonthLastDay, HttpMethod.GET,
+                HttpEntity.EMPTY, DateMonthYearDto.class);
         model.addAttribute("dateLastMonth", dateLastMonth.getBody());
 
         model.addAttribute("currentDate", LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
