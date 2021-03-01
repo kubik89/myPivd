@@ -14,6 +14,8 @@ public interface IPeopleService {
     //List<PeopleDto> getAllPersons();
     PeopleGetViewDto getAllPersons();
 
+    List<PeopleJustNameDto> getAllPersonName();
+
     //People getPersonById(int id);
     PeopleViewCurrentUserDto getPersonById(int id);
 

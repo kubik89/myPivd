@@ -30,6 +30,11 @@ public class PeopleController {
         return iPeopleService.getAllPersons();
     }
 
+    @GetMapping("/justName")
+    public List<PeopleJustNameDto> getAllPersonName() {
+        return iPeopleService.getAllPersonName();
+    }
+
     @GetMapping("/getEldersOrHelpers")
     public PeopleEldersAndHelpers getEldersOrHelpers() {
         return iPeopleService.getEldersOrHelpers();

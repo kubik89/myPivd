@@ -1,25 +1,15 @@
-package com.example.demo.entity;
+package com.example.demo.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.example.demo.entity.People;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Entity
-public class Result {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
-    @ManyToOne
-    @JsonIgnore
-    private People people;
+public class ResultViewCreteDto {
+    private int people_id;
     private int hour;
     private int publication;
     private int video;

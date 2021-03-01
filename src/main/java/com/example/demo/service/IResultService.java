@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.ResultViewCreteDto;
 import com.example.demo.entity.Result;
 
 import java.text.ParseException;
@@ -13,6 +14,9 @@ public interface IResultService {
     List<Result> getAllResultsPioneers();
     List<Result> getAllResultsInMeet();
     List<Result> getAllResultsInMonth(int month) throws ParseException;
+    String getValueOfLastResultMonth();
+
+    Result insert (ResultViewCreteDto result);
 
 
 }

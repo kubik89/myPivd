@@ -1,18 +1,17 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.ResultViewCreteDto;
 import com.example.demo.entity.Result;
 import com.example.demo.service.IResultService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.util.List;
 
+@CrossOrigin
 @RestController
-@RequestMapping("/result")
+@RequestMapping(value = "/res")
 public class ResultController {
 
     @Autowired
@@ -41,6 +40,16 @@ public class ResultController {
     @GetMapping("/meet/month/{month}")
     public List<Result> getAllPioneerResults(@PathVariable int month) throws ParseException {
         return iResultService.getAllResultsInMonth(month);
+    }
+
+    @GetMapping("/lastMonthValue")
+    public String getValueOfLastMonth() {
+        return iResultService.getValueOfLastResultMonth();
+    }
+
+    @PostMapping("/create")
+    public Result insert (@RequestBody ResultViewCreteDto result) {
+        return iResultService.insert(result);
     }
 
 }

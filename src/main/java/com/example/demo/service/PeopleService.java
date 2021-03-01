@@ -83,6 +83,15 @@ public class PeopleService implements IPeopleService {
     }
 
     @Override
+    public List<PeopleJustNameDto> getAllPersonName() {
+        List<PeopleJustNameDto> list = new ArrayList<>();
+        peopleRepository.findAll().forEach(people ->
+            list.add(new PeopleJustNameDto(people.getId(), people.getLname(), people.getFname())));
+
+        return list;
+    }
+
+    @Override
     public PeopleViewCurrentUserDto getPersonById(int id) {
         People person = peopleRepository.getOne(id);
         return convertToPeopleViewCurrentUserDto(person);
