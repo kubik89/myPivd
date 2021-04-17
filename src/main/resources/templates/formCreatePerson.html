@@ -12,6 +12,8 @@
     <p>Про людину: </p>
     <input placeholder="Ім'я" type="text" th:field="*{fname}"/>
     <input placeholder="Прізвище" type="text" th:field="*{lname}"/>
+<!--    <div th:if= "*{lname != ''}"> No Data Found </div>-->
+    <div th:value="${noName}" th:text="${noName}"> </div>
 
     <span>Стать: </span>
     <select th:field="*{sex}">

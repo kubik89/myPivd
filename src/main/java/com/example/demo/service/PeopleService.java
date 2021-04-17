@@ -40,12 +40,29 @@ public class PeopleService implements IPeopleService {
         people.setFname(peopleCreateDto.getFname());
         people.setLname(peopleCreateDto.getLname());
         people.setBirthday(peopleCreateDto.getBirthday());
-        people.setDate_chreshchennja(peopleCreateDto.getDate_chreshchennja());
         people.setStreet_name(peopleCreateDto.getStreet_name());
         people.setStreet_building_number(peopleCreateDto.getStreet_building_number());
         people.setFlat_number(peopleCreateDto.getFlat_number());
         people.setHome_phone(peopleCreateDto.getHome_phone());
         people.setMob_phone(peopleCreateDto.getMob_phone());
+
+
+//        if (people.getDate_chreshchennja().isEmpty())
+//        if (people.getDate_chreshchennja().isEmpty() | people.getDate_chreshchennja().equals("") | people.getDate_chreshchennja() == null) {
+//            throw new NullPointerException("Дата хрещення = empty or ''? = " + peopleCreateDto.getServiceInS());
+//            System.out.println("Дата хрещення = empty or ''? = " + peopleCreateDto.getServiceInS());
+//            people.setDate_chreshchennja(peopleCreateDto.getDate_chreshchennja());
+//            people.setDate_chreshchennja(null);
+//        } else if (peopleCreateDto.getServiceInS() == 4) {
+//            System.out.println("Дата хрещення =4 ? = " + peopleCreateDto.getServiceInS());
+//            people.setDate_chreshchennja(null);
+//        }
+//        else {
+//            System.out.println("Дата хрещення = else ? = " + peopleCreateDto.getServiceInS());
+//            people.setDate_chreshchennja(null);
+//        }
+
+        people.setDate_chreshchennja(peopleCreateDto.getDate_chreshchennja());
 //
         Optional<MeetServices> byId = meetRepository.findById(peopleCreateDto.getPriv_meet());
         MeetServices meetServices = byId.orElseThrow(() -> new BadRequestException("I did not find any services in meet " +
@@ -86,7 +103,7 @@ public class PeopleService implements IPeopleService {
     public List<PeopleJustNameDto> getAllPersonName() {
         List<PeopleJustNameDto> list = new ArrayList<>();
         peopleRepository.findAll().forEach(people ->
-            list.add(new PeopleJustNameDto(people.getId(), people.getLname(), people.getFname())));
+                list.add(new PeopleJustNameDto(people.getId(), people.getLname(), people.getFname())));
 
         return list;
     }
@@ -120,7 +137,11 @@ public class PeopleService implements IPeopleService {
         people1.setFlat_number(people.getFlat_number());
         people1.setHome_phone(people.getHome_phone());
         people1.setMob_phone(people.getMob_phone());
-        people1.setDate_chreshchennja(people.getDateChreshchennja());
+        if (people.getDateChreshchennja().equals("")) {
+            people.setDateChreshchennja(null);
+        } else {
+            people1.setDate_chreshchennja(people.getDateChreshchennja());
+        }
 
         meetRepository.findAll().forEach(meetServices -> {
             if (people.getPrivInMeet() == meetServices.getId()) {

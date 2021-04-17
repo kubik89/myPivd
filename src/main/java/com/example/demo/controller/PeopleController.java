@@ -72,7 +72,7 @@ public class PeopleController {
 //    }
 
     @PostMapping
-    public People createPerson(@RequestBody PeopleCreateDto people) {
+    public People createPerson(@RequestBody @Valid PeopleCreateDto people) {
         logger.info("New person created: {}", people.getLname());
         return iPeopleService.savePerson(people);
     }

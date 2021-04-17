@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -23,7 +24,7 @@ import java.util.Date;
 public class People {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @ManyToOne
@@ -35,6 +36,7 @@ public class People {
     private String fname;
 
 //    @NotBlank(message = "Пусте значення Прізвище")
+//    @Min(message = "Прізвище має містити мінімум 3 символи", value = 3)
     private String lname;
     private String street_name;
     private String street_building_number;

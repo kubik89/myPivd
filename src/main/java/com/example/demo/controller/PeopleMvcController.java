@@ -41,7 +41,6 @@ public class PeopleMvcController {
     }
 
 
-
     @GetMapping("/")
     public String index(Model model) {
 
@@ -77,6 +76,7 @@ public class PeopleMvcController {
         model.addAttribute("hopeList", responseEntity4.getBody().getHopeList());
 
         model.addAttribute("person", new PeopleCreateDto());
+        model.addAttribute("noName", "noName");
 
         model.addAttribute("person1", new PeopleViewCurrentUserDto());
         return "formCreatePerson";
@@ -131,11 +131,15 @@ public class PeopleMvcController {
     }
 
     @PostMapping("/create_person")
-    public String createPersonForm(PeopleCreateDto person) {
+    public String createPersonForm(PeopleCreateDto person, String noName) {
 
         HttpEntity<PeopleCreateDto> httpEntity = new HttpEntity<>(person, HttpHeaders.EMPTY);
-        restTemplate.exchange("http://localhost:8081/people", HttpMethod.POST, httpEntity, People.class);
 
+        if (person.getLname().isEmpty()) {
+            noName = "no name";
+        } else {
+            restTemplate.exchange("http://localhost:8081/people", HttpMethod.POST, httpEntity, People.class);
+        }
         return "redirect:/view/create_person";
     }
 

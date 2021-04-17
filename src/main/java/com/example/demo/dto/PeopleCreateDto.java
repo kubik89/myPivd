@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
 @NoArgsConstructor
@@ -15,6 +18,8 @@ import java.util.Date;
 public class PeopleCreateDto {
     private int id;
     private String fname;
+//    @NotBlank(message = "Пусте значення Прізвище")
+//    @Min(message = "Прізвище має містити мінімум 3 символи", value = 3)
     private String lname;
     private int sex;
     private int groupNumb;
