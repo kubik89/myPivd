@@ -4,6 +4,7 @@ import com.example.demo.dao.PeopleRepository;
 import com.example.demo.dao.ResultRepository;
 import com.example.demo.dto.DateMonthYearDto;
 import com.example.demo.dto.ResultViewCreteDto;
+import com.example.demo.dto.ResultViewWithPersonName;
 import com.example.demo.entity.People;
 import com.example.demo.entity.Result;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -44,13 +46,48 @@ public class ResultService implements IResultService {
 
     @Override
     public List<Result> getAllResultsInGroupByGroupId(int groupId) {
-        List<Result> resultList = new ArrayList<>();
-        resultRepository.findAll().forEach(result -> {
-            if (result.getPeople().getGroup_numb().getGroup_number() == groupId) {
-                resultList.add(result);
-            }
-        });
-        return resultList;
+        return null;
+    }
+
+    @Override
+    public List<Result> getAllResultsInGroupByDate(String forDate) {
+        int year = Integer.parseInt(forDate.substring(0, 4));
+        int month = Integer.parseInt(forDate.substring(5, 7));
+
+        List<Result> list = resultRepository.findAll().stream().filter(
+                result -> Integer.parseInt(result.getResultForDate().substring(0, 4)) == year &&
+                        Integer.parseInt(result.getResultForDate().substring(5, 7)) == month)
+                .collect(Collectors.toList());
+
+        return list;
+    }
+
+    @Override
+    public List<Result> getAllResultsInGroupByDate(String forDate, boolean pio) {
+        int year = Integer.parseInt(forDate.substring(0, 4));
+        int month = Integer.parseInt(forDate.substring(5, 7));
+
+        List<Result> list = resultRepository.findAll().stream().filter(
+                result -> Integer.parseInt(result.getResultForDate().substring(0, 4)) == year &&
+                        Integer.parseInt(result.getResultForDate().substring(5, 7)) == month&&
+                result.getPeople().getPriv_service().getId()==1)
+                .collect(Collectors.toList());
+
+        return list;
+    }
+
+    @Override
+    public List<Result> getAllResultsInGroupByDate(int groupId, String forDate) {
+        int year = Integer.parseInt(forDate.substring(0, 4));
+        int month = Integer.parseInt(forDate.substring(5, 7));
+
+        List<Result> list = resultRepository.findAll().stream().filter(
+                result -> result.getPeople().getGroup_numb().getGroup_number() == groupId &&
+                        Integer.parseInt(result.getResultForDate().substring(0, 4)) == year &&
+                        Integer.parseInt(result.getResultForDate().substring(5, 7)) == month)
+                .collect(Collectors.toList());
+
+        return list;
     }
 
     @Override
@@ -71,19 +108,19 @@ public class ResultService implements IResultService {
         return resultList;
     }
 
-    @Override
-    public List<Result> getAllResultsInMonth(int month) {
-
-        List<Result> resultList = new ArrayList<>();
-        resultRepository.findAll().forEach(result -> {
-            String sDate1 = result.getResultForDate();
-            LocalDate date = LocalDate.parse(sDate1);
-            if (date.getMonth().getValue() == month) {
-                resultList.add(result);
-            }
-        });
-        return resultList;
-    }
+//    @Override
+//    public List<Result> getAllResultsInMonth(String forDate) {
+//
+//        List<Result> resultList = new ArrayList<>();
+//        resultRepository.findAll().forEach(result -> {
+//            String sDate1 = result.getResultForDate();
+//            LocalDate date = LocalDate.parse(sDate1);
+//            if (date.getMonth().getValue() == month) {
+//                resultList.add(result);
+//            }
+//        });
+//        return resultList;
+//    }
 
     @Override
     public DateMonthYearDto getValueOfLastResultMonth() {

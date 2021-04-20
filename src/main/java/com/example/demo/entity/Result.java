@@ -18,7 +18,7 @@ public class Result {
     private int id;
 
     @ManyToOne
-    @JsonIgnore
+//    @JsonIgnore
     private People people;
     private int hour;
     private int publication;

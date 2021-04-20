@@ -28,6 +28,21 @@ public class ResultController {
         return iResultService.getAllResultsInGroupByGroupId(groupId);
     }
 
+    @GetMapping("/{forDate}")
+    public List<Result> getGrResultsByDate(@PathVariable String forDate) {
+        return iResultService.getAllResultsInGroupByDate(forDate);
+    }
+
+    @GetMapping("/{forDate}/pio={pio}")
+    public List<Result> getGrResultsByDate(@PathVariable String forDate, @PathVariable boolean pio) {
+        return iResultService.getAllResultsInGroupByDate(forDate, pio);
+    }
+
+    @GetMapping("/{groupId}/{forDate}")
+    public List<Result> getGrResultsByDate(@PathVariable int groupId, @PathVariable String forDate) {
+        return iResultService.getAllResultsInGroupByDate(groupId, forDate);
+    }
+
     @GetMapping("/meet")
     public List<Result> getAllResults() {
         return iResultService.getAllResultsInMeet();
@@ -38,10 +53,10 @@ public class ResultController {
         return iResultService.getAllResultsPioneers();
     }
 
-    @GetMapping("/meet/month/{month}")
-    public List<Result> getAllPioneerResults(@PathVariable int month) throws ParseException {
-        return iResultService.getAllResultsInMonth(month);
-    }
+//    @GetMapping("/meet/month/{month}")
+//    public List<Result> getAllPioneerResults(@PathVariable int month) throws ParseException {
+//        return iResultService.getAllResultsInMonth(month);
+//    }
 
     @GetMapping("/lastMonthValue")
     public DateMonthYearDto getValueOfLastMonth() {
