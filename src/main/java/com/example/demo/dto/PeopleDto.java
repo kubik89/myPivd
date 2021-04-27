@@ -12,6 +12,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Data
 public class PeopleDto {
+    private int id;
     private String lname;
     private String fname;
 //    private String respInGroup;

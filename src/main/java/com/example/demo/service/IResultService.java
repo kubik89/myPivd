@@ -11,6 +11,7 @@ public interface IResultService {
 
     Result getResultMonthlyByUserId(int userId, int month);
     List<Result> getAllResultsByUserId(int userId);
+    List<Result> getAllResultsByUserId(int userId, String date);
     List<Result> getAllResultsInGroupByGroupId(int groupId);
     List<Result> getAllResultsPioneers();
     List<Result> getAllResultsInMeet();

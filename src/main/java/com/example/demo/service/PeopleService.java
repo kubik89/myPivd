@@ -6,6 +6,8 @@ import com.example.demo.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.swing.text.html.parser.Entity;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -91,11 +93,17 @@ public class PeopleService implements IPeopleService {
     @Override
     public PeopleGetViewDto getAllPersons() {
 
-        List<People> allPersons = peopleRepository.findAllPersons();
+//        List<People> allPersons = peopleRepository.findAllPersons();
+//        List<PeopleDto> peopleDtoList = allPersons.stream().map(people ->
+//                new PeopleDto(people.getId(), people.getLname(), people.getFname(), people.getGroup_numb().getGroup_number(),
+//                        people.getSex().getSexType(), people.getBirthday())).collect(Collectors.toList());
+
+        List<PeopleDto> allPersons = peopleRepository.findAllPersonsAsPeopleDto();
 
         List<PeopleDto> peopleDtoList = allPersons.stream().map(people ->
-                new PeopleDto(people.getLname(), people.getFname(), people.getGroup_numb().getGroup_number(),
-                        people.getSex().getSexType(), people.getBirthday())).collect(Collectors.toList());
+                new PeopleDto(people.getId(), people.getLname(), people.getFname(), people.getGroupNumb(),
+                        people.getSex(), people.getBirthday())).collect(Collectors.toList());
+
         return new PeopleGetViewDto(peopleDtoList);
     }
 

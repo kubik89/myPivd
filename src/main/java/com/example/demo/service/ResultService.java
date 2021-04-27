@@ -45,6 +45,17 @@ public class ResultService implements IResultService {
     }
 
     @Override
+    public List<Result> getAllResultsByUserId(int userId, String fromDate) {
+        int year = Integer.parseInt(fromDate.substring(0, 4));
+        int month = Integer.parseInt(fromDate.substring(5, 7));
+        return resultRepository.findAll().stream().filter(
+                result -> result.getPeople().getId() == userId &&
+                        Integer.parseInt(result.getResultForDate().substring(0, 4)) >= year &&
+                        Integer.parseInt(result.getResultForDate().substring(5, 7)) >= month)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public List<Result> getAllResultsInGroupByGroupId(int groupId) {
         return null;
     }

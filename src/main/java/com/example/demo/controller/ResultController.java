@@ -7,6 +7,7 @@ import com.example.demo.service.IResultService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.text.ParseException;
 import java.util.List;
 
@@ -21,6 +22,11 @@ public class ResultController {
     @GetMapping("/user/{userId}")
     public List<Result> getUserResult(@PathVariable int userId) {
         return iResultService.getAllResultsByUserId(userId);
+    }
+
+    @GetMapping("/user/{userId}/{date}")
+    public List<Result> getUserResult(@PathVariable int userId, @PathVariable String date) {
+        return iResultService.getAllResultsByUserId(userId, date);
     }
 
     @GetMapping("/group/{groupId}")
@@ -63,8 +69,8 @@ public class ResultController {
         return iResultService.getValueOfLastResultMonth();
     }
 
-    @PostMapping("/create")
-    public Result insert (@RequestBody ResultViewCreteDto result) {
+    @PostMapping()
+    public Result insert (@RequestBody @Valid ResultViewCreteDto result) {
         return iResultService.insert(result);
     }
 

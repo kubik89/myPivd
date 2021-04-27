@@ -5,11 +5,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.Min;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 public class ResultViewCreteDto {
     private int people_id;
+    @Min(value = 1, message = "can not be 0")
     private int hour;
     private int publication;
     private int video;

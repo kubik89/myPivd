@@ -34,4 +34,3 @@ public class ErrorController {
         return new ResponceErrorDTO(LocalDateTime.now(), ex.getMessage(), HttpStatus.BAD_REQUEST.value());
     }
 }
-
