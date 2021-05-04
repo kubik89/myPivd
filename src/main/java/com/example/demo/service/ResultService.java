@@ -156,7 +156,7 @@ public class ResultService implements IResultService {
             newResult.setP_v(result.getP_v());
             newResult.setB_learning(result.getB_learning());
             newResult.setResultForDate(result.getResultForDate());
-            newResult.setDateInput(result.getDateInput());
+//            newResult.setDateInput(result.getDateInput());
             newResult.setComment(result.getComment());
             resultRepository.saveAndFlush(newResult);
         }

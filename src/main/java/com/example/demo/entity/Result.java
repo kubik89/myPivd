@@ -26,6 +26,6 @@ public class Result {
     private int p_v;
     private int b_learning;
     private String resultForDate;
-    private String dateInput;
+//    private String dateInput;
     private String comment;
 }

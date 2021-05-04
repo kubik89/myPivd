@@ -4,6 +4,8 @@ import com.example.demo.dto.DateMonthYearDto;
 import com.example.demo.dto.ResultViewCreteDto;
 import com.example.demo.entity.Result;
 import com.example.demo.service.IResultService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +20,8 @@ public class ResultController {
 
     @Autowired
     IResultService iResultService;
+
+    private static Logger logger = LoggerFactory.getLogger(ResultController.class);
 
     @GetMapping("/user/{userId}")
     public List<Result> getUserResult(@PathVariable int userId) {
@@ -71,6 +75,7 @@ public class ResultController {
 
     @PostMapping()
     public Result insert (@RequestBody @Valid ResultViewCreteDto result) {
+        logger.info("Created new result for person" + result.getPeople_id());
         return iResultService.insert(result);
     }
 
