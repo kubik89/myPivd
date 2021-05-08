@@ -1,15 +1,23 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
+    <!--    <script src="jquery-3.6.0.min.js"></script>-->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js" type="text/javascript"></script>
+<!--    <link rel="stylesheet" href="css/style.css">-->
     <meta charset="UTF-8">
+    <style>
+        div.bckColor {
+            background-color: red;
+        }
+    </style>
     <title>groups</title>
 </head>
 <body>
 
 <form method="get" action="/main/">
-    <button type="submit"> <- До головного меню</button>
+    <button type="submit"> До головного меню</button>
 </form>
-<br/>
+<br>
 
 <span style="font-size: medium">Список в групі #</span>
 <span th:text="${groupNumb}"></span>
@@ -31,6 +39,115 @@
         <span th:text="${person.fname}"></span>
     </form>
 </div>
+<button id="recordButton" onclick="">Record</button>
+<div class="bckColor" id="myDiv1">Hello from myDiv</div>
+<div class="bckColor1" id="myDiv2">Hello from myDiv</div>
+<button id="chgDiv">Change myDiv</button>
+<button id="chgSpan">Change all span</button>
+
+<script data-th-inline="javascript" type="text/javascript">
+
+    let obj1 = {name: "Vova", age: 30, married: true};
+
+    document.write(`<div>hello</div>`);
+    console.log("hello")
+
+
+    $(document).ready(function () {
+        $("#myDiv1").mouseenter(function () {
+            console.log("Your mouse enter this div")
+            $(".bckColor").css("background-color", "silver")
+        }).mouseout(function () {
+            $(".bckColor").css("background-color", "white")
+            console.log("Your mouse out this div")
+        })
+    })
+
+    $(document).ready(function () {
+        $("#chgSpan").on("click", function () {
+            let $div = $("div");
+            console.log($div[1])
+            $div[1].innerHTML="new text"
+            // $div[1].html('JQuery text')
+            let s = prompt("Change text?", "yes");
+            console.log(s)
+            if (s==="yes") {
+                prompt("Please, enter other word instead " + s)
+            }
+            // for (let $divKey in $div) {
+            //     console.log($divKey.id);
+            // }
+            // console.log($div)
+        })
+    })
+
+    $(document).ready(function () {
+        $("#chgDiv").on("click", function () {
+            $("#myDiv1").html("I changed by jquery method")
+            // document.getElementById("myDiv1").innerText="I changed"
+            document.getElementById("myDiv2").innerText="I changed too"
+            console.log("divs changed")
+        })
+    })
+
+    $(document).ready(function () {
+        $("#recordButton").on("click", function () {
+            console.log("function")
+            parseMyObject();
+            document.write(`<div>hello Function</div>`);
+            for (let i = 0; i < 10; i++) {
+                document.write(`<div>hello ${i}</div>`);
+            }
+            let hiBoss = document.createElement('div');
+            hiBoss.innerHTML='Hi boss';
+            // document.appendChild(hiBoss);
+        })
+    })
+
+    function parseMyObject() {
+        let string1 = JSON.stringify(obj1); // JSON.stringify() - перетворення обєкту в String за допомогою методу бібліотеки JSON
+        document.write(`<div>${string1}</div>`)
+        console.log(string1);
+    }
+
+
+    let string1 = JSON.stringify(obj1); // JSON.stringify() - перетворення обєкту в String за допомогою методу бібліотеки JSON
+    console.log(string1);
+
+    // $(document).ready(function (e) {
+    //     $("#recordButton").click(function (e) {
+    //         console.log("Click")
+    //     })
+    //     // document.write(`<!--<div>hello Function</div>-->`);
+    // })
+</script>
+<!--    // document.write(`<div>hello</div>`);-->
+
+
+<!--//-->
+<!--//-->
+<!--//     document.ready(function (e) {-->
+<!--//         // $("div").click(function (e) {-->
+<!--//             console.log("Mouse over Record button")-->
+<!--//-->
+<!--//     })-->
+<!--//     // let recordButton = $("#recordButton")-->
+<!--//     //-->
+<!--//     // function updateTimer(start, resume, stop) {-->
+<!--    //     if (start) {-->
+<!--    //         console.log("start")-->
+<!--    //     } else if (resume) {-->
+<!--    //         console.log("resume")-->
+<!--    //     } else if (stop) {-->
+<!--    //         console.log("stop")-->
+<!--    //     }-->
+<!--    // }-->
+<!--    //-->
+<!--    // function startRecording() {-->
+<!--    //     updateTimer(true, false, false);-->
+<!--    // }-->
+<!--    //-->
+<!--    // recordButton.click(startRecording);-->
 
 
 </body>

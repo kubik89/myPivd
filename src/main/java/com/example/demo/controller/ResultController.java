@@ -78,5 +78,4 @@ public class ResultController {
         logger.info("Created new result for person" + result.getPeople_id());
         return iResultService.insert(result);
     }
-
 }
