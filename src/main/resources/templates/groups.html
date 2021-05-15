@@ -1,13 +1,21 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
-    <!--    <script src="jquery-3.6.0.min.js"></script>-->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js" type="text/javascript"></script>
-<!--    <link rel="stylesheet" href="css/style.css">-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <style>
+        .greenText {
+            color: green;
+        }
+
         div.bckColor {
             background-color: red;
+        }
+
+        span.fontSize {
+            font-size: 25px;
         }
     </style>
     <title>groups</title>
@@ -19,23 +27,23 @@
 </form>
 <br>
 
-<span style="font-size: medium">Список в групі #</span>
+<span class="fontSize">Список в групі #</span>
 <span th:text="${groupNumb}"></span>
 <br>
-<span>Кількість: </span>
+<span class="fontSize">Кількість: </span>
 <span th:text="${count.count}"></span>
 <p></p>
 
-<span>Відповідальний за групу: </span>
+<span class="fontSize">Відповідальний за групу: </span>
 <span style="color: blue" th:text="${responsible.lname}"></span>
 <span style="color: blue" th:text="${responsible.fname}"></span>
 <p></p>
 
 <div>
-    <form th:each="person : ${list}">
+    <form id="personList" th:each="person : ${list}">
         <button type="submit" th:formaction="'/view/'+${person.id}">Інфо</button>
         <button type="submit" th:formaction="'/view/edit/'+${person.id}">Ред.</button>
-        <span th:text="${person.lname}"></span>
+        <span id="lName" th:text="${person.lname}"></span>
         <span th:text="${person.fname}"></span>
     </form>
 </div>
@@ -44,14 +52,163 @@
 <div class="bckColor1" id="myDiv2">Hello from myDiv</div>
 <button id="chgDiv">Change myDiv</button>
 <button id="chgSpan">Change all span</button>
+<button id="showlName">showlName</button>
+
+<div id="cssTest">Hello css test function</div>
+
+<form action="." class="validate">
+    <input class="testForm" type="text" name="f_name">Name
+    <input class="testForm" type="text" name="l_name">Last name
+    <input class="testForm" type="number" name="age">Age
+    <input type="submit" value="Submit"/>
+</form>
+
+<button id="sendReq">Send Request</button>
 
 <script data-th-inline="javascript" type="text/javascript">
 
+    const reqURL = "http://localhost:8081/groups/";
+    const body = {
+        number: 21,
+        respId: 100
+    }
+
+    function sendXMLRequest(method, URL, body) {
+        return new Promise((resolve, reject) => {
+
+            const xhr = new XMLHttpRequest();
+            xhr.open(method, URL);
+
+            xhr.responseType = 'json';
+            // якщо метод Post то передаємо headers -
+            xhr.setRequestHeader('Content-Type', 'application/json')
+            xhr.onload = () => {
+                if (xhr.status >= 400) {
+                    reject(xhr.response)
+                } else
+                    resolve(xhr.response)
+            }
+            xhr.onerror = () => {
+                reject(xhr.response)
+            }
+            // xhr.send();
+            xhr.send(JSON.stringify(body));
+        })
+    }
+
+    // let promise = sendXMLRequest("POST", reqURL, body);
+    // promise
+    //     .then(value => console.log(value))
+    //     .catch(onerror => console.log(onerror))
+
+
+$("#sendReq").on("click", function () {
+    $.ajax({
+        url: reqURL,
+        type: "POST",
+        data: JSON.stringify(body),
+        contentType: 'application/json',
+        responseType: 'json',
+        beforeSend: function () {
+            console.log("before send")
+        },
+        success: function () {
+            $("#sendReq").css("background-color", "green")
+            alert("Дані  надіслано" + body.number);
+
+            console.log("success")
+        }
+    })
+})
+
     let obj1 = {name: "Vova", age: 30, married: true};
+
+    $(".testForm").change(function () {
+        console.log("Не вірні дані")
+    })
+
+
+    // $(".validate").validate({
+    //     rules: {
+    //         f_name: {
+    //             required: true,
+    //             minlength: 4
+    //         },
+    //         l_name: {
+    //             required: true,
+    //             minlength: 4
+    //         },
+    //         age: {
+    //             min: 10,
+    //             max: 100
+    //         }
+    //     }, messages: {
+    //         f_name: "Не коректне імя",
+    //         l_name: "Не коректне прізвище",
+    //         age: "Вік повинен бути більший 10"
+    //     },
+    //     errorClass: "input_error"
+    // })
+
+    // $(function() - виконується в самому кінці
+    $(function () {
+        let jq = $('[for*=myDiv]');
+        jq.html("text found");
+
+        let fontSize = $(".fontSize");
+        fontSize.first().css("border", "thick double red").html("Border changed");
+        fontSize.eq(1).css("border", "thick double blue").html("Border changed");
+        console.log("тільки функція")
+
+        let isResult = $('div').is(function () {
+            if (this.innerHTML === 'Hello from myDiv1') {
+                console.log(this.innerHTML)
+                return this;
+            }
+        });
+        console.log("Результат: " + isResult);
+    })
+
+    $("#lName").on("copy", function () {
+        console.log("copy on the some lName")
+    })
+
+    $("#myDiv1").append(document.getElementById("personList")).css("color", "green")
+
+    $('button:odd').each(function () {
+        $(this).css("background-color", "gray")
+    })
+
+    let elems = $('body *');
+    index = elems.index($('#personList'));
+    console.log("Индекс, найденный с использованием объекта jQuery: " + index);
 
     document.write(`<div>hello</div>`);
     console.log("hello")
 
+    let elementById1 = document.getElementById("personList");
+    console.log(elementById1.tagName);
+
+    // let elementById2 = document.getElementById("lName");
+    $(document).ready(function () {
+
+        $("#showlName").click(function () {
+            $("#lName").each(function (index, element) {
+                console.log(element.innerText + " + " + index);
+            })
+        })
+    })
+
+    $(document).ready(function () {
+        let elementById = document.getElementById("cssTest");
+        $(elementById).click(function () {
+            $(this).css("background-color", "yellow")
+        })
+    })
+
+    // $(document).ready(function () {
+    //     alert("Привіт")
+    // })
 
     $(document).ready(function () {
         $("#myDiv1").mouseenter(function () {
@@ -67,25 +224,22 @@
         $("#chgSpan").on("click", function () {
             let $div = $("div");
             console.log($div[1])
-            $div[1].innerHTML="new text"
+            $div[1].innerHTML = "new text"
             // $div[1].html('JQuery text')
             let s = prompt("Change text?", "yes");
             console.log(s)
-            if (s==="yes") {
+            if (s === "yes") {
                 prompt("Please, enter other word instead " + s)
             }
-            // for (let $divKey in $div) {
-            //     console.log($divKey.id);
-            // }
-            // console.log($div)
         })
     })
 
     $(document).ready(function () {
         $("#chgDiv").on("click", function () {
+            // setTimeout();
             $("#myDiv1").html("I changed by jquery method")
             // document.getElementById("myDiv1").innerText="I changed"
-            document.getElementById("myDiv2").innerText="I changed too"
+            document.getElementById("myDiv2").innerText = "I changed too"
             console.log("divs changed")
         })
     })
@@ -93,61 +247,36 @@
     $(document).ready(function () {
         $("#recordButton").on("click", function () {
             console.log("function")
-            parseMyObject();
+            parseMyObject(obj1);
             document.write(`<div>hello Function</div>`);
             for (let i = 0; i < 10; i++) {
                 document.write(`<div>hello ${i}</div>`);
             }
+
+            setTimeout(function () {
+                console.log("time out started...")
+            }, 2000);
+
             let hiBoss = document.createElement('div');
-            hiBoss.innerHTML='Hi boss';
+            hiBoss.innerHTML = 'Hi boss';
             // document.appendChild(hiBoss);
         })
     })
 
-    function parseMyObject() {
-        let string1 = JSON.stringify(obj1); // JSON.stringify() - перетворення обєкту в String за допомогою методу бібліотеки JSON
+    function parseMyObject(object) {
+        let string1 = JSON.stringify(object); // JSON.stringify() - перетворення обєкту в String за допомогою методу бібліотеки JSON
         document.write(`<div>${string1}</div>`)
         console.log(string1);
     }
 
+    // setTimeout(function () {
+    //     console.log("time out started...")
+    // }, 500);
 
-    let string1 = JSON.stringify(obj1); // JSON.stringify() - перетворення обєкту в String за допомогою методу бібліотеки JSON
+    let string1 = JSON.stringify(obj1);
     console.log(string1);
 
-    // $(document).ready(function (e) {
-    //     $("#recordButton").click(function (e) {
-    //         console.log("Click")
-    //     })
-    //     // document.write(`<!--<div>hello Function</div>-->`);
-    // })
 </script>
-<!--    // document.write(`<div>hello</div>`);-->
-
-
-<!--//-->
-<!--//-->
-<!--//     document.ready(function (e) {-->
-<!--//         // $("div").click(function (e) {-->
-<!--//             console.log("Mouse over Record button")-->
-<!--//-->
-<!--//     })-->
-<!--//     // let recordButton = $("#recordButton")-->
-<!--//     //-->
-<!--//     // function updateTimer(start, resume, stop) {-->
-<!--    //     if (start) {-->
-<!--    //         console.log("start")-->
-<!--    //     } else if (resume) {-->
-<!--    //         console.log("resume")-->
-<!--    //     } else if (stop) {-->
-<!--    //         console.log("stop")-->
-<!--    //     }-->
-<!--    // }-->
-<!--    //-->
-<!--    // function startRecording() {-->
-<!--    //     updateTimer(true, false, false);-->
-<!--    // }-->
-<!--    //-->
-<!--    // recordButton.click(startRecording);-->
 
 
 </body>

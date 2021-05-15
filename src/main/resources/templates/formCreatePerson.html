@@ -1,8 +1,16 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://thymeleaf.org" xmlns:form="http://www.w3.org/1999/html">
 <head>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js" type="text/javascript"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+            crossorigin="anonymous"></script>
     <meta charset="UTF-8">
-    <title>Create Person</title>
+    <title>formCreatePerson</title>
+    <style type="text/css">
+    </style>
 </head>
 <body>
 <span>Створення нової людини: </span>
@@ -10,23 +18,44 @@
 <form method="post" th:object="${person}" th:action="@{/view/create_person}">
 
     <p>Про людину: </p>
-    <input placeholder="Ім'я" type="text" th:field="*{fname}"/>
-    <input placeholder="Прізвище" type="text" th:field="*{lname}"/>
-<!--    <div th:if= "*{lname != ''}"> No Data Found </div>-->
-    <div th:value="${noName}" th:text="${noName}"> </div>
+
+    <div class="form-floating mb-3" style="display: inline-block">
+        <input class="form-control" id="inputName" placeholder="Ім'я" type="text" th:field="*{fname}"/>
+        <label for="inputName">Ім'я</label>
+    </div>
+    <!--    <input placeholder="Ім'я" type="text" th:field="*{fname}"/>-->
+
+    <div class="form-floating mb-3" style="display: inline-block">
+        <input class="form-control" id="inputLName" placeholder="Прізвище" type="text" th:field="*{lname}"/>
+        <label for="inputLName">Прізвище</label>
+    </div>
+    <!--    <input placeholder="Прізвище" type="text" th:field="*{lname}"/>-->
+
 
     <span>Стать: </span>
-    <select th:field="*{sex}">
+    <select class="form-select form-select-lg mb-3" style="width: max-content; font-size: 12px; display: inline"
+            th:field="*{sex}">
         <option th:each="sex : ${genderList}" th:value="${sex.id}"
                 th:text="${sex.type}"></option>
     </select>
+    <br>
 
-    <span>Дата народження</span>
-    <input placeholder="Дата народження" type="date" th:field="*{birthday}"/>
+    <div class="form-floating mb-3" style="display: inline-block">
+        <input class="form-control" id="inputBirthday" placeholder="Дата народження" type="date"
+               th:field="*{birthday}"/>
+        <label for="inputBirthday">Дата народження</label>
+    </div>
+    <!--        <input placeholder="Дата народження" type="date" th:field="*{birthday}"/>-->
 
     <br>
     <p>Контактні дані: </p>
-    <input placeholder="Вулиця" type="text" th:field="*{street_name}"/>
+
+<!--    <input placeholder="Вулиця" type="text" th:field="*{street_name}"/>-->
+    <div class="form-floating mb-3" style="display: inline-block">
+        <input class="form-control" id="inputStreet" placeholder="Вулиця" type="text" th:field="*{street_name}">
+        <label for="inputStreet">Вулиця</label>
+    </div>
+
     <input placeholder="Будинок" type="text" th:field="*{street_building_number}"/>
     <input placeholder="Квартира" type="number" th:field="*{flat_number}"/>
     <input placeholder="Дом.тел." type="number" th:field="*{home_phone}"/>
@@ -37,24 +66,28 @@
     <br>
     <p>Зборова інформація: </p>
     <span>Група: </span>
-    <select th:field="*{groupNumb}">
+    <select th:field="*{groupNumb}" class="form-select form-select-lg mb-3"
+            style="width: max-content; font-size: 12px; display: inline">
         <option th:each="group : ${list}" th:value="${group.number}"
                 th:text="${group.number}+' '+${group.resplname}+' '+${group.respfname}"></option>
     </select>
 
     <span>В зборі: </span>
-    <select th:field="*{priv_meet}">
+    <select th:field="*{priv_meet}" class="form-select form-select-lg mb-3"
+            style="width: max-content; font-size: 12px; display: inline">
         <option th:each="meetType : ${typesDtoList}" th:value="${meetType.id}"
                 th:text="${meetType.meet_type}"></option>
     </select>
 
     <span>В служінні: </span>
-    <select th:field="*{serviceInS}">
+    <select th:field="*{serviceInS}" class="form-select form-select-lg mb-3"
+            style="width: max-content; font-size: 12px; display: inline">
         <option th:each="service : ${serviceList}" th:value="${service.id}"
                 th:text="${service.type}"></option>
     </select>
 
-    <select th:field="*{hope_id}">
+    <select th:field="*{hope_id}" class="form-select form-select-lg mb-3"
+            style="width: max-content; font-size: 12px; display: inline">
         <option th:each="hope : ${hopeList}" th:value="${hope.id}"
                 th:text="${hope.hope_type}"></option>
     </select>
@@ -64,6 +97,12 @@
     <input type="submit" value="Створити">
 
 </form>
+
+<script>
+    $("#div1").on("click", function () {
+        console.log("this is div1")
+    })
+</script>
 
 </body>
 </html>
