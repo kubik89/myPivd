@@ -74,7 +74,7 @@ public class ResultController {
     }
 
     @PostMapping()
-    public Result insert (@RequestBody @Valid ResultViewCreteDto result) {
+    public Result insert (@RequestBody ResultViewCreteDto result) {
         logger.info("Created new result for person" + result.getPeople_id());
         return iResultService.insert(result);
     }

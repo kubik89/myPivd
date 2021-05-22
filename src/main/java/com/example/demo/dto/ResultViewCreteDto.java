@@ -12,8 +12,9 @@ import javax.validation.constraints.Min;
 @Data
 public class ResultViewCreteDto {
     private int people_id;
-    @Min(value = 1, message = "can not be 0")
+//    @Min(value = 1, message = "can not be 0")
     private int hour;
+    private int minutes;
     private int publication;
     private int video;
     private int p_v;
@@ -21,4 +22,6 @@ public class ResultViewCreteDto {
     private String resultForDate;
     private String dateInput;
     private String comment;
+    private boolean isHelpPioneer;
+    private boolean isNotActive;
 }

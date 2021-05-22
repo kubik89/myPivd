@@ -21,11 +21,13 @@ public class Result {
 //    @JsonIgnore
     private People people;
     private int hour;
+    private int minutes;
     private int publication;
     private int video;
     private int p_v;
     private int b_learning;
     private String resultForDate;
-//    private String dateInput;
+    private boolean isHelpPioneer;
+    private boolean isNotActive;
     private String comment;
 }

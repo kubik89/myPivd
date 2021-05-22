@@ -7,6 +7,7 @@ import com.example.demo.dto.ResultViewCreteDto;
 import com.example.demo.dto.ResultViewWithPersonName;
 import com.example.demo.entity.People;
 import com.example.demo.entity.Result;
+import org.hibernate.internal.build.AllowSysOut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -133,24 +134,30 @@ public class ResultService implements IResultService {
 //        return resultList;
 //    }
 
+    /**
+     * сьогоднішню дату повну в стрічці перетворити в мин.місяць і окремо витягнути номер місяця й рік
+     * @return
+     */
     @Override
     public DateMonthYearDto getValueOfLastResultMonth() {
 
-//        сьогоднішню дату повну в стрічці перетворити в мин.місяць і окремо витягнути номер місяця й рік
         LocalDate lastDayOfLastMonth = LocalDate.now().withDayOfMonth(1).minusDays(1);
         String date = lastDayOfLastMonth.toString();
-        String monthName = lastDayOfLastMonth.getMonth().name();
         int year = lastDayOfLastMonth.getYear();
+        String monthName = lastDayOfLastMonth.getMonth().name();
+
         return new DateMonthYearDto(date, monthName, year);
     }
 
     @Override
     public Result insert(ResultViewCreteDto result) {
         Result newResult = new Result();
+
         if (peopleRepository.existsById(result.getPeople_id())) {
             People people = peopleRepository.findById(result.getPeople_id()).get();
             newResult.setPeople(people);
             newResult.setHour(result.getHour());
+            newResult.setMinutes(result.getMinutes());
             newResult.setPublication(result.getPublication());
             newResult.setVideo(result.getVideo());
             newResult.setP_v(result.getP_v());
@@ -158,6 +165,9 @@ public class ResultService implements IResultService {
             newResult.setResultForDate(result.getResultForDate());
 //            newResult.setDateInput(result.getDateInput());
             newResult.setComment(result.getComment());
+            newResult.setHelpPioneer(result.isHelpPioneer());
+            newResult.setNotActive(result.isNotActive());
+
             resultRepository.saveAndFlush(newResult);
         }
         return newResult;
