@@ -36,15 +36,23 @@ public class GroupsService implements IGroupService {
 
     @Override
     public Group saveGroup(GroupCreateDto group) {
-        Group myGroups = new Group();
 
+        Group groupById = groupRepository.findGroupById(group.getNumber());
+        if (groupRepository.findGroupById(group.getNumber()) != null) {
+            logger.error("group is exist and can not be added as new");
+            System.out.println(groupById.getGroup_number());
+            return new Group();
+        }
+
+        Group myGroups = new Group();
         myGroups.setGroup_number(group.getNumber());
 
         Optional<People> responsibleID = peopleRepository.findById(group.getRespId());
         People people = responsibleID.orElseThrow(() ->
-                new BadRequestException("I did not find any responsible in DB"));
+                new BadRequestException("Did not find any responsible in DB"));
+
         myGroups.setResponsible_name(people);
-        logger.info("New group {} created ", group.getNumber());
+        logger.info("New group {} is created ", group.getNumber());
         return groupRepository.saveAndFlush(myGroups);
     }
 
