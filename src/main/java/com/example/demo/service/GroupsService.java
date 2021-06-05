@@ -37,10 +37,8 @@ public class GroupsService implements IGroupService {
     @Override
     public Group saveGroup(GroupCreateDto group) {
 
-        Group groupById = groupRepository.findGroupById(group.getNumber());
         if (groupRepository.findGroupById(group.getNumber()) != null) {
             logger.error("group is exist and can not be added as new");
-            System.out.println(groupById.getGroup_number());
             return new Group();
         }
 
@@ -52,7 +50,7 @@ public class GroupsService implements IGroupService {
                 new BadRequestException("Did not find any responsible in DB"));
 
         myGroups.setResponsible_name(people);
-        logger.info("New group {} is created ", group.getNumber());
+        logger.info("New group {} creating ", group.getNumber());
         return groupRepository.saveAndFlush(myGroups);
     }
 
@@ -75,19 +73,54 @@ public class GroupsService implements IGroupService {
 
     @Override
     public void deleteGroup(int id) {
-        Group groupById = groupRepository.findGroupById(id);
-        groupRepository.delete(groupById);
+        if (id <= 0) {
+            logger.error("Can not delete group - incoming groupId equal or less than 0");
+            return;
+        }
+
+        Group groupById = null;
+        try {
+            groupById = groupRepository.findGroupById(id);
+            if (groupById != null) {
+                groupRepository.delete(groupById);
+                logger.info("group {} deleted successfully", groupById.getGroup_number());
+            } else logger.error("Group did not find in DB, can not be deleted");
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+        }
     }
 
     @Override
     public Group updateGroup(GroupCreateDto group) {
-        Group groupByNumber = groupRepository.findGroupById(group.getNumber());
-        People respId = peopleRepository.getOne(group.getRespId());
+        if (group.getNumber() <= 0) {
+            logger.error("Group can not equal or less than 0");
+            return new Group();
+        }
+        if (group.getRespId() == 0) {
+            logger.error("Responsible person can not equal 0");
+            return new Group();
+        }
+        try {
+            Group groupByNumber = groupRepository.findGroupById(group.getNumber());
+            if (groupByNumber == null) {
+                logger.error("Group not found");
+                return new Group();
+            } else {
+                try {
+                    People respId = peopleRepository.getOne(group.getRespId());
+                    groupByNumber.setResponsible_name(respId);
 
-        groupByNumber.setResponsible_name(respId);
-
-        logger.info("Group id {} updated", groupByNumber.getId());
-        return groupRepository.saveAndFlush(groupByNumber);
+                    logger.info("Group {} updating, new responsible - {} {}", groupByNumber.getGroup_number(), respId.getLname(), respId.getFname());
+                    return groupRepository.saveAndFlush(groupByNumber);
+                } catch (Exception ex) {
+                    logger.error(ex.getMessage());
+                    return new Group();
+                }
+            }
+        } catch (Exception ex) {
+            logger.error(ex.getMessage());
+            return new Group();
+        }
     }
 
     @Override
