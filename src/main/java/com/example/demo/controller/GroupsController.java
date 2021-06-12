@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.dao.GroupsRepository;
 import com.example.demo.dto.*;
 import com.example.demo.entity.Group;
 import com.example.demo.service.IGroupService;
@@ -18,6 +19,9 @@ public class GroupsController {
     @Autowired
     private IGroupService igroupService;
 
+    @Autowired
+    private GroupsRepository groupsRepository;
+
     @GetMapping
     public GroupGetViewDto getAllGroups() {
         return igroupService.getAllGroups();
@@ -25,6 +29,7 @@ public class GroupsController {
 
     @GetMapping("/{id}")
     public GroupDto getGroupById(@PathVariable int id) {
+//        return groupsRepository.findGroupById(id);
         return igroupService.getSomeGroupById(id);
     }
 
@@ -49,18 +54,19 @@ public class GroupsController {
     }
 
     @DeleteMapping(value = "/{id}")
-    public void deleteGroup(@PathVariable int id) {
-        igroupService.deleteGroup(id);
+    public ResponseContainer deleteGroup(@PathVariable int id) {
+       return igroupService.deleteGroup(id);
     }
 
     @GetMapping("/byid/{id}")
     public Group findGroupById(@PathVariable int id) {
-       return igroupService.findGroupById(id);
+        return groupsRepository.findGroupById(id);
+//       return igroupService.findGroupById(id);
     }
 
     @GetMapping("/resp/{id}")
     public PeopleJustNameDto getResponsibleIdInGroup(@PathVariable int id) {
-        return igroupService.getResonsibleIdInGroup(id);
+        return igroupService.getResponsibleIdInGroup(id);
     }
 
     @GetMapping("/count/{id}")

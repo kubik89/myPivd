@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.example.demo.controller.GroupsController;
 import com.example.demo.dao.BadRequestException;
 import com.example.demo.dao.GroupRepository;
+import com.example.demo.dao.GroupsRepository;
 import com.example.demo.dao.PeopleRepository;
 import com.example.demo.dto.*;
 import com.example.demo.entity.Group;
@@ -24,14 +25,16 @@ public class GroupsService implements IGroupService {
 
     private GroupRepository groupRepository;
     private PeopleRepository peopleRepository;
+    private GroupsRepository groupsRepository;
     String messageNoGroup = "We did not find any group";
 
     private static Logger logger = LoggerFactory.getLogger(GroupsController.class);
 
     @Autowired
-    public GroupsService(GroupRepository groupRepository, PeopleRepository peopleRepository) {
+    public GroupsService(GroupRepository groupRepository, PeopleRepository peopleRepository, GroupsRepository groupsRepository) {
         this.groupRepository = groupRepository;
         this.peopleRepository = peopleRepository;
+        this.groupsRepository = groupsRepository;
     }
 
     @Override
@@ -66,16 +69,18 @@ public class GroupsService implements IGroupService {
     @Override
     public GroupDto getSomeGroupById(int id) {
 
+
+
         Group group = groupRepository.findGroupById(id);
         return new GroupDto(group.getGroup_number(), group.getResponsible_name().getFname(),
                 group.getResponsible_name().getLname());
     }
 
     @Override
-    public void deleteGroup(int id) {
+    public ResponseContainer deleteGroup(int id) {
         if (id <= 0) {
             logger.error("Can not delete group - incoming groupId equal or less than 0");
-            return;
+            return new ResponseContainer("Can not delete group - incoming groupId equal or less than 0", "", "");
         }
 
         Group groupById = null;
@@ -84,14 +89,20 @@ public class GroupsService implements IGroupService {
             if (groupById != null) {
                 groupRepository.delete(groupById);
                 logger.info("group {} deleted successfully", groupById.getGroup_number());
-            } else logger.error("Group did not find in DB, can not be deleted");
+                return new ResponseContainer(null, null,"group " + groupById.getGroup_number() + " deleted successfully");
+            } else {
+                logger.error("Group did not find in DB, can not be deleted");
+                return new ResponseContainer("Group did not find in DB, can not be deleted", null, null);
+            }
         } catch (Exception e) {
             logger.error(e.getMessage());
+            return new ResponseContainer("Can not delete group because she have active users", null,null);
         }
     }
 
     @Override
     public Group updateGroup(GroupCreateDto group) {
+        System.out.println("updateGroup");
         if (group.getNumber() <= 0) {
             logger.error("Group can not equal or less than 0");
             return new Group();
@@ -125,6 +136,7 @@ public class GroupsService implements IGroupService {
 
     @Override
     public Group findGroupById(int groupId) {
+//        return groupsRepository.findGroupById(groupId);
         return groupRepository.findGroupById(groupId);
     }
 
@@ -136,13 +148,8 @@ public class GroupsService implements IGroupService {
         return new GroupMembersDto(list);
     }
 
-    public PeopleJustNameDto getResonsibleIdInGroup(int groupId) {
-        int responsibleInGroup = groupRepository.findResponsibleInGroup(groupId);
-
-        int id = peopleRepository.findById(responsibleInGroup).get().getId();
-        String lname = peopleRepository.findById(responsibleInGroup).get().getLname();
-        String fname = peopleRepository.findById(responsibleInGroup).get().getFname();
-        return new PeopleJustNameDto(id, lname, fname);
+    public PeopleJustNameDto getResponsibleIdInGroup(int groupId) {
+        return groupRepository.findResponsibleInGroup(groupId);
     }
 
     public int getCountGroupMembers(int groupId) {

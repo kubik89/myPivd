@@ -10,13 +10,13 @@ public interface IGroupService {
     Group saveGroup (GroupCreateDto groupDto);
     GroupGetViewDto getAllGroups();
     GroupDto getSomeGroupById(int id);
-    void deleteGroup(int id);
+    ResponseContainer deleteGroup(int id);
     Group updateGroup(GroupCreateDto group);
     GroupMembersDto peopleInGroup(int groupId);
 
     Group findGroupById(int groupId);
 
-    PeopleJustNameDto getResonsibleIdInGroup(int groupId);
+    PeopleJustNameDto getResponsibleIdInGroup(int groupId);
 
     int getCountGroupMembers(int groupId);
 

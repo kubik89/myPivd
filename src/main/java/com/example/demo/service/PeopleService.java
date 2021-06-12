@@ -24,6 +24,11 @@ public class PeopleService implements IPeopleService {
     ServiceInSRepository serviceInSRepository;
     HopeRepository hopeRepository;
 
+    String MAN_GENDER_VALUE_BIG = "Ч";
+    String MAN_GENDER_VALUE_SMALL = "ч";
+    String WOMAN_GENDER_VALUE_BIG = "Ж";
+    String WOMAN_GENDER_VALUE_SMALL = "ж";
+
     @Autowired
     public PeopleService(PeopleRepository peopleRepository, GroupRepository groupRepository, SexRepository sexRepository,
                          MeetRepository meetRepository, ServiceInSRepository serviceInSRepository, HopeRepository hopeRepository) {
@@ -83,9 +88,9 @@ public class PeopleService implements IPeopleService {
         Group groupByNumb = groupRepository.findGroupById(peopleCreateDto.getGroupNumb());
         people.setGroup_numb(groupByNumb);
 
-        Optional<Sex> sexById = sexRepository.findById(peopleCreateDto.getSex());
-        Sex sex = sexById.orElseThrow(() -> new BadRequestException("Current sex type did not find"));
-        people.setSex(sex);
+//        Optional<Sex> sexById = sexRepository.findById(peopleCreateDto.getSex());
+//        Sex sex = sexById.orElseThrow(() -> new BadRequestException("Current sex type did not find"));
+        people.setSex(null);
 
         return peopleRepository.saveAndFlush(people);
     }
@@ -172,15 +177,15 @@ public class PeopleService implements IPeopleService {
         Group groupByNumb = groupRepository.findGroupById(people.getGroup());
         people1.setGroup_numb(groupByNumb);
 
-        if (people.getSex().startsWith("Ч") || people.getSex().startsWith("ч")) {
-            sexRepository.findAll().forEach(sexType -> {
-                if (sexType.getSexType().startsWith("Ч")) {
+        if (people.getSex().startsWith(MAN_GENDER_VALUE_BIG) || people.getSex().startsWith(MAN_GENDER_VALUE_SMALL)) {
+            sexRepository.getAllGenders().forEach(sexType -> {
+                if (sexType.getSexType().startsWith(MAN_GENDER_VALUE_BIG)) {
                     people1.setSex(sexType);
                 }
             });
-        } else if (people.getSex().startsWith("Ж") || people.getSex().startsWith("ж")) {
-            sexRepository.findAll().forEach(sexType -> {
-                if (sexType.getSexType().startsWith("Ж")) {
+        } else if (people.getSex().startsWith(WOMAN_GENDER_VALUE_BIG) || people.getSex().startsWith(WOMAN_GENDER_VALUE_SMALL)) {
+            sexRepository.getAllGenders().forEach(sexType -> {
+                if (sexType.getSexType().startsWith(WOMAN_GENDER_VALUE_BIG)) {
                     people1.setSex(sexType);
                 }
             });
