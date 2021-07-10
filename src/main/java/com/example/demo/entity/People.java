@@ -44,6 +44,7 @@ public class People {
     private int home_phone;
     private int mob_phone;
     private String birthday;
+
     private String date_chreshchennja;
 
     @ManyToOne

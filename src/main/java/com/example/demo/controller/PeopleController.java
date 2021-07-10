@@ -73,7 +73,8 @@ public class PeopleController {
 
     @PostMapping
     public People createPerson(@RequestBody @Valid PeopleCreateDto people) {
-        logger.info("New person created: {}", people.getLname());
+        logger.info("Creating new person, first Name: {}, last Name: {}, group number: {}", people.getFname(),
+                people.getLname(), people.getGroupNumb());
         return iPeopleService.savePerson(people);
     }
 

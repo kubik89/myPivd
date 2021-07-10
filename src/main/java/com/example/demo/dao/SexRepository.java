@@ -1,5 +1,6 @@
 package com.example.demo.dao;
 
+import com.example.demo.dto.MeetTypesDto;
 import com.example.demo.entity.Sex;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -29,5 +30,18 @@ public class SexRepository {
                 return sex;
             }
         });
+    }
+
+    public Sex getGenderById(int genderId) {
+        String SQL = "SELECT * from SEX WHERE id = ?";
+        return jdbcTemplate.queryForObject(SQL, new Object[]{genderId}, SexRepository::getGenderMapper);
+    }
+
+    public static Sex getGenderMapper(ResultSet result, int rowNum) throws SQLException {
+        Sex sex = new Sex();
+        sex.setId(result.getInt("id"));
+        sex.setSexType(result.getString("sex_type"));
+
+        return sex;
     }
 }
